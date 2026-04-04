@@ -119,7 +119,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
       <section className="site-shell section-gap" id="featured-skills">
         <div className="section-heading centered category-search-heading">
-          <h2 className="section-title">精选skills</h2>
+          <h2 className="section-title">本周精选skills</h2>
           <p className="section-copy">先看少量更通用、更高频的优质 Skills，不把所有结果一次堆给你。</p>
         </div>
 

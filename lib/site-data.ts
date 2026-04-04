@@ -442,7 +442,7 @@ focus: 质检修订`,
 ];
 
 const booksFeaturedSkills = booksCatalogSkills.filter((skill) =>
-  ["Last30days", "Deep Research Pro", "Summarize"].includes(skill.name),
+  ["Last30days", "Deep Research Pro", "Academic Deep Research"].includes(skill.name),
 );
 
 const articlesSkills: SkillPreview[] = [
