@@ -1,30 +1,19 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/section-heading";
-import { categories } from "@/lib/site-data";
+import { categories, editorChoices } from "@/lib/site-data";
 
 export default function HomePage() {
   const featuredCategory = categories[0];
   const sideCategories = categories.slice(1);
-  const spotlightSkills = [
-    {
-      name: "Chapter Blueprint Forge",
-      scene: "适用场景：长篇书稿、章节大纲、故事推进",
-      tags: ["适合新手", "热门", "长篇创作"],
-      href: "/skills/books-chapter-blueprint-forge",
-    },
-    {
-      name: "Angle Finder Brief",
-      scene: "适用场景：公众号选题、专栏切入、观点文章",
-      tags: ["适合新手", "热门", "文章写作"],
-      href: "/skills/articles-angle-finder-brief",
-    },
-    {
-      name: "Literature Review Mapper",
-      scene: "适用场景：文献整理、综述摘要、研究脉络梳理",
-      tags: ["学术整理", "热门", "研究写作"],
-      href: "/skills/academic-literature-review-mapper",
-    },
-  ];
+  const spotlightSkills = editorChoices
+    .filter((skill) => skill.sourceUrl)
+    .slice(0, 3)
+    .map((skill) => ({
+      name: skill.name,
+      scene: skill.description,
+      tags: [skill.badge ?? "精选", skill.workflow, "可直达 ClawHub"],
+      href: skill.sourceUrl as string,
+    }));
   const reasonCards = [
     {
       title: "按创作流程筛选，找 Skill 更快",
@@ -179,9 +168,14 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <Link href={skill.href} className="secondary-button spotlight-button">
-                查看详情
-              </Link>
+              <a
+                href={skill.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="primary-button spotlight-button"
+              >
+                前往 ClawHub ↗
+              </a>
             </article>
           ))}
         </div>
