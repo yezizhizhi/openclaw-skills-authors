@@ -16,7 +16,7 @@ export function SiteHeader() {
           </div>
           <div className="min-w-0">
             <p className="header-brand-title">
-              OPENCLAW SKILLS
+              OpenClaw Skills for Authors
             </p>
             <p className="header-brand-copy">
               为创作者筛选可直达的优质 Skills
