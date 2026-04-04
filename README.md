@@ -40,11 +40,17 @@ npm run dev
 2. 打开 SQL Editor，先执行 `supabase/schema.sql`
 3. 再执行 `supabase/seed.sql`
 4. 在项目根目录创建 `.env.local`
-5. 填入下面两个环境变量：
+5. 填入下面两个前端读取变量：
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
+```
+
+如果你希望后续让我继续做“批量同步 Skills 数据”“后台写入”或“管理员导入脚本”，还需要额外补一个服务端密钥：
+
+```bash
+SUPABASE_SERVICE_ROLE_KEY=...
 ```
 
 可直接参考：
@@ -52,6 +58,20 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
 - [.env.example](./.env.example)
 
 如果没有配置 Supabase，站点会自动回退到当前的静态样例数据，不会影响页面预览。
+
+## 检查数据库是否接通
+
+填好 `.env.local` 后，可以运行：
+
+```bash
+npm run supabase:check
+```
+
+它会检查：
+
+- 环境变量是否齐全
+- `categories / scenarios / skills / skill_scenarios` 四张表能否读到数据
+- 当前是否已经把 seed 成功导入数据库
 
 ## 代码入口
 
