@@ -42,9 +42,7 @@ function getStableSourceLink(
     const sourceUrl = new URL(skill.sourceUrl);
 
     if (sourceUrl.hostname === "clawhub.ai") {
-      const slug = sourceUrl.pathname.split("/").filter(Boolean).pop();
-      const query = slug ? slug.replace(/-/g, " ") : skill.name;
-      return `https://clawhub.ai/skills?q=${encodeURIComponent(query)}`;
+      return null;
     }
 
     return skill.sourceUrl;

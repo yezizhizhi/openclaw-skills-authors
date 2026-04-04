@@ -50,14 +50,14 @@ const scenarioAliases: Record<string, string[]> = {
 };
 
 const skillScenarioNames: Record<string, string[]> = {
-  "books:Outline Mainline Extraction": ["素材清洗", "章节大纲"],
-  "books:Structure Building": ["素材清洗", "章节大纲"],
-  "books:Chapter Responsibility Split": ["章节大纲", "初稿扩写"],
-  "books:Chapter Content Prompts": ["章节大纲", "初稿扩写"],
-  "books:Structure Conflict Check": ["风格润色", "交叉校对"],
-  "books:Rhythm Control": ["初稿扩写", "风格润色"],
-  "books:Writing Feasibility Check": ["章节大纲", "交叉校对"],
-  "books:Multi Outline Design": ["素材清洗", "章节大纲"],
+  "books:outline-mainline-extraction": ["素材清洗", "章节大纲"],
+  "books:structure-building": ["素材清洗", "章节大纲"],
+  "books:chapter-responsibility-split": ["章节大纲", "初稿扩写"],
+  "books:chapter-content-prompts": ["章节大纲", "初稿扩写"],
+  "books:structure-conflict-check": ["风格润色", "交叉校对"],
+  "books:rhythm-control": ["初稿扩写", "风格润色"],
+  "books:writing-feasibility-check": ["章节大纲", "交叉校对"],
+  "books:multi-outline-design": ["素材清洗", "章节大纲"],
   "articles:Angle Finder Brief": ["选题拆解", "提纲整理", "观点展开"],
   "articles:Headline Refinery": ["标题优化", "段落润色", "发布前校对"],
   "copywriting:Hook Pulse Lab": ["爆款拆解", "情绪钩子", "内容生成"],
@@ -71,14 +71,14 @@ const skillScenarioNames: Record<string, string[]> = {
 };
 
 const skillSourceUrls: Record<string, string> = {
-  "books:Outline Mainline Extraction": "https://clawhub.ai/skills/outline-mainline-extraction",
-  "books:Structure Building": "https://clawhub.ai/skills/structure-building",
-  "books:Chapter Responsibility Split": "https://clawhub.ai/skills/chapter-responsibility-split",
-  "books:Chapter Content Prompts": "https://clawhub.ai/skills/chapter-content-prompts",
-  "books:Structure Conflict Check": "https://clawhub.ai/skills/structure-conflict-check",
-  "books:Rhythm Control": "https://clawhub.ai/skills/rhythm-control",
-  "books:Writing Feasibility Check": "https://clawhub.ai/skills/writing-feasibility-check",
-  "books:Multi Outline Design": "https://clawhub.ai/skills/multi-outline-design",
+  "books:outline-mainline-extraction": "https://clawhub.ai/skills/outline-mainline-extraction",
+  "books:structure-building": "https://clawhub.ai/skills/structure-building",
+  "books:chapter-responsibility-split": "https://clawhub.ai/skills/chapter-responsibility-split",
+  "books:chapter-content-prompts": "https://clawhub.ai/skills/chapter-content-prompts",
+  "books:structure-conflict-check": "https://clawhub.ai/skills/structure-conflict-check",
+  "books:rhythm-control": "https://clawhub.ai/skills/rhythm-control",
+  "books:writing-feasibility-check": "https://clawhub.ai/skills/writing-feasibility-check",
+  "books:multi-outline-design": "https://clawhub.ai/skills/multi-outline-design",
 };
 
 function slugify(value: string) {

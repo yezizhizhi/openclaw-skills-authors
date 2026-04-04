@@ -135,7 +135,7 @@ export const homeFaqs: FaqItem[] = [
 
 const booksSkills: SkillPreview[] = [
   {
-    name: "Outline Mainline Extraction",
+    name: "outline-mainline-extraction",
     version: "ClawHub verified",
     workflow: "全书主线提炼",
     description:
@@ -151,7 +151,7 @@ category: books
 focus: 全书主线提炼`,
   },
   {
-    name: "Structure Building",
+    name: "structure-building",
     version: "ClawHub verified",
     workflow: "整体结构搭建",
     description:
@@ -166,7 +166,7 @@ category: books
 focus: 整体结构搭建`,
   },
   {
-    name: "Chapter Responsibility Split",
+    name: "chapter-responsibility-split",
     version: "ClawHub verified",
     workflow: "章节职责拆分",
     description:
@@ -181,7 +181,7 @@ category: books
 focus: 章节职责拆分`,
   },
   {
-    name: "Chapter Content Prompts",
+    name: "chapter-content-prompts",
     version: "ClawHub verified",
     workflow: "章节重点内容提示",
     description:
@@ -196,7 +196,7 @@ category: books
 focus: 章节重点内容提示`,
   },
   {
-    name: "Structure Conflict Check",
+    name: "structure-conflict-check",
     version: "ClawHub verified",
     workflow: "结构重复与冲突检查",
     description:
@@ -211,7 +211,7 @@ category: books
 focus: 结构重复与冲突检查`,
   },
   {
-    name: "Rhythm Control",
+    name: "rhythm-control",
     version: "ClawHub verified",
     workflow: "节奏控制",
     description:
@@ -226,7 +226,7 @@ category: books
 focus: 节奏控制`,
   },
   {
-    name: "Writing Feasibility Check",
+    name: "writing-feasibility-check",
     version: "ClawHub verified",
     workflow: "写作可执行性验证",
     description:
@@ -241,7 +241,7 @@ category: books
 focus: 写作可执行性验证`,
   },
   {
-    name: "Multi Outline Design",
+    name: "multi-outline-design",
     version: "ClawHub verified",
     workflow: "多方案大纲设计",
     description:

@@ -183,7 +183,7 @@ values
   (
     'books-outline-mainline-extraction',
     'books',
-    'Outline Mainline Extraction',
+    'outline-mainline-extraction',
     '全书主线提炼',
     '从大量素材和支线里提炼整本书真正要持续推进的主线，帮助作者先稳住主题、冲突和叙事方向。',
     'https://clawhub.ai/skills/outline-mainline-extraction',
@@ -201,7 +201,7 @@ values
   (
     'books-structure-building',
     'books',
-    'Structure Building',
+    'structure-building',
     '整体结构搭建',
     '把主线、章节层级和前后承接关系搭成可执行结构，减少写着写着整体散掉的风险。',
     'https://clawhub.ai/skills/structure-building',
@@ -219,7 +219,7 @@ values
   (
     'books-chapter-responsibility-split',
     'books',
-    'Chapter Responsibility Split',
+    'chapter-responsibility-split',
     '章节职责拆分',
     '为每一章分配明确职责，区分信息交代、冲突推进、人物变化和悬念承接。',
     'https://clawhub.ai/skills/chapter-responsibility-split',
@@ -237,7 +237,7 @@ values
   (
     'books-chapter-content-prompts',
     'books',
-    'Chapter Content Prompts',
+    'chapter-content-prompts',
     '章节重点内容提示',
     '围绕章节目标生成更具体的内容提示，帮助作者在扩写前先抓住这一章最该写的内容。',
     'https://clawhub.ai/skills/chapter-content-prompts',
@@ -255,7 +255,7 @@ values
   (
     'books-structure-conflict-check',
     'books',
-    'Structure Conflict Check',
+    'structure-conflict-check',
     '结构重复与冲突检查',
     '检查章节之间是否有重复功能、信息打架或前后承接冲突，避免结构层面的返工。',
     'https://clawhub.ai/skills/structure-conflict-check',
@@ -273,7 +273,7 @@ values
   (
     'books-rhythm-control',
     'books',
-    'Rhythm Control',
+    'rhythm-control',
     '节奏控制',
     '帮助作者检查整书或单章的推进节奏，平衡信息密度、情节推进和停顿位置。',
     'https://clawhub.ai/skills/rhythm-control',
@@ -291,7 +291,7 @@ values
   (
     'books-writing-feasibility-check',
     'books',
-    'Writing Feasibility Check',
+    'writing-feasibility-check',
     '写作可执行性验证',
     '在正式开写前检查当前大纲是否真的可写，识别空章、虚章和难以落地的部分。',
     'https://clawhub.ai/skills/writing-feasibility-check',
@@ -309,7 +309,7 @@ values
   (
     'books-multi-outline-design',
     'books',
-    'Multi Outline Design',
+    'multi-outline-design',
     '多方案大纲设计',
     '一次生成多套不同推进逻辑的大纲方案，帮助作者在正式定稿前比较路径和风险。',
     'https://clawhub.ai/skills/multi-outline-design',

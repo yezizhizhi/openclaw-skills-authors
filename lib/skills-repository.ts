@@ -49,6 +49,25 @@ type DbCategoryRow = {
 
 export type SkillDetail = StaticSkillDetail;
 
+function getCanonicalSkillName(skillName: string, sourceUrl: string | null) {
+  if (!sourceUrl) {
+    return skillName;
+  }
+
+  try {
+    const url = new URL(sourceUrl);
+
+    if (url.hostname !== "clawhub.ai") {
+      return skillName;
+    }
+
+    const slug = url.pathname.split("/").filter(Boolean).pop();
+    return slug || skillName;
+  } catch {
+    return skillName;
+  }
+}
+
 function getFallback(categorySlug: string) {
   return getStaticCategoryExplorerData(categorySlug);
 }
@@ -96,7 +115,7 @@ function normalizeSkills(
     return {
       id: skill.id,
       categorySlug,
-      name: skill.name,
+      name: getCanonicalSkillName(skill.name, skill.source_url),
       workflow: skill.workflow,
       description: skill.description,
       models: skill.models ?? [],
