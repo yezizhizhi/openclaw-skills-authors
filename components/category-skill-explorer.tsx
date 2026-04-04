@@ -2,64 +2,38 @@
 
 import Link from "next/link";
 import { useDeferredValue, useState } from "react";
-import type { SkillPreview } from "@/lib/site-data";
+import {
+  searchExplorerSkills,
+  type CategoryExplorerData,
+  type ExplorerScenario,
+  type ExplorerSkill,
+} from "@/lib/skill-search";
 
 type CategorySkillExplorerProps = {
+  categorySlug: string;
   categoryLabel: string;
   workflowTags: string[];
-  skills: SkillPreview[];
+  scenarios: ExplorerScenario[];
+  skills: ExplorerSkill[];
 };
 
-function getSearchUnits(query: string) {
-  const normalized = query.trim().toLowerCase();
-
-  if (!normalized) {
-    return [];
-  }
-
-  const units = new Set<string>([normalized]);
-
-  normalized
-    .split(/[\s,，、/]+/)
-    .filter((part) => part.length >= 2)
-    .forEach((part) => units.add(part));
-
-  if (/[\u4e00-\u9fff]/.test(normalized) && normalized.length >= 2) {
-    for (let index = 0; index < normalized.length - 1; index += 1) {
-      units.add(normalized.slice(index, index + 2));
-    }
-  }
-
-  return Array.from(units);
-}
-
-function matchesSkill(skill: SkillPreview, query: string) {
-  const haystack = [
-    skill.name,
-    skill.workflow,
-    skill.description,
-    skill.inputPreview,
-    skill.outputPreview,
-    ...skill.models,
-  ]
-    .join(" ")
-    .toLowerCase();
-
-  const units = getSearchUnits(query);
-  return units.some((unit) => haystack.includes(unit));
-}
-
 export function CategorySkillExplorer({
+  categorySlug,
   categoryLabel,
   workflowTags,
+  scenarios,
   skills,
 }: CategorySkillExplorerProps) {
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
   const normalizedQuery = deferredQuery.trim();
-  const filteredSkills = normalizedQuery
-    ? skills.filter((skill) => matchesSkill(skill, normalizedQuery))
-    : skills;
+  const explorerData: CategoryExplorerData = {
+    categorySlug,
+    workflowTags,
+    scenarios,
+    skills,
+  };
+  const filteredSkills = searchExplorerSkills(explorerData, normalizedQuery);
 
   return (
     <div className="explorer-shell">

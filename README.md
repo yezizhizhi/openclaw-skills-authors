@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OpenClaw Skills for Authors
 
-## Getting Started
+`Next.js + Tailwind CSS` 原型站，当前用于验证：
 
-First, run the development server:
+- 首页与 6 个分类页的视觉与信息层级
+- 分类页第二屏的“输入场景 -> 推荐 Skills”交互
+- `Supabase` 数据层、场景映射与后续登录/订阅能力的接入方式
+
+线上地址：
+
+- [Vercel Production](https://openclaw-skills-authors.vercel.app)
+
+## 本地运行
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+打开 [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 当前数据结构
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+当前项目已经接好一层最小可用的数据模型，核心表如下：
 
-## Learn More
+- `categories`
+- `scenarios`
+- `scenario_aliases`
+- `skills`
+- `skill_scenarios`
 
-To learn more about Next.js, take a look at the following resources:
+它们对应的 SQL 文件在：
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [supabase/schema.sql](./supabase/schema.sql)
+- [supabase/seed.sql](./supabase/seed.sql)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 接入 Supabase
 
-## Deploy on Vercel
+1. 在 Supabase 新建一个项目
+2. 打开 SQL Editor，先执行 `supabase/schema.sql`
+3. 再执行 `supabase/seed.sql`
+4. 在项目根目录创建 `.env.local`
+5. 填入下面两个环境变量：
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+可直接参考：
+
+- [.env.example](./.env.example)
+
+如果没有配置 Supabase，站点会自动回退到当前的静态样例数据，不会影响页面预览。
+
+## 代码入口
+
+- 首页：[app/page.tsx](./app/page.tsx)
+- 分类页：[app/categories/[slug]/page.tsx](./app/categories/[slug]/page.tsx)
+- 分类页场景搜索组件：[components/category-skill-explorer.tsx](./components/category-skill-explorer.tsx)
+- 静态页面文案与 hero 数据：[lib/site-data.ts](./lib/site-data.ts)
+- 静态 catalog fallback 与 alias 映射：[lib/static-catalog.ts](./lib/static-catalog.ts)
+- 搜索与排序逻辑：[lib/skill-search.ts](./lib/skill-search.ts)
+- Supabase 读取仓库层：[lib/skills-repository.ts](./lib/skills-repository.ts)
+- 搜索接口：[app/api/skills/search/route.ts](./app/api/skills/search/route.ts)
+
+## 下一步建议
+
+完成这版数据库接入后，最合理的下一步是：
+
+1. 真的在 Supabase 建库并导入 seed
+2. 把 `查看详情` 接成真实 Skill 详情页
+3. 接用户登录
+4. 再接订阅 / 付费 / 权限控制

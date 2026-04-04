@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CategorySkillExplorer } from "@/components/category-skill-explorer";
 import { categories, getCategoryBySlug } from "@/lib/site-data";
+import { getCategoryExplorerData } from "@/lib/skills-repository";
 
 type CategoryPageProps = {
   params: Promise<{
@@ -37,6 +38,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   if (!category) {
     notFound();
   }
+
+  const explorerData = await getCategoryExplorerData(category.slug);
+  const workflowTags =
+    explorerData?.workflowTags.length ? explorerData.workflowTags : category.workflowTags;
+  const explorerScenarios = explorerData?.scenarios ?? [];
+  const explorerSkills = explorerData?.skills ?? [];
 
   const heroCtas: Record<string, { primary: string; secondary: string }> = {
     books: {
@@ -84,7 +91,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </div>
 
           <div className="hero-chip-row category-flow-row">
-            {category.workflowTags.map((tag) => (
+            {workflowTags.map((tag) => (
               <span key={tag} className="chip-link category-flow-chip">
                 {tag}
               </span>
@@ -101,9 +108,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
         <div className="mt-8">
           <CategorySkillExplorer
+            categorySlug={category.slug}
             categoryLabel={category.navLabel}
-            workflowTags={category.workflowTags}
-            skills={category.featuredSkills}
+            workflowTags={workflowTags}
+            scenarios={explorerScenarios}
+            skills={explorerSkills}
           />
         </div>
       </section>
