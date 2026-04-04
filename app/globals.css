@@ -121,6 +121,47 @@ a {
   backdrop-filter: blur(14px);
 }
 
+.header-brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.header-brand-mark {
+  display: flex;
+  height: 3.15rem;
+  width: 3.15rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(54, 131, 246, 0.96), rgba(15, 110, 240, 0.88));
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 18px 36px rgba(54, 131, 246, 0.18);
+}
+
+.header-brand-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--accent-ink);
+}
+
+.header-brand-copy {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.98rem;
+  color: var(--muted-ink);
+}
+
 .header-nav {
   align-items: center;
   gap: 0.65rem;
@@ -130,8 +171,7 @@ a {
   border-radius: 999px;
 }
 
-.header-nav-link,
-.header-primary-link {
+.header-nav-link {
   min-height: 2.85rem;
   display: inline-flex;
   align-items: center;
@@ -145,25 +185,12 @@ a {
     background-color 180ms ease,
     border-color 180ms ease,
     transform 180ms ease;
-}
-
-.header-nav-link {
   color: var(--soft-ink);
 }
 
 .header-nav-link:hover {
   color: var(--ink);
   background: rgba(255, 255, 255, 0.04);
-}
-
-.header-primary-link {
-  color: white;
-  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
-  box-shadow: 0 16px 36px rgba(255, 98, 76, 0.22);
-}
-
-.header-primary-link:hover {
-  transform: translateY(-1px);
 }
 
 .footer-shell,
@@ -211,6 +238,35 @@ a {
   line-height: 1.45;
   letter-spacing: -0.03em;
   font-weight: 700;
+}
+
+.submission-input {
+  width: 100%;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background: rgba(8, 13, 22, 0.72);
+  padding: 1rem 1.1rem;
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.submission-input::placeholder {
+  color: var(--muted-ink);
+}
+
+.submission-input:focus {
+  border-color: rgba(255, 98, 76, 0.32);
+  box-shadow: 0 0 0 4px rgba(255, 98, 76, 0.08);
+}
+
+.submission-textarea {
+  resize: vertical;
+  min-height: 10rem;
 }
 
 .hero-actions {
@@ -1453,5 +1509,9 @@ a {
   .header-shell {
     justify-content: space-between;
     padding: 0.9rem 1rem;
+  }
+
+  .header-brand-copy {
+    display: none;
   }
 }
