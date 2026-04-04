@@ -756,48 +756,389 @@ targets:
   },
 ];
 
-const reportsSkills: SkillPreview[] = [
+const reportWorkflowPrompts: Record<
+  string,
   {
-    name: "Executive Summary Press",
-    version: "v0.1 static preview",
-    workflow: "摘要压缩",
-    description:
-      "适合把长报告的重点压成更清晰的执行摘要，减少汇报前的大段返工。",
-    models: ["GPT-4.1", "Claude 3.7"],
-    inputPreview: "内容很多，但面对汇报对象时不知道哪些信息该放在第一页。",
-    outputPreview: "输出层级清晰的摘要结构和更适合决策阅读的重点排序。",
-    primaryAction: "Copy-first Setup",
-    configSnippet: `skill: executive_summary_press
-category: reports
-workflow: summary
-inputs:
-  - full_report
-outputs:
-  - key_points
-  - risks
-  - next_actions`,
+    input: string;
+    output: string;
+  }
+> = {
+  任务定义: {
+    input: "需要先明确汇报目标、受众、决策口径和输出边界，避免一上来就堆材料。",
+    output: "输出任务框架、目标拆解和更清晰的汇报范围定义。",
   },
-  {
-    name: "Logic Line Checker",
-    version: "v0.1 static preview",
-    workflow: "逻辑校对",
-    description:
-      "用来检查章节之间的论证顺序、结论支撑和信息跳跃，减少报告说服力不足的问题。",
-    models: ["Claude 3.7", "Gemini 2.5"],
-    inputPreview: "信息不少，但结构读起来像素材拼接，结论和论据之间不够顺。",
-    outputPreview: "标出逻辑断点、缺失环节和建议补强的位置。",
-    primaryAction: "View Source Notes",
-    configSnippet: `skill: logic_line_checker
-category: reports
-workflow: logic_review
-inputs:
-  - report_outline
-  - key_claims
-checks:
-  evidence_chain: true
-  section_transitions: true`,
+  "资料收集 / 信息搜索": {
+    input: "需要快速摸清行业背景、趋势数据和多源资料，先把研究基础铺起来。",
+    output: "返回更完整的研究资料、来源线索和可继续分析的搜索结果。",
   },
+  "资料归档 / 输入接入": {
+    input: "需要把 PDF、网页、会议记录和企业文档接成可继续处理的统一输入。",
+    output: "把原始资料转成更适合归档、检索和后续分析的标准化输入。",
+  },
+  "清洗整理 / 重点提炼": {
+    input: "原始资料已经很多，但还没有被压缩成真正能支撑判断的重点信息。",
+    output: "输出摘要、重点提炼和可继续汇报使用的结构化结论。",
+  },
+  "分析归纳 / 形成判断": {
+    input: "需要从数据、竞品或结构化材料里抽出结论，而不是只停留在信息罗列。",
+    output: "形成更清晰的分析判断、差异结论和可引用的洞察。",
+  },
+  "框架搭建 / 报告成稿": {
+    input: "结论和材料都在，但还需要组织成正式报告、PPT 或可交付文档。",
+    output: "输出更适合汇报的结构框架、成稿内容和正式交付格式。",
+  },
+  "摘要压缩 / 汇报版改写": {
+    input: "需要把长报告压缩成给管理层、会议或简报场景更容易理解的版本。",
+    output: "输出简报式摘要、管理层速览版和更适合快速汇报的内容。",
+  },
+  "逻辑校对 / 终稿质检": {
+    input: "终稿接近完成，但还需要检查逻辑一致性、格式统一和语气自然度。",
+    output: "标出逻辑缺口、表达问题和更适合最终交付的修订建议。",
+  },
+};
+
+function createReportSkill(
+  name: string,
+  workflow: string,
+  description: string,
+  sourceUrl: string,
+  badge?: string,
+): SkillPreview {
+  const prompts = reportWorkflowPrompts[workflow];
+
+  return {
+    name,
+    version: "ClawHub verified",
+    workflow,
+    description,
+    sourceUrl,
+    models: ["OpenClaw"],
+    inputPreview: prompts.input,
+    outputPreview: prompts.output,
+    primaryAction: "ClawHub ↗",
+    badge,
+    configSnippet: `skill: ${name}
+source: ${sourceUrl}
+category: reports
+focus: ${workflow}`,
+  };
+}
+
+const reportsCatalogSkills: SkillPreview[] = [
+  createReportSkill(
+    "deep-strategy",
+    "任务定义",
+    "适合做汇报目标拆解、决策口径设定和任务定义，先把报告真正要回答的问题定清楚。",
+    "https://clawhub.ai/realroc/deep-strategy",
+    "Editor’s Choice",
+  ),
+  createReportSkill(
+    "agile-toolkit",
+    "任务定义",
+    "用来拆工作流、澄清任务和确认输出目标，适合复杂汇报项目前期快速定边界。",
+    "https://clawhub.ai/olivermonneke/agile-toolkit",
+  ),
+  createReportSkill(
+    "natural-language-planner",
+    "任务定义",
+    "把自然语言需求转成任务框架和项目规划，更适合把模糊要求先结构化。",
+    "https://clawhub.ai/bparticle/natural-language-planner",
+  ),
+  createReportSkill(
+    "writing-plans",
+    "任务定义",
+    "适合写作前规划、步骤拆解和章节前置设计，让大型材料不至于一开始就失控。",
+    "https://clawhub.ai/zlc000190/writing-plans",
+  ),
+  createReportSkill(
+    "briefing",
+    "任务定义",
+    "适合先生成 brief、确认汇报范围和梳理输入要求，减少反复返工。",
+    "https://clawhub.ai/lstpsche/briefing",
+  ),
+  createReportSkill(
+    "go-to-market",
+    "任务定义",
+    "适合商业计划、市场进入策略和业务目标定义，尤其适合偏增长和市场导向的报告。",
+    "https://clawhub.ai/jk-0001/go-to-market",
+  ),
+  createReportSkill(
+    "agent-deep-research",
+    "资料收集 / 信息搜索",
+    "适合多轮深度调研和行业资料搜集，把复杂研究任务推进成可引用的结果。",
+    "https://clawhub.ai/24601/agent-deep-research",
+    "Editor’s Choice",
+  ),
+  createReportSkill(
+    "autonomous-research",
+    "资料收集 / 信息搜索",
+    "适合独立完成主题研究和资料收集，用于报告前期建立完整的信息底座。",
+    "https://clawhub.ai/tobisamaa/autonomous-research",
+  ),
+  createReportSkill(
+    "hybrid-deep-search",
+    "资料收集 / 信息搜索",
+    "把深搜与快搜结合，适合多源检索和资料覆盖度要求较高的研究任务。",
+    "https://clawhub.ai/scsun1978/hybrid-deep-search",
+  ),
+  createReportSkill(
+    "web-search-pro",
+    "资料收集 / 信息搜索",
+    "适合网页资料搜索、内容抓取和研究流起步，快速搭起报告所需的背景材料。",
+    "https://clawhub.ai/zjianru/web-search-pro",
+  ),
+  createReportSkill(
+    "content-research",
+    "资料收集 / 信息搜索",
+    "用于主题研究、趋势收集和内容前置调研，适合先把核心背景盘清楚。",
+    "https://clawhub.ai/hazy2go/content-research",
+  ),
+  createReportSkill(
+    "google-trends",
+    "资料收集 / 信息搜索",
+    "适合热点发现、趋势验证和关键词比较，用来判断议题热度与变化方向。",
+    "https://clawhub.ai/satnamra/google-trends",
+  ),
+  createReportSkill(
+    "social-intelligence",
+    "资料收集 / 信息搜索",
+    "聚焦社媒舆情、用户反馈和竞品观察，适合补足定性研究视角。",
+    "https://clawhub.ai/atyachin/social-intelligence",
+  ),
+  createReportSkill(
+    "boof",
+    "资料归档 / 输入接入",
+    "适合把 PDF 和文档转成 Markdown、本地索引并做文档分析，先把原始材料接进统一格式。",
+    "https://clawhub.ai/chiefsegundo/boof",
+  ),
+  createReportSkill(
+    "links-to-pdfs",
+    "资料归档 / 输入接入",
+    "适合从 Notion、DocSend 和 PDF 链接里批量收集资料，减少手工整理。",
+    "https://clawhub.ai/chrisling-dev/links-to-pdfs",
+  ),
+  createReportSkill(
+    "markdown-converter",
+    "资料归档 / 输入接入",
+    "适合把不同文档统一转成 Markdown，方便后续搜索、摘要和成稿流程。",
+    "https://clawhub.ai/steipete/markdown-converter",
+  ),
+  createReportSkill(
+    "paddleocr-doc-parsing",
+    "资料归档 / 输入接入",
+    "适合扫描件和 OCR 文档解析，把原本不易处理的材料转成可分析文本。",
+    "https://clawhub.ai/bobholamovic/paddleocr-doc-parsing",
+  ),
+  createReportSkill(
+    "sharepoint-by-altf1be",
+    "资料归档 / 输入接入",
+    "适合从企业 SharePoint 文档库接入 Office 资料，用于企业内部报告和汇报材料。",
+    "https://clawhub.ai/abdelkrim/sharepoint-by-altf1be",
+  ),
+  createReportSkill(
+    "clawemail",
+    "资料归档 / 输入接入",
+    "适合从邮件、Drive、Docs、Sheets 和 Slides 收集资料，把分散输入收进一个工作流。",
+    "https://clawhub.ai/cto1/clawemail",
+  ),
+  createReportSkill(
+    "ffcli",
+    "资料归档 / 输入接入",
+    "适合抓取会议记录和整理会议资料，让会议输入也能纳入报告材料池。",
+    "https://clawhub.ai/ruigomeseu/ffcli",
+  ),
+  createReportSkill(
+    "aliyun-asr",
+    "清洗整理 / 重点提炼",
+    "适合把访谈和会议音频转成文字，为后续重点提炼和汇报整理做准备。",
+    "https://clawhub.ai/jixsonwang/aliyun-asr",
+  ),
+  createReportSkill(
+    "assemblyai-transcribe",
+    "清洗整理 / 重点提炼",
+    "适合音视频转录和调研文本化，让会议、访谈和演讲内容可进入分析流程。",
+    "https://clawhub.ai/tristanmanchester/assemblyai-transcribe",
+  ),
+  createReportSkill(
+    "chain-of-density",
+    "清洗整理 / 重点提炼",
+    "适合长文本压缩和层层浓缩，把冗长资料提炼成更适合汇报的高密度摘要。",
+    "https://clawhub.ai/killerapp/chain-of-density",
+  ),
+  createReportSkill(
+    "dizest-summarize",
+    "清洗整理 / 重点提炼",
+    "适合对长文、PDF、播客和笔记做摘要，快速压缩高信息量输入。",
+    "https://clawhub.ai/s-annam/dizest-summarize",
+  ),
+  createReportSkill(
+    "ai-review",
+    "清洗整理 / 重点提炼",
+    "适合结构化总结、重点抽取和内容分类评论，让材料更快进入可判断状态。",
+    "https://clawhub.ai/blackshady1130-jpg/ai-review",
+  ),
+  createReportSkill(
+    "note-processor",
+    "清洗整理 / 重点提炼",
+    "适合研究笔记整理、重点归纳和把笔记推进成结论草稿。",
+    "https://clawhub.ai/johstracke/note-processor",
+  ),
+  createReportSkill(
+    "competitor-analysis-report",
+    "分析归纳 / 形成判断",
+    "适合竞品分析、差异化判断和报告结论形成，把资料推进成真正可用的判断。",
+    "https://clawhub.ai/seanwyngaard/competitor-analysis-report",
+  ),
+  createReportSkill(
+    "competitor-analyzer",
+    "分析归纳 / 形成判断",
+    "适合竞争格局分析和定位判断，帮助你更快归纳行业里的核心差异。",
+    "https://clawhub.ai/claudiodrusus/competitor-analyzer",
+  ),
+  createReportSkill(
+    "serp-analysis",
+    "分析归纳 / 形成判断",
+    "适合搜索结果分析、需求洞察和内容机会判断，为行业判断补足搜索面视角。",
+    "https://clawhub.ai/aaron-he-zhu/serp-analysis",
+  ),
+  createReportSkill(
+    "csv-pipeline",
+    "分析归纳 / 形成判断",
+    "适合 CSV 和 JSON 清洗、数据汇总与分析报告生成，处理结构化数据更高效。",
+    "https://clawhub.ai/gitgoodordietrying/csv-pipeline",
+  ),
+  createReportSkill(
+    "performance-reporter",
+    "分析归纳 / 形成判断",
+    "适合绩效、流量、SEO 和运营类报告输出，把指标材料整理成更可读的分析结果。",
+    "https://clawhub.ai/aaron-he-zhu/performance-reporter",
+  ),
+  createReportSkill(
+    "deck-builder",
+    "框架搭建 / 报告成稿",
+    "适合做 PPT 底稿、路演框架和汇报逻辑，是报告与演讲稿场景里很通用的一类工具。",
+    "https://clawhub.ai/teamolab/deck-builder",
+    "Editor’s Choice",
+  ),
+  createReportSkill(
+    "research-report",
+    "框架搭建 / 报告成稿",
+    "适合研究报告成稿和 PDF 导出，把分析结果推进成正式报告。",
+    "https://clawhub.ai/huaruoji/research-report",
+  ),
+  createReportSkill(
+    "ai-pdf-builder",
+    "框架搭建 / 报告成稿",
+    "适合正式报告、Pitch 材料和 PDF 输出，让终稿格式更适合交付。",
+    "https://clawhub.ai/nextfrontierbuilds/ai-pdf-builder",
+  ),
+  createReportSkill(
+    "ppt-ooxml-tool",
+    "框架搭建 / 报告成稿",
+    "适合 PPT 结构生成和汇报稿件落地，更偏演示文稿成品输出。",
+    "https://clawhub.ai/jason2be/ppt-ooxml-tool",
+  ),
+  createReportSkill(
+    "convert-to-pdf",
+    "框架搭建 / 报告成稿",
+    "适合报告终稿导出和格式统一，用于最终交付前的收口动作。",
+    "https://clawhub.ai/crossservicesolutions/convert-to-pdf",
+  ),
+  createReportSkill(
+    "ai-daily-briefing",
+    "摘要压缩 / 汇报版改写",
+    "适合 briefing 模式和管理层速览版，把长材料压成更适合领导快速浏览的结构。",
+    "https://clawhub.ai/jeffjhunter/ai-daily-briefing",
+  ),
+  createReportSkill(
+    "daily-brief-digest",
+    "摘要压缩 / 汇报版改写",
+    "适合多源信息压缩和简报生成，适合作为日报和管理汇报的前置压缩层。",
+    "https://clawhub.ai/rajtejani61/daily-brief-digest",
+  ),
+  createReportSkill(
+    "sovereign-daily-digest",
+    "摘要压缩 / 汇报版改写",
+    "适合日报和摘要式汇报，把多条信息压成可快速阅读的 digest。",
+    "https://clawhub.ai/ryudi84/sovereign-daily-digest",
+  ),
+  createReportSkill(
+    "finance-news",
+    "摘要压缩 / 汇报版改写",
+    "适合把新闻材料压缩成资讯简报，用于财经、行业和市场汇报场景。",
+    "https://clawhub.ai/kesslerio/finance-news",
+  ),
+  createReportSkill(
+    "fund-news-summary",
+    "摘要压缩 / 汇报版改写",
+    "适合多源新闻汇总和结论摘要，帮助快速形成管理层可读版本。",
+    "https://clawhub.ai/yonghaozhao722/fund-news-summary",
+  ),
+  createReportSkill(
+    "x-actionbook-recap",
+    "摘要压缩 / 汇报版改写",
+    "适合社媒信息汇总和热点速览，用于汇报前快速补充舆情层输入。",
+    "https://clawhub.ai/jack4world/x-actionbook-recap",
+  ),
+  createReportSkill(
+    "feishu-minutes",
+    "摘要压缩 / 汇报版改写",
+    "适合会议纪要提炼和汇报摘要，帮你快速从会议输入中生成对外汇报版本。",
+    "https://clawhub.ai/autogame-17/feishu-minutes",
+  ),
+  createReportSkill(
+    "pocket-ai",
+    "摘要压缩 / 汇报版改写",
+    "适合会议智能摘要和跨会话结论检索，用于持续汇总多个会话里的重点信息。",
+    "https://clawhub.ai/asabovetech/pocket-ai",
+  ),
+  createReportSkill(
+    "self-review",
+    "逻辑校对 / 终稿质检",
+    "适合终稿自检和输出质量检查，在交付前先做一轮自我审计。",
+    "https://clawhub.ai/leic8959-sudo/self-review",
+  ),
+  createReportSkill(
+    "pls-copy-editing",
+    "逻辑校对 / 终稿质检",
+    "适合表达统一、语言润色和专业口径修正，让报告语气更干净统一。",
+    "https://clawhub.ai/mattvalenta/pls-copy-editing",
+  ),
+  createReportSkill(
+    "academic-writing-refiner",
+    "逻辑校对 / 终稿质检",
+    "适合把表达修到更严谨、更有论证质感，适合正式分析材料。",
+    "https://clawhub.ai/zihan-zhu/academic-writing-refiner",
+  ),
+  createReportSkill(
+    "academic-writing",
+    "逻辑校对 / 终稿质检",
+    "适合借鉴更正式分析材料的写法，让报告结构和论证更有秩序。",
+    "https://clawhub.ai/teamolab/academic-writing",
+  ),
+  createReportSkill(
+    "markdown-formatter",
+    "逻辑校对 / 终稿质检",
+    "适合做格式统一和文档规范化，让多来源内容看起来像一个整体。",
+    "https://clawhub.ai/michael-laffin/markdown-formatter",
+  ),
+  createReportSkill(
+    "docsync",
+    "逻辑校对 / 终稿质检",
+    "适合检查文档一致性和内容漂移，减少多个版本之间前后不一致的问题。",
+    "https://clawhub.ai/suhteevah/docsync",
+  ),
+  createReportSkill(
+    "solo-audit",
+    "逻辑校对 / 终稿质检",
+    "适合做缺口检查、覆盖度检查和结构审计，作为终稿前的最后一轮把关。",
+    "https://clawhub.ai/fortunto2/solo-audit",
+  ),
 ];
+
+const reportsFeaturedSkills = reportsCatalogSkills.filter((skill) =>
+  ["deep-strategy", "agent-deep-research", "deck-builder"].includes(skill.name),
+);
 
 const academicSkills: SkillPreview[] = [
   {
@@ -1113,18 +1454,27 @@ export const categories: Category[] = [
   {
     slug: "reports",
     navLabel: "写报告",
-    cardSubtitle: "商业计划｜行业分析｜汇报材料",
+    cardSubtitle: "商业计划｜汇报材料｜行业报告｜演讲稿",
     cardCopy:
-      "帮助你梳理信息、组织结构、压缩表达与统一逻辑，让报告更专业、更有说服力。",
+      "围绕任务定义、信息搜索、分析归纳和报告成稿，筛出能直接跳到 ClawHub 原 Skill 页的报告类工具。",
     metaTitle: "OpenClaw Skills for Reports",
     metaDescription:
       "OpenClaw Skills for business reports, analysis, deck writing, and executive summaries.",
     heroTag: "Reports",
     heroTitle: "OpenClaw Skills for Reports",
-    heroSubtitle: "适合商业计划、行业分析与汇报材料的 OpenClaw Skills",
+    heroSubtitle: "商业计划 、汇报材料  、 行业报告 、演讲稿等等",
     heroDescription:
-      "面对信息量大、结构要求强的写作任务，这里的 OpenClaw Skills 可以帮助你完成资料归纳、逻辑梳理、章节组织、摘要压缩和表达统一，让报告更专业、更有条理。",
-    workflowTags: ["资料归纳", "框架整理", "重点提炼", "报告成稿", "摘要压缩", "逻辑校对"],
+      "适合这几类别的通用环节包括任务定义、资料收集 / 信息搜索、资料归档 / 输入接入、清洗整理 / 重点提炼、分析归纳 / 形成判断、框架搭建 / 报告成稿、摘要压缩 / 汇报版改写和逻辑校对 / 终稿质检。你可以先看本周精选，再按具体环节检索更适合的 Skills。",
+    workflowTags: [
+      "任务定义",
+      "资料收集 / 信息搜索",
+      "资料归档 / 输入接入",
+      "清洗整理 / 重点提炼",
+      "分析归纳 / 形成判断",
+      "框架搭建 / 报告成稿",
+      "摘要压缩 / 汇报版改写",
+      "逻辑校对 / 终稿质检",
+    ],
     audienceTitle: "这类页面更适合偏结构化表达的工作文档",
     audienceCopy: "报告页强调逻辑层级和决策阅读体验，因此卡片说明会比其他分类更理性、更结果导向。",
     audienceBullets: [
@@ -1163,7 +1513,8 @@ export const categories: Category[] = [
         copy: "统一术语、格式和口径，减少材料显得松散的风险。",
       },
     ],
-    featuredSkills: reportsSkills,
+    featuredSkills: reportsFeaturedSkills,
+    catalogSkills: reportsCatalogSkills,
     pageCtaTitle: "报告页已经和整站结构对齐",
     pageCtaCopy:
       "它保留同一套首页和分类页的视觉系统，但在说明语言上更偏理性，方便未来扩到商业和咨询类关键词。",
