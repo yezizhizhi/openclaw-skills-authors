@@ -121,7 +121,12 @@ function normalizeSkills(
 export async function getCategoryExplorerData(categorySlug: string): Promise<CategoryExplorerData | null> {
   const fallback = getFallback(categorySlug);
 
-  if (categorySlug === "books" || categorySlug === "articles" || categorySlug === "reports") {
+  if (
+    categorySlug === "books" ||
+    categorySlug === "articles" ||
+    categorySlug === "reports" ||
+    categorySlug === "academic"
+  ) {
     return fallback;
   }
 
@@ -220,7 +225,8 @@ export async function getSkillDetail(skillId: string): Promise<SkillDetail | nul
   if (
     skillId.startsWith("books-") ||
     skillId.startsWith("articles-") ||
-    skillId.startsWith("reports-")
+    skillId.startsWith("reports-") ||
+    skillId.startsWith("academic-")
   ) {
     return fallback;
   }

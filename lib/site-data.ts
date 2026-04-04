@@ -1140,51 +1140,317 @@ const reportsFeaturedSkills = reportsCatalogSkills.filter((skill) =>
   ["deep-strategy", "agent-deep-research", "deck-builder"].includes(skill.name),
 );
 
-const academicSkills: SkillPreview[] = [
+const academicWorkflowPrompts: Record<
+  string,
   {
-    name: "Literature Review Mapper",
-    version: "v0.1 static preview",
-    workflow: "文献综述",
-    description:
-      "适合整理研究主题下的主要流派、核心观点和争议点，帮助文献综述更快成型。",
-    models: ["GPT-4.1", "Claude 3.7"],
-    inputPreview: "文献读了很多，但综述写出来像摘抄堆积，缺少组织结构。",
-    outputPreview: "输出主题簇、研究脉络和待补空白，方便形成可写的综述框架。",
-    primaryAction: "Download Skill Pack",
-    badge: "Editor’s Choice",
-    configSnippet: `skill: literature_review_mapper
-category: academic
-workflow: literature_review
-inputs:
-  - paper_notes
-  - citation_list
-outputs:
-  - clusters
-  - debates
-  - gaps`,
+    input: string;
+    output: string;
+  }
+> = {
+  研究任务定义: {
+    input: "需要先明确研究问题、研究目标和工作边界，避免文献越看越散。",
+    output: "输出更清晰的研究任务定义、研究路线和前置执行框架。",
   },
-  {
-    name: "Abstract Precision Editor",
-    version: "v0.1 static preview",
-    workflow: "摘要润色",
-    description:
-      "聚焦摘要里最容易出问题的目标、方法、结果和贡献表达，让学术摘要更紧凑。",
-    models: ["Claude 3.7", "Gemini 2.5"],
-    inputPreview: "摘要信息不完整或太松散，读者无法快速把握研究重点。",
-    outputPreview: "输出结构更完整、术语更统一的摘要表达。",
-    primaryAction: "Copy-first Setup",
-    configSnippet: `skill: abstract_precision_editor
-category: academic
-workflow: abstract
-inputs:
-  - draft_abstract
-checks:
-  objective: true
-  method: true
-  result: true
-  contribution: true`,
+  "文献收集 / 研究材料归档": {
+    input: "需要系统收集论文、PDF 和数据库材料，并把它们接入统一整理流程。",
+    output: "返回更完整的文献来源、检索结果和可继续归档的研究材料。",
   },
+  "学术检索 / 外部数据库补强": {
+    input: "需要补充外部数据库、跨源论文和科学检索结果，扩大研究覆盖面。",
+    output: "输出更多学术搜索结果、数据库来源和可继续分析的研究线索。",
+  },
+  "文献整理 / 摘要提炼": {
+    input: "文献已经收集不少，但还需要提炼摘要、研究脉络和论文要点。",
+    output: "输出摘要、论文 digest 和适合进入综述或研究笔记的整理结果。",
+  },
+  "研究结构 / 正文写作": {
+    input: "需要把研究材料推进成论文结构、章节框架和正式正文草稿。",
+    output: "输出更适合论文写作的结构框架、正文草稿和正式研究成稿。",
+  },
+  "语言润色 / 学术语体优化": {
+    input: "正文已有基础，但还需要把表达修到更严谨、更符合学术语体。",
+    output: "输出更自然严谨的学术表达、摘要浓缩和段落层改写建议。",
+  },
+  "引用辅助 / 参考文献管理": {
+    input: "需要把引用关系、文献库和知识摄取整理成持续可复用的研究支持层。",
+    output: "输出更清晰的引用线索、知识库管理结果和文献联动能力。",
+  },
+  "逻辑一致性 / 终稿审校": {
+    input: "论文接近终稿，需要统一格式、检查逻辑一致性并做最后一轮审校。",
+    output: "输出终稿自检结果、格式统一版本和更适合提交的最终修订建议。",
+  },
+};
+
+function createAcademicSkill(
+  name: string,
+  workflow: string,
+  description: string,
+  sourceUrl: string,
+  badge?: string,
+): SkillPreview {
+  const prompts = academicWorkflowPrompts[workflow];
+
+  return {
+    name,
+    version: "ClawHub verified",
+    workflow,
+    description,
+    sourceUrl,
+    models: ["OpenClaw"],
+    inputPreview: prompts.input,
+    outputPreview: prompts.output,
+    primaryAction: "ClawHub ↗",
+    badge,
+    configSnippet: `skill: ${name}
+source: ${sourceUrl}
+category: academic
+focus: ${workflow}`,
+  };
+}
+
+const academicCatalogSkills: SkillPreview[] = [
+  createAcademicSkill(
+    "academic-deep-research",
+    "研究任务定义",
+    "适合研究问题聚焦和研究路线定义，尤其适合开题和正式研究前的任务收束。",
+    "https://clawhub.ai/kesslerio/academic-deep-research",
+    "Editor’s Choice",
+  ),
+  createAcademicSkill(
+    "aclawdemy",
+    "研究任务定义",
+    "适合学术研究任务入口和研究规划，把模糊的研究方向先拉成可执行框架。",
+    "https://clawhub.ai/nimhar/aclawdemy",
+  ),
+  createAcademicSkill(
+    "call-academic-search-agent",
+    "研究任务定义",
+    "适合启动学术检索任务和拆解研究目标，让搜索任务更有边界。",
+    "https://clawhub.ai/teamolab/call-academic-search-agent",
+  ),
+  createAcademicSkill(
+    "writing-plans",
+    "研究任务定义",
+    "适合开题和论文写作前的任务拆解，把后续写作步骤先排清楚。",
+    "https://clawhub.ai/zlc000190/writing-plans",
+  ),
+  createAcademicSkill(
+    "literature-manager",
+    "文献收集 / 研究材料归档",
+    "适合文献搜索、下载、整理和审计，是学术场景里很通用的材料管理入口。",
+    "https://clawhub.ai/isonaei/literature-manager",
+    "Editor’s Choice",
+  ),
+  createAcademicSkill(
+    "paperzilla",
+    "文献收集 / 研究材料归档",
+    "适合高信号论文搜索与筛选，快速缩短从主题到论文池的距离。",
+    "https://clawhub.ai/pors/paperzilla",
+  ),
+  createAcademicSkill(
+    "pz",
+    "文献收集 / 研究材料归档",
+    "适合命令行环境下浏览和筛选论文，作为 Paperzilla 的轻量检索入口。",
+    "https://clawhub.ai/pors/pz",
+  ),
+  createAcademicSkill(
+    "pubmed-edirect",
+    "文献收集 / 研究材料归档",
+    "适合 PubMed 检索和文献抓取，偏生命科学和医学类研究很常用。",
+    "https://clawhub.ai/killgfat/pubmed-edirect",
+  ),
+  createAcademicSkill(
+    "xy-pubmed-pdf-downloader",
+    "文献收集 / 研究材料归档",
+    "适合 PMC 和 Europe PMC 的 PDF 抓取，补足全文资料搜集环节。",
+    "https://clawhub.ai/xuyuan0805/xy-pubmed-pdf-downloader",
+  ),
+  createAcademicSkill(
+    "aminer-open-academic",
+    "文献收集 / 研究材料归档",
+    "适合通过 AMiner 做学术资源检索，补充传统数据库之外的学术线索。",
+    "https://clawhub.ai/canxiangcc/aminer-open-academic",
+  ),
+  createAcademicSkill(
+    "swiftscholar-skill",
+    "学术检索 / 外部数据库补强",
+    "适合学术论文搜索与分析，用来补强核心数据库之外的检索入口。",
+    "https://clawhub.ai/tokisakix/swiftscholar-skill",
+  ),
+  createAcademicSkill(
+    "web-search-pro",
+    "学术检索 / 外部数据库补强",
+    "适合跨源研究检索和抓取，用于补充论文之外的研究背景与辅助材料。",
+    "https://clawhub.ai/zjianru/web-search-pro",
+  ),
+  createAcademicSkill(
+    "arxiv-cli-tools",
+    "学术检索 / 外部数据库补强",
+    "适合 arXiv 检索与命令行处理，方便跟踪最新论文流。",
+    "https://clawhub.ai/killgfat/arxiv-cli-tools",
+  ),
+  createAcademicSkill(
+    "agent-deep-research",
+    "学术检索 / 外部数据库补强",
+    "适合做深度学术检索和研究材料扩展，在复杂问题下比单轮检索更稳。",
+    "https://clawhub.ai/24601/agent-deep-research",
+  ),
+  createAcademicSkill(
+    "wolfram-alpha",
+    "学术检索 / 外部数据库补强",
+    "适合科学计算、公式验证和方法部分补强，尤其适合定量研究和技术性论文。",
+    "https://clawhub.ai/robert-janssen/wolfram-alpha",
+  ),
+  createAcademicSkill(
+    "agentic-paper-digest-skill",
+    "文献整理 / 摘要提炼",
+    "适合对 arXiv 和 Hugging Face 论文做摘要整理，快速建立论文 digest。",
+    "https://clawhub.ai/matanle51/agentic-paper-digest-skill",
+  ),
+  createAcademicSkill(
+    "arxiv-watcher",
+    "文献整理 / 摘要提炼",
+    "适合持续跟踪并总结论文，适合长期研究主题的日常输入管理。",
+    "https://clawhub.ai/rubenfb23/arxiv-watcher",
+  ),
+  createAcademicSkill(
+    "arxiv-paper-reviews",
+    "文献整理 / 摘要提炼",
+    "适合单篇论文阅读与评论式总结，帮助你更快形成研究判断。",
+    "https://clawhub.ai/zxrys/arxiv-paper-reviews",
+  ),
+  createAcademicSkill(
+    "arxiv-paper-processor",
+    "文献整理 / 摘要提炼",
+    "适合论文批处理、附件下载和材料整合，适合大批量论文输入。",
+    "https://clawhub.ai/xukp20/arxiv-paper-processor",
+  ),
+  createAcademicSkill(
+    "arxiv-summarizer-orchestrator",
+    "文献整理 / 摘要提炼",
+    "适合批量论文汇总和报告编排，把论文池整理成可读摘要输出。",
+    "https://clawhub.ai/xukp20/arxiv-summarizer-orchestrator",
+  ),
+  createAcademicSkill(
+    "note-processor",
+    "文献整理 / 摘要提炼",
+    "适合研究笔记总结、文献摘录整理和笔记向综述素材的转换。",
+    "https://clawhub.ai/johstracke/note-processor",
+  ),
+  createAcademicSkill(
+    "arxiv-batch-reporter",
+    "文献整理 / 摘要提炼",
+    "适合批量论文信息拼装成报告，适合周期性研究扫描和综述前整理。",
+    "https://clawhub.ai/xukp20/arxiv-batch-reporter",
+  ),
+  createAcademicSkill(
+    "academic-writing",
+    "研究结构 / 正文写作",
+    "适合学术论文、文献综述和方法论写作，是论文结构与写作的通用入口。",
+    "https://clawhub.ai/teamolab/academic-writing",
+    "Editor’s Choice",
+  ),
+  createAcademicSkill(
+    "academic-writer",
+    "研究结构 / 正文写作",
+    "适合 LaTeX 和正式学术写作，偏向把内容组织成可提交的论文形态。",
+    "https://clawhub.ai/dayunyan/academic-writer",
+  ),
+  createAcademicSkill(
+    "research-report",
+    "研究结构 / 正文写作",
+    "适合研究报告和论文型输出成稿，把研究结果推进成正式文稿。",
+    "https://clawhub.ai/huaruoji/research-report",
+  ),
+  createAcademicSkill(
+    "agentarxiv",
+    "研究结构 / 正文写作",
+    "适合科研论文生成和 scientific publishing 相关场景，偏向从研究到成稿的推动。",
+    "https://clawhub.ai/amanbhandula/agentarxiv",
+  ),
+  createAcademicSkill(
+    "academic-writing-refiner",
+    "语言润色 / 学术语体优化",
+    "适合学术语体润色和顶会风格优化，把论文语言修到更像正式学术表达。",
+    "https://clawhub.ai/zihan-zhu/academic-writing-refiner",
+  ),
+  createAcademicSkill(
+    "ai-review",
+    "语言润色 / 学术语体优化",
+    "适合段落总结、结构化评论和表达改进，帮助发现论文表达里的薄弱点。",
+    "https://clawhub.ai/blackshady1130-jpg/ai-review",
+  ),
+  createAcademicSkill(
+    "chain-of-density",
+    "语言润色 / 学术语体优化",
+    "适合摘要压缩和学术摘要浓缩，把长解释层层压到更高密度版本。",
+    "https://clawhub.ai/killerapp/chain-of-density",
+  ),
+  createAcademicSkill(
+    "lore",
+    "引用辅助 / 参考文献管理",
+    "适合带 citations 的知识检索与摄取，帮助把引用信息持续纳入研究知识库。",
+    "https://clawhub.ai/mishkinf/lore",
+  ),
+  createAcademicSkill(
+    "research-paper-kb",
+    "引用辅助 / 参考文献管理",
+    "适合论文知识库和跨会话文献管理，让研究上下文持续可追踪。",
+    "https://clawhub.ai/ilkhamfy/research-paper-kb",
+  ),
+  createAcademicSkill(
+    "citation-finder",
+    "引用辅助 / 参考文献管理",
+    "适合引用查找和引文补全，帮助快速定位论文中的引用缺口。",
+    "https://clawhub.ai/antonia-sz/citation-finder",
+  ),
+  createAcademicSkill(
+    "capacities",
+    "引用辅助 / 参考文献管理",
+    "适合研究笔记和摘录管理，把分散的阅读记录沉淀成长期可检索的资料库。",
+    "https://clawhub.ai/davidsmorais/capacities",
+  ),
+  createAcademicSkill(
+    "aoi-triple-memory-lite",
+    "引用辅助 / 参考文献管理",
+    "适合研究资料检索与决策笔记模板，帮助在长期研究里持续追踪判断依据。",
+    "https://clawhub.ai/edmonddantesj/aoi-triple-memory-lite",
+  ),
+  createAcademicSkill(
+    "self-review",
+    "逻辑一致性 / 终稿审校",
+    "适合终稿自检和输出质量检查，在提交前先做一轮系统性审查。",
+    "https://clawhub.ai/leic8959-sudo/self-review",
+  ),
+  createAcademicSkill(
+    "boof",
+    "逻辑一致性 / 终稿审校",
+    "适合把 PDF 和文档转成 Markdown 后做深度分析，用于终稿前复核材料一致性。",
+    "https://clawhub.ai/chiefsegundo/boof",
+  ),
+  createAcademicSkill(
+    "markdown-converter",
+    "逻辑一致性 / 终稿审校",
+    "适合文档标准化，让不同来源内容进入统一格式，便于最终一致性检查。",
+    "https://clawhub.ai/steipete/markdown-converter",
+  ),
+  createAcademicSkill(
+    "markdown-formatter",
+    "逻辑一致性 / 终稿审校",
+    "适合终稿格式统一和文档规范化，让提交版本更整洁稳定。",
+    "https://clawhub.ai/michael-laffin/markdown-formatter",
+  ),
+  createAcademicSkill(
+    "docsync",
+    "逻辑一致性 / 终稿审校",
+    "适合文档漂移检查和一致性审计，避免摘要、正文和引用前后不一致。",
+    "https://clawhub.ai/suhteevah/docsync",
+  ),
 ];
+
+const academicFeaturedSkills = academicCatalogSkills.filter((skill) =>
+  ["academic-deep-research", "literature-manager", "academic-writing"].includes(skill.name),
+);
 
 const courseSkills: SkillPreview[] = [
   {
@@ -1534,18 +1800,27 @@ export const categories: Category[] = [
   {
     slug: "academic",
     navLabel: "写论文",
-    cardSubtitle: "开题报告｜文献综述｜润色校对",
+    cardSubtitle: "学术写作｜研究支持｜文献综述｜终稿审校",
     cardCopy:
-      "聚焦摘要提炼、资料整理、逻辑一致性与语言修订，减少重复性编辑工作。",
+      "围绕研究任务定义、文献收集、摘要提炼、正文写作和终稿审校，筛出能直接跳到 ClawHub 原 Skill 页的学术类工具。",
     metaTitle: "OpenClaw Skills for Academic Writing",
     metaDescription:
       "OpenClaw Skills for academic writing, literature reviews, research summaries, and paper polishing.",
     heroTag: "Academic",
     heroTitle: "OpenClaw Skills for Academic Writing",
-    heroSubtitle: "用于开题报告、文献综述、学术润色与研究整理的 OpenClaw Skills",
+    heroSubtitle: "学术写作与研究支持",
     heroDescription:
-      "如果你的写作任务强调严谨性、引用规范和逻辑一致性，这里的 OpenClaw Skills 会更有帮助。它们更适合处理文献摘要、研究整理、段落润色、结构一致性检查与学术表达优化。",
-    workflowTags: ["文献整理", "摘要提炼", "结构检查", "语言润色", "引用辅助", "逻辑一致性"],
+      "如果你的写作任务强调严谨性、引用规范和逻辑一致性，这里的 OpenClaw Skills 会更有帮助。它们更适合处理研究任务定义、文献收集与归档、学术检索、摘要提炼、正文写作、学术语体优化、引用辅助和终稿审校。",
+    workflowTags: [
+      "研究任务定义",
+      "文献收集 / 研究材料归档",
+      "学术检索 / 外部数据库补强",
+      "文献整理 / 摘要提炼",
+      "研究结构 / 正文写作",
+      "语言润色 / 学术语体优化",
+      "引用辅助 / 参考文献管理",
+      "逻辑一致性 / 终稿审校",
+    ],
     audienceTitle: "这类页面适合更偏研究和规范表达的任务",
     audienceCopy: "论文页会保持安静、清晰的阅读感，不用太多强动作语言，让页面气质更贴近研究工作。",
     audienceBullets: [
@@ -1584,7 +1859,8 @@ export const categories: Category[] = [
         copy: "让摘要、正文和标题使用同一套表达口径。",
       },
     ],
-    featuredSkills: academicSkills,
+    featuredSkills: academicFeaturedSkills,
+    catalogSkills: academicCatalogSkills,
     pageCtaTitle: "论文页已经按同样模板完成扩展",
     pageCtaCopy:
       "后续如果要优化学术场景的气质，我们更可能调整色彩和字重，而不是重写布局结构。",
@@ -1676,7 +1952,7 @@ export const categories: Category[] = [
 export const editorChoices: SkillPreview[] = [
   booksFeaturedSkills[0],
   copywritingSkills[0],
-  academicSkills[0],
+  academicFeaturedSkills[0],
 ];
 
 export function getCategoryBySlug(slug: string) {
