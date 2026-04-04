@@ -47,28 +47,28 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const heroCtas: Record<string, { primary: string; secondary: string }> = {
     books: {
-      primary: "浏览写书 Skills",
-      secondary: "查看长篇创作安装指南",
+      primary: "快速查找skills",
+      secondary: "浏览精选skills",
     },
     articles: {
-      primary: "浏览写文章 Skills",
-      secondary: "查看文章写作安装指南",
+      primary: "快速查找skills",
+      secondary: "浏览精选skills",
     },
     copywriting: {
-      primary: "浏览写文案 Skills",
-      secondary: "查看文案创作安装指南",
+      primary: "快速查找skills",
+      secondary: "浏览精选skills",
     },
     reports: {
-      primary: "浏览写报告 Skills",
-      secondary: "查看报告写作安装指南",
+      primary: "快速查找skills",
+      secondary: "浏览精选skills",
     },
     academic: {
-      primary: "浏览写论文 Skills",
-      secondary: "查看学术写作安装指南",
+      primary: "快速查找skills",
+      secondary: "浏览精选skills",
     },
     courses: {
-      primary: "浏览写课程 Skills",
-      secondary: "查看课程制作安装指南",
+      primary: "快速查找skills",
+      secondary: "浏览精选skills",
     },
   };
   const currentHeroCtas = heroCtas[category.slug];
@@ -82,10 +82,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <h3 className="hero-copy hero-copy-lg category-page-copy">{category.heroDescription}</h3>
 
           <div className="hero-actions">
-            <Link href="#featured-skills" className="primary-button">
+            <Link href="#search-skills" className="primary-button">
               {currentHeroCtas.primary}
             </Link>
-            <Link href="/install-guide" className="secondary-button">
+            <Link href="#featured-skills" className="secondary-button">
               {currentHeroCtas.secondary}
             </Link>
           </div>
@@ -100,9 +100,26 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </div>
       </section>
 
+      <section className="site-shell category-search-section section-gap" id="search-skills">
+        <div className="section-heading centered category-search-heading">
+          <h2 className="section-title">输入你需要的场景，快速找到对应 Skills</h2>
+          <p className="section-copy">试试输入当前工作环节，系统会优先输入匹配的skills</p>
+        </div>
+
+        <div className="mt-8">
+          <CategorySkillExplorer
+            categorySlug={category.slug}
+            categoryLabel={category.navLabel}
+            workflowTags={workflowTags}
+            scenarios={explorerScenarios}
+            skills={explorerSkills}
+          />
+        </div>
+      </section>
+
       <section className="site-shell section-gap" id="featured-skills">
         <div className="section-heading centered category-search-heading">
-          <h2 className="section-title">{category.navLabel}类别的精选 Skills</h2>
+          <h2 className="section-title">精选skills</h2>
           <p className="section-copy">先看少量更通用、更高频的优质 Skills，不把所有结果一次堆给你。</p>
         </div>
 
@@ -132,29 +149,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   前往 ClawHub ↗
                 </a>
               ) : (
-                <Link href={`/skills/${category.slug}-${skill.name.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-").replace(/^-+|-+$/g, "")}`} className="secondary-button category-skill-button">
+                <Link
+                  href={`/skills/${category.slug}-${skill.name
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
+                    .replace(/^-+|-+$/g, "")}`}
+                  className="secondary-button category-skill-button"
+                >
                   查看详情
                 </Link>
               )}
             </article>
           ))}
-        </div>
-      </section>
-
-      <section className="site-shell category-search-section section-gap" id="search-skills">
-        <div className="section-heading centered category-search-heading">
-          <h2 className="section-title">输入你需要的场景，快速找到对应 Skills</h2>
-          <p className="section-copy">试试输入当前工作环节，系统会优先输入匹配的skills</p>
-        </div>
-
-        <div className="mt-8">
-          <CategorySkillExplorer
-            categorySlug={category.slug}
-            categoryLabel={category.navLabel}
-            workflowTags={workflowTags}
-            scenarios={explorerScenarios}
-            skills={explorerSkills}
-          />
         </div>
       </section>
     </main>
