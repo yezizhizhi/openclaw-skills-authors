@@ -30,28 +30,28 @@ export default function HomePage() {
   ];
   const faqCards = [
     {
-      question: "OpenClaw Skills 适合完全没有技术背景的作者吗？",
+      question: "这个网站适合完全没有技术背景的创作者吗？",
       answer:
-        "可以。我们会优先标注更容易上手的 Skills，并尽量用更直观的方式说明它们适合解决什么问题。",
+        "适合。我们现在优先按写书、写文章、写文案、写报告、写论文和写课程分门类整理，再把 Skill 放进具体工作环节里，尽量让你先看懂“它适合解决什么问题”，再决定要不要点进去。",
     },
     {
-      question: "我应该先按题材找，还是按流程找？",
+      question: "我应该先看精选，还是先按环节搜索？",
       answer:
-        "如果你已经知道自己在写书、写论文或写文案，建议先按题材浏览；如果你只是卡在某个步骤，比如大纲或润色，建议按流程找。",
+        "如果你只是想先快速看一眼，建议先看每个分类页里的“本周精选 Skills”；如果你已经知道自己卡在某个环节，比如大纲创建、资料整理、终稿质检，就直接在分类页第二屏输入场景搜索，会更快。",
     },
     {
-      question: "所有 Skill 都支持直接复制配置吗？",
+      question: "这里的 Skill 都能直接跳到 ClawHub 吗？",
       answer:
-        "不一定。不同 Skill 会提供复制配置、下载包或查看源文件中的一种或多种方式，具体以详情页标注为准。",
+        "我们现在的方向是只保留能稳定跳到 ClawHub 原 Skill 页的条目。也就是说，能放进精选卡和分类页搜索结果里的 Skill，会优先经过直跳验证，避免把你带去空页面或无效搜索结果。",
     },
     {
-      question: "这些 Skill 会持续更新吗？",
+      question: "这些 Skill 会继续更新和替换吗？",
       answer: "我们会定期同步来源更新，并尽量在卡片中标注最近检查时间和适用信息。",
     },
     {
-      question: "我可以提交想收录的 Skill 吗？",
+      question: "我可以推荐想收录的 Skill 吗？",
       answer:
-        "可以。后续可以在站点里加入 Submit 页面，用于推荐适合作者使用的 OpenClaw Skills。",
+        "可以。现在最适合的方式，就是直接给出 Skill 名称或 ClawHub 链接，我们会先验证它能不能稳定打开、适合哪个创作环节，再决定是否放进站内。",
     },
   ];
 
@@ -198,7 +198,7 @@ export default function HomePage() {
 
       <section className="site-shell section-gap">
         <div className="section-heading centered faq-heading">
-          <h2 className="section-title">FAQ区 常见问题</h2>
+          <h2 className="section-title">常见问题</h2>
         </div>
 
         <div className="faq-list mt-8">
