@@ -17,12 +17,16 @@ export default function AuthCallbackPage() {
     }
 
     let redirected = false;
+    const nextPath =
+      typeof window === "undefined"
+        ? "/"
+        : new URL(window.location.href).searchParams.get("next") || "/";
 
     const tryRedirect = async () => {
       const { data } = await supabase.auth.getSession();
       if (data.session && !redirected) {
         redirected = true;
-        router.replace("/");
+        router.replace(nextPath);
       }
     };
 
@@ -33,7 +37,7 @@ export default function AuthCallbackPage() {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session && !redirected) {
         redirected = true;
-        router.replace("/");
+        router.replace(nextPath);
       }
     });
 
