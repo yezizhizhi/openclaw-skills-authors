@@ -135,93 +135,126 @@ export const homeFaqs: FaqItem[] = [
 
 const booksSkills: SkillPreview[] = [
   {
-    name: "Chapter Blueprint Forge",
-    version: "v0.1 static preview",
-    workflow: "章节大纲",
+    name: "Outline Mainline Extraction",
+    version: "ClawHub verified",
+    workflow: "全书主线提炼",
     description:
-      "适合把零散主题和故事节点整理成章节蓝图，优先明确每章目标、冲突和推进关系。",
+      "从大量素材和支线里提炼整本书真正要持续推进的主线，帮助作者先稳住主题、冲突和叙事方向。",
     models: ["GPT-4.1", "Claude 3.7"],
-    inputPreview: "素材零散、角色线索很多，但还没有能真正推进写作的章节结构。",
-    outputPreview: "输出分章目标、场景推进、信息揭示顺序和每章结尾钩子，方便进入扩写。",
-    primaryAction: "Download Skill Pack",
-    badge: "Editor’s Choice",
-    configSnippet: `skill: chapter_blueprint_forge
-category: books
-workflow: outline
-inputs:
-  - premise
-  - character_arcs
-  - reference_notes
-style:
-  tone: "clear, publish-ready"
-checks:
-  continuity: true
-  pacing_balance: true`,
-  },
-  {
-    name: "Character Depth Studio",
-    version: "v0.1 static preview",
-    workflow: "角色设定",
-    description:
-      "帮助作者把角色从标签化设定推进到可持续驱动剧情的动机、关系和行为模式。",
-    models: ["Claude 3.7", "Gemini 2.5"],
-    inputPreview: "人物设定停留在职业、年龄、个性几个词，后续剧情难以自然延展。",
-    outputPreview: "生成欲望、伤口、反应模式和关系张力，让角色更容易支撑长篇叙事。",
-    primaryAction: "Download Skill Pack",
-    configSnippet: `skill: character_depth_studio
-category: books
-workflow: character
-inputs:
-  - core_traits
-  - contradictions
-  - relationship_map
-outputs:
-  - motivations
-  - tension_points
-  - scene_behaviors`,
-  },
-  {
-    name: "Draft Expansion Flow",
-    version: "v0.1 static preview",
-    workflow: "初稿扩写",
-    description:
-      "适合在已有大纲的前提下扩写段落和场景，保持叙述方向一致，同时减少空泛表达。",
-    models: ["GPT-4.1", "DeepSeek"],
-    inputPreview: "你已经有章节摘要，但正文写出来总是太干、太快，细节支撑不足。",
-    outputPreview: "输出更有画面感和节奏控制的初稿段落，并保留后续可编辑的空间。",
-    primaryAction: "Copy-first Setup",
-    configSnippet: `skill: draft_expansion_flow
-category: books
-workflow: first_draft
-inputs:
-  - chapter_summary
-  - voice_notes
-style:
-  narrative_density: medium
-  sensory_detail: controlled
-guards:
-  avoid_overwriting: true`,
-  },
-  {
-    name: "Continuity Revision Guard",
-    version: "v0.1 static preview",
-    workflow: "审校修订",
-    description:
-      "适合在长篇书稿后期做前后设定对齐、重复信息标记和逻辑冲突检查。",
-    models: ["Claude 3.7", "GPT-4.1"],
-    inputPreview: "角色时间线、称谓、设定细节和前文伏笔在后期容易互相打架。",
-    outputPreview: "列出前后冲突、重复解释和断裂处，帮助作者集中修订高风险问题。",
+    inputPreview: "选题、素材和章节想法很多，但整本书到底围绕哪条主线推进还不够清晰。",
+    outputPreview: "输出全书主问题、核心推进线、关键转折和可持续延展的叙事骨架。",
     primaryAction: "View Source Notes",
-    configSnippet: `skill: continuity_revision_guard
+    badge: "Editor’s Choice",
+    configSnippet: `skill: outline-mainline-extraction
+source: https://clawhub.ai/skills/outline-mainline-extraction
 category: books
-workflow: revision
-inputs:
-  - manuscript
-  - canon_sheet
-checks:
-  timeline_conflicts: true
-  naming_consistency: true
-  repeated_exposition: true`,
+focus: 全书主线提炼`,
+  },
+  {
+    name: "Structure Building",
+    version: "ClawHub verified",
+    workflow: "整体结构搭建",
+    description:
+      "把主线、章节层级和前后承接关系搭成可执行结构，减少写着写着整体散掉的风险。",
+    models: ["GPT-4.1", "Gemini 2.5"],
+    inputPreview: "知道大概要写什么，但全书结构层级和章节承接还没有真正搭起来。",
+    outputPreview: "输出更清楚的上中下段、章节职责和结构推进顺序。",
+    primaryAction: "View Source Notes",
+    configSnippet: `skill: structure-building
+source: https://clawhub.ai/skills/structure-building
+category: books
+focus: 整体结构搭建`,
+  },
+  {
+    name: "Chapter Responsibility Split",
+    version: "ClawHub verified",
+    workflow: "章节职责拆分",
+    description:
+      "为每一章分配明确职责，区分信息交代、冲突推进、人物变化和悬念承接。",
+    models: ["Claude 3.7", "GPT-4.1"],
+    inputPreview: "有全书大纲，但每章为什么存在、各自负责什么还比较模糊。",
+    outputPreview: "输出章节职责清单，明确每章承担的推进任务和不可替代性。",
+    primaryAction: "View Source Notes",
+    configSnippet: `skill: chapter-responsibility-split
+source: https://clawhub.ai/skills/chapter-responsibility-split
+category: books
+focus: 章节职责拆分`,
+  },
+  {
+    name: "Chapter Content Prompts",
+    version: "ClawHub verified",
+    workflow: "章节重点内容提示",
+    description:
+      "围绕章节目标生成更具体的内容提示，帮助作者在扩写前先抓住这一章最该写的内容。",
+    models: ["GPT-4.1", "DeepSeek"],
+    inputPreview: "已经知道这一章要写什么，但下笔时容易空、散、缺重点。",
+    outputPreview: "输出每章应重点展开的场景、情绪、信息点和推进提示。",
+    primaryAction: "View Source Notes",
+    configSnippet: `skill: chapter-content-prompts
+source: https://clawhub.ai/skills/chapter-content-prompts
+category: books
+focus: 章节重点内容提示`,
+  },
+  {
+    name: "Structure Conflict Check",
+    version: "ClawHub verified",
+    workflow: "结构重复与冲突检查",
+    description:
+      "检查章节之间是否有重复功能、信息打架或前后承接冲突，避免结构层面的返工。",
+    models: ["Claude 3.7", "Gemini 2.5"],
+    inputPreview: "大纲写出来了，但担心章节功能重复、冲突或前后不顺。",
+    outputPreview: "标出结构重复、职责冲突和承接断点，方便在扩写前先修结构。",
+    primaryAction: "View Source Notes",
+    configSnippet: `skill: structure-conflict-check
+source: https://clawhub.ai/skills/structure-conflict-check
+category: books
+focus: 结构重复与冲突检查`,
+  },
+  {
+    name: "Rhythm Control",
+    version: "ClawHub verified",
+    workflow: "节奏控制",
+    description:
+      "帮助作者检查整书或单章的推进节奏，平衡信息密度、情节推进和停顿位置。",
+    models: ["Claude 3.7", "GPT-4.1"],
+    inputPreview: "内容不算少，但读起来快慢失衡，有的地方拖，有的地方又跳太快。",
+    outputPreview: "给出节奏调整建议，指出该压缩、放慢或提前铺垫的位置。",
+    primaryAction: "View Source Notes",
+    configSnippet: `skill: rhythm-control
+source: https://clawhub.ai/skills/rhythm-control
+category: books
+focus: 节奏控制`,
+  },
+  {
+    name: "Writing Feasibility Check",
+    version: "ClawHub verified",
+    workflow: "写作可执行性验证",
+    description:
+      "在正式开写前检查当前大纲是否真的可写，识别空章、虚章和难以落地的部分。",
+    models: ["GPT-4.1", "Claude 3.7"],
+    inputPreview: "大纲看起来完整，但不确定每一部分是否真的能顺利写成正文。",
+    outputPreview: "指出可执行性薄弱的章节、信息断层和需要补足的前置条件。",
+    primaryAction: "View Source Notes",
+    configSnippet: `skill: writing-feasibility-check
+source: https://clawhub.ai/skills/writing-feasibility-check
+category: books
+focus: 写作可执行性验证`,
+  },
+  {
+    name: "Multi Outline Design",
+    version: "ClawHub verified",
+    workflow: "多方案大纲设计",
+    description:
+      "一次生成多套不同推进逻辑的大纲方案，帮助作者在正式定稿前比较路径和风险。",
+    models: ["Claude 3.7", "Gemini 2.5"],
+    inputPreview: "主题确定了，但不知道应该走线性推进、双线对照还是更强冲突的结构。",
+    outputPreview: "给出多套大纲方案、各自优缺点和更适合的叙事方向。",
+    primaryAction: "View Source Notes",
+    badge: "Editor’s Choice",
+    configSnippet: `skill: multi-outline-design
+source: https://clawhub.ai/skills/multi-outline-design
+category: books
+focus: 多方案大纲设计`,
   },
 ];
 

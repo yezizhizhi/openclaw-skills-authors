@@ -50,10 +50,14 @@ const scenarioAliases: Record<string, string[]> = {
 };
 
 const skillScenarioNames: Record<string, string[]> = {
-  "books:Chapter Blueprint Forge": ["素材清洗", "章节大纲"],
-  "books:Character Depth Studio": ["角色设定", "章节大纲"],
-  "books:Draft Expansion Flow": ["初稿扩写", "风格润色"],
-  "books:Continuity Revision Guard": ["风格润色", "交叉校对"],
+  "books:Outline Mainline Extraction": ["素材清洗", "章节大纲"],
+  "books:Structure Building": ["素材清洗", "章节大纲"],
+  "books:Chapter Responsibility Split": ["章节大纲", "初稿扩写"],
+  "books:Chapter Content Prompts": ["章节大纲", "初稿扩写"],
+  "books:Structure Conflict Check": ["风格润色", "交叉校对"],
+  "books:Rhythm Control": ["初稿扩写", "风格润色"],
+  "books:Writing Feasibility Check": ["章节大纲", "交叉校对"],
+  "books:Multi Outline Design": ["素材清洗", "章节大纲"],
   "articles:Angle Finder Brief": ["选题拆解", "提纲整理", "观点展开"],
   "articles:Headline Refinery": ["标题优化", "段落润色", "发布前校对"],
   "copywriting:Hook Pulse Lab": ["爆款拆解", "情绪钩子", "内容生成"],
@@ -64,6 +68,17 @@ const skillScenarioNames: Record<string, string[]> = {
   "academic:Abstract Precision Editor": ["摘要提炼", "语言润色", "引用辅助", "逻辑一致性"],
   "courses:Course Outline Architect": ["课程定位", "大纲规划", "讲义整理"],
   "courses:Lesson Script Polish Coach": ["案例设计", "脚本编写", "表达优化"],
+};
+
+const skillSourceUrls: Record<string, string> = {
+  "books:Outline Mainline Extraction": "https://clawhub.ai/skills/outline-mainline-extraction",
+  "books:Structure Building": "https://clawhub.ai/skills/structure-building",
+  "books:Chapter Responsibility Split": "https://clawhub.ai/skills/chapter-responsibility-split",
+  "books:Chapter Content Prompts": "https://clawhub.ai/skills/chapter-content-prompts",
+  "books:Structure Conflict Check": "https://clawhub.ai/skills/structure-conflict-check",
+  "books:Rhythm Control": "https://clawhub.ai/skills/rhythm-control",
+  "books:Writing Feasibility Check": "https://clawhub.ai/skills/writing-feasibility-check",
+  "books:Multi Outline Design": "https://clawhub.ai/skills/multi-outline-design",
 };
 
 function slugify(value: string) {
@@ -116,7 +131,7 @@ function buildSkills(
       models: skill.models,
       tags: [categoryLabel, skill.workflow, skill.badge ?? "精选"].filter(Boolean),
       badge: skill.badge,
-      sourceUrl: null,
+      sourceUrl: skillSourceUrls[`${categorySlug}:${skill.name}`] ?? null,
       installMode:
         skill.primaryAction === "Download Skill Pack"
           ? "download"
