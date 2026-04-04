@@ -1,5 +1,9 @@
 # OpenClaw Skills for Authors
 
+合作方阅读版架构说明书：
+
+- [docs/项目架构说明书.md](./docs/项目架构说明书.md)
+
 `Next.js + Tailwind CSS` 原型站，当前用于验证：
 
 - 首页与 6 个分类页的视觉与信息层级
