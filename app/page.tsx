@@ -16,16 +16,16 @@ export default function HomePage() {
     }));
   const reasonCards = [
     {
-      title: "按创作流程筛选，找 Skill 更快",
-      copy: "不是简单罗列工具，而是按照作者真实的工作流程进行筛选。你可以从题材进入，也可以从当前环节进入。",
+      title: "先按创作任务筛，再看具体 Skill",
+      copy: "首页先按写书、写文章、写文案、写报告、写论文和写课程分门类整理。进入分类页后，还能继续按工作环节检索，不用自己在海量 Skill 里盲找。",
     },
     {
-      title: "更适合创作者的使用方式",
-      copy: "我们优先保留与创作任务直接相关的功能说明，减少不必要的技术信息，让非技术背景的作者也能更快理解每个 Skill 的用途。",
+      title: "只保留能直接跳转的真实 Skill",
+      copy: "我们现在优先收录能稳定跳到 ClawHub 原始页面的 Skill，不把用户带去空页面或无效搜索页。你看到的精选卡和检索结果，目标都是点开就能继续用。",
     },
     {
-      title: "安装路径更清晰",
-      copy: "每个 Skill 都会标注适用场景、安装方式与使用入口，帮助你减少试错成本，更快进入创作状态。",
+      title: "从精选入口到检索结果，路径都更短",
+      copy: "每个分类页都已经分成“本周精选 Skills”和“按场景检索”两层入口。你可以先看少量高频 Skill，也可以直接输入当前环节，快速找到更对口的工具。",
     },
   ];
   const faqCards = [
@@ -183,7 +183,7 @@ export default function HomePage() {
 
       <section className="site-shell section-gap">
         <div className="section-heading centered reason-heading">
-          <h2 className="section-title">为什么作者会选择这个技能库？</h2>
+          <h2 className="section-title">为什么创作者要选择这个skills库？</h2>
         </div>
 
         <div className="reason-grid mt-8">
