@@ -1,9 +1,9 @@
+import nextEnv from "@next/env";
 import { createClient } from "@supabase/supabase-js";
 
-const requiredPublicEnv = [
-  "NEXT_PUBLIC_SUPABASE_URL",
-  "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
-];
+const { loadEnvConfig } = nextEnv;
+
+loadEnvConfig(process.cwd());
 
 const optionalServerEnv = ["SUPABASE_SERVICE_ROLE_KEY"];
 
@@ -17,7 +17,17 @@ function exitWithMessage(message) {
   process.exit(1);
 }
 
-const missingPublicEnv = requiredPublicEnv.filter((name) => !readEnv(name));
+const supabaseUrl = readEnv("NEXT_PUBLIC_SUPABASE_URL");
+const publishableKey =
+  readEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY") ||
+  readEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY");
+
+const missingPublicEnv = [
+  !supabaseUrl ? "NEXT_PUBLIC_SUPABASE_URL" : "",
+  !publishableKey
+    ? "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY"
+    : "",
+].filter(Boolean);
 
 if (missingPublicEnv.length > 0) {
   exitWithMessage(
@@ -25,8 +35,6 @@ if (missingPublicEnv.length > 0) {
   );
 }
 
-const supabaseUrl = readEnv("NEXT_PUBLIC_SUPABASE_URL");
-const publishableKey = readEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
 const serviceRoleKey = readEnv("SUPABASE_SERVICE_ROLE_KEY");
 
 const client = createClient(supabaseUrl, serviceRoleKey || publishableKey, {
@@ -46,7 +54,15 @@ const checks = [
 async function main() {
   console.log("\n[Supabase Check] 开始检查数据库连接...\n");
   console.log(`- URL: ${supabaseUrl}`);
-  console.log(`- 使用密钥: ${serviceRoleKey ? "SUPABASE_SERVICE_ROLE_KEY" : "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"}`);
+  console.log(
+    `- 使用密钥: ${
+      serviceRoleKey
+        ? "SUPABASE_SERVICE_ROLE_KEY"
+        : readEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY")
+          ? "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+          : "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY"
+    }`,
+  );
   console.log(
     `- 可选服务端密钥: ${optionalServerEnv.map((name) => `${name}=${readEnv(name) ? "已提供" : "未提供"}`).join("，")}\n`,
   );

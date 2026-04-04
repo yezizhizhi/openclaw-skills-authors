@@ -47,6 +47,8 @@ NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
 ```
 
+如果你的 Supabase 控制台给的是 `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`，当前项目也兼容，不必额外改逻辑。
+
 如果你希望后续让我继续做“批量同步 Skills 数据”“后台写入”或“管理员导入脚本”，还需要额外补一个服务端密钥：
 
 ```bash
