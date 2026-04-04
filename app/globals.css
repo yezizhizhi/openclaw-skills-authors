@@ -121,6 +121,51 @@ a {
   backdrop-filter: blur(14px);
 }
 
+.header-nav {
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.35rem;
+  border-radius: 999px;
+}
+
+.header-nav-link,
+.header-primary-link {
+  min-height: 2.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.header-nav-link {
+  color: var(--soft-ink);
+}
+
+.header-nav-link:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.header-primary-link {
+  color: white;
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+  box-shadow: 0 16px 36px rgba(255, 98, 76, 0.22);
+}
+
+.header-primary-link:hover {
+  transform: translateY(-1px);
+}
+
 .footer-shell,
 .preview-frame,
 .category-hero-card,
@@ -1401,5 +1446,12 @@ a {
 
   .hero-center {
     padding-top: 4rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .header-shell {
+    justify-content: space-between;
+    padding: 0.9rem 1rem;
   }
 }

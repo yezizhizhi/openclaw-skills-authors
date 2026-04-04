@@ -197,7 +197,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="site-shell section-gap">
+      <section className="site-shell section-gap" id="faq">
         <div className="section-heading centered faq-heading">
           <h2 className="section-title">常见问题</h2>
           <p className="section-description">先回答最常见的几个问题，帮你更快判断从哪一类、哪一个环节开始找。</p>
