@@ -712,49 +712,199 @@ const articlesFeaturedSkills = articlesCatalogSkills.filter((skill) =>
   ["wechat-writer", "Last30days", "SEO Content Writer"].includes(skill.name),
 );
 
-const copywritingSkills: SkillPreview[] = [
-  {
-    name: "Hook Pulse Lab",
-    version: "v0.1 static preview",
-    workflow: "情绪钩子",
-    description:
-      "用来快速拆解用户情绪入口和内容开场方式，让短内容更容易抓住注意力。",
-    models: ["GPT-4.1", "Claude 3.7"],
-    inputPreview: "内容方向没问题，但开头缺少能让用户停下来的第一秒吸引力。",
-    outputPreview: "给出多种不同强度的开场钩子和后续展开路径。",
-    primaryAction: "Copy-first Setup",
-    badge: "Editor’s Choice",
-    configSnippet: `skill: hook_pulse_lab
-category: copywriting
-workflow: hook
-inputs:
-  - product
-  - audience_pain
-outputs:
-  - emotional_hooks
-  - opening_lines`,
+const copywritingWorkflowPrompts: Record<string, { input: string; output: string }> = {
+  "热点/需求调研": {
+    input: "需要先摸清平台热点、用户痛点和市场机会，避免文案方向一开始就偏掉。",
+    output: "输出更清晰的热点洞察、需求判断和可继续推进的选题方向。",
   },
-  {
-    name: "Platform Rewrite Switcher",
-    version: "v0.1 static preview",
-    workflow: "平台适配",
-    description:
-      "把同一段核心内容快速转成小红书、公众号或短视频脚本可用的版本。",
-    models: ["Gemini 2.5", "DeepSeek"],
-    inputPreview: "有一段已经能用的核心内容，但每个平台都要重写一遍，效率太低。",
-    outputPreview: "输出针对不同平台节奏、句长和 CTA 的改写版本。",
-    primaryAction: "Download Skill Pack",
-    configSnippet: `skill: platform_rewrite_switcher
-category: copywriting
-workflow: adaptation
-inputs:
-  - master_copy
-targets:
-  - xiaohongshu
-  - wechat_article
-  - video_script`,
+  "竞品调研与拆解": {
+    input: "需要研究对手的内容打法、卖点表达和传播节奏，找到可借鉴与可错开的地方。",
+    output: "输出竞品分析、对标结论和差异化表达建议。",
   },
+  "内容策划与矩阵设计": {
+    input: "需要把选题、栏目、平台节奏和内容矩阵先排出来，再进入实际写作。",
+    output: "输出更适合社媒和营销内容的策划结构、选题池和分发思路。",
+  },
+  "内容生产与平台改写": {
+    input: "需要把卖点、脚本或正文真正写出来，并适配不同平台的表达方式。",
+    output: "输出更适合小红书、抖音、活动宣传和带货场景的内容成稿。",
+  },
+  "成交链路与活动转化": {
+    input: "需要让文案不仅能被看见，还能推动用户完成转化、触达或行动。",
+    output: "输出更适合成交链路、活动传播和连续触达的文案方案。",
+  },
+  "短视频与直播表达": {
+    input: "需要把内容变成更适合口播、直播和前几秒抓人的短视频脚本。",
+    output: "输出更适合短视频完播和直播转化的脚本与话术。",
+  },
+  "润色去 AI 味": {
+    input: "文案已经成型，但语气太模板化或太像 AI，需要变得更自然、更像真人在说话。",
+    output: "输出更自然的表达节奏、口语化改写和终稿润色版本。",
+  },
+};
+
+function createCopywritingSkill(
+  name: string,
+  workflow: string,
+  description: string,
+  sourceUrl: string,
+  badge?: string,
+): SkillPreview {
+  const prompts = copywritingWorkflowPrompts[workflow];
+
+  return {
+    name,
+    version: "ClawHub verified",
+    workflow,
+    description,
+    sourceUrl,
+    models: ["OpenClaw"],
+    inputPreview: prompts.input,
+    outputPreview: prompts.output,
+    primaryAction: "ClawHub ↗",
+    badge,
+    configSnippet: `skill: ${name}
+source: ${sourceUrl}
+category: copywriting
+focus: ${workflow}`,
+  };
+}
+
+const copywritingCatalogSkills: SkillPreview[] = [
+  createCopywritingSkill(
+    "Market Research",
+    "热点/需求调研",
+    "适合热点调研、市场机会判断和用户需求洞察，先把文案要打的真实需求摸清楚。",
+    "https://clawhub.ai/ivangdavila/market-research",
+    "Editor’s Choice",
+  ),
+  createCopywritingSkill(
+    "Competitor Research",
+    "竞品调研与拆解",
+    "适合竞品调研、内容对标和打法拆解，快速看清同类内容都怎么写。",
+    "https://clawhub.ai/ivangdavila/competitor-research",
+  ),
+  createCopywritingSkill(
+    "Competitive Analysis",
+    "竞品调研与拆解",
+    "适合做竞品深度分析、差异化定位和卖点对比。",
+    "https://clawhub.ai/jk-0001/competitive-analysis",
+  ),
+  createCopywritingSkill(
+    "Competitor Analyst",
+    "竞品调研与拆解",
+    "适合对手内容策略复盘和竞品研究，帮助找出可借鉴的表达打法。",
+    "https://clawhub.ai/1kalin/competitor-analyst",
+  ),
+  createCopywritingSkill(
+    "Research Planner",
+    "热点/需求调研",
+    "适合调研方案设计、访谈提纲和需求验证框架搭建。",
+    "https://clawhub.ai/nkz55/research-planner",
+  ),
+  createCopywritingSkill(
+    "SEO Research Master",
+    "热点/需求调研",
+    "适合挖需求词、痛点词和竞品内容缺口，帮助发现更有机会的内容方向。",
+    "https://clawhub.ai/danielblinker83-bot/seo-research-master",
+  ),
+  createCopywritingSkill(
+    "Digital Marketing",
+    "内容策划与矩阵设计",
+    "适合整体营销策略、渠道打法和增长实验设计。",
+    "https://clawhub.ai/ivangdavila/digital-marketing",
+  ),
+  createCopywritingSkill(
+    "Content Marketing",
+    "内容策划与矩阵设计",
+    "适合内容策划、分发和内容矩阵复用，把内容生产排成可持续节奏。",
+    "https://clawhub.ai/ivangdavila/content-marketing",
+  ),
+  createCopywritingSkill(
+    "content-strategy",
+    "内容策划与矩阵设计",
+    "适合选题规划、栏目设计和话题池搭建。",
+    "https://clawhub.ai/alirezarezvani/cs-content-strategy",
+  ),
+  createCopywritingSkill(
+    "Social Media Marketing",
+    "内容策划与矩阵设计",
+    "适合社媒内容规划、平台选择和发布节奏设计。",
+    "https://clawhub.ai/jk-0001/social-media-marketing",
+  ),
+  createCopywritingSkill(
+    "social-media-manager",
+    "内容策划与矩阵设计",
+    "适合内容日历、社媒运营和互动增长管理。",
+    "https://clawhub.ai/alirezarezvani/cs-social-media-manager",
+  ),
+  createCopywritingSkill(
+    "Content Production",
+    "内容生产与平台改写",
+    "适合正文写作、脚本写作和内容生产优化。",
+    "https://clawhub.ai/alirezarezvani/content-production",
+  ),
+  createCopywritingSkill(
+    "Copywriting",
+    "内容生产与平台改写",
+    "适合卖点、痛点、活动宣传和带货文案，直接进入成交表达。",
+    "https://clawhub.ai/jk-0001/copywriting",
+    "Editor’s Choice",
+  ),
+  createCopywritingSkill(
+    "Content",
+    "内容生产与平台改写",
+    "适合从内容策略到写作的一体化执行，也适合跨平台改写。",
+    "https://clawhub.ai/ethagent/content",
+  ),
+  createCopywritingSkill(
+    "Humanizer",
+    "润色去 AI 味",
+    "适合正文润色、脚本去 AI 味和朋友圈/社群文案口语化。",
+    "https://clawhub.ai/nissan/reddi-humanizer",
+  ),
+  createCopywritingSkill(
+    "Email Sequence Builder",
+    "成交链路与活动转化",
+    "适合私域转化文案、连续触达文案和成交链路设计。",
+    "https://clawhub.ai/seanwyngaard/email-sequence-builder",
+  ),
+  createCopywritingSkill(
+    "Product Launch",
+    "成交链路与活动转化",
+    "适合上新传播、活动宣传文案和节点营销策划。",
+    "https://clawhub.ai/jk-0001/product-launch",
+  ),
+  createCopywritingSkill(
+    "Pump",
+    "成交链路与活动转化",
+    "适合活动预热、发布节奏和首发传播爆点设计。",
+    "https://clawhub.ai/agisearch/pump",
+  ),
+  createCopywritingSkill(
+    "Douyin",
+    "短视频与直播表达",
+    "适合抖音文案、短视频口播和前 3 秒钩子优化。",
+    "https://clawhub.ai/agimodel/douyin",
+    "Editor’s Choice",
+  ),
+  createCopywritingSkill(
+    "Douyin Live",
+    "短视频与直播表达",
+    "适合带货脚本、直播话术和促单转化表达。",
+    "https://clawhub.ai/zhangifonly/douyin-live",
+  ),
+  createCopywritingSkill(
+    "XHS Content Generate",
+    "内容生产与平台改写",
+    "适合小红书选题、种草文案和爆款笔记写作。",
+    "https://clawhub.ai/lifei68801/xhs-content-generate",
+  ),
 ];
+
+const copywritingFeaturedSkills = copywritingCatalogSkills.filter((skill) =>
+  ["Market Research", "Copywriting", "Douyin"].includes(skill.name),
+);
 
 const reportWorkflowPrompts: Record<
   string,
@@ -2056,18 +2206,18 @@ export const categories: Category[] = [
   {
     slug: "copywriting",
     navLabel: "写文案",
-    cardSubtitle: "小红书｜营销内容｜带货脚本",
+    cardSubtitle: "小红书｜抖音文案｜带货脚本｜短视频口播",
     cardCopy:
-      "围绕情绪钩子、内容节奏与转化表达，快速生成更适合传播与互动的文案内容。",
+      "围绕热点调研、竞品拆解、内容策划、正文写作和转化表达，筛出能直接跳到 ClawHub 原 Skill 页的文案类工具。",
     metaTitle: "OpenClaw Skills for Copywriting",
     metaDescription:
       "OpenClaw Skills for copywriting, Xiaohongshu, marketing scripts, and conversion content.",
     heroTag: "Copywriting",
     heroTitle: "OpenClaw Skills for Copywriting",
-    heroSubtitle: "服务于小红书、营销内容与带货表达的 OpenClaw Skills",
+    heroSubtitle: "小红书、抖音文案、带货脚本、短视频口播、种草文案、活动宣传文案等等",
     heroDescription:
-      "这一区更适合需要传播力、节奏感和转化表达的写作任务。你可以找到用于爆款拆解、情绪钩子设计、内容重写、平台适配和行动引导优化的 OpenClaw Skills。",
-    workflowTags: ["爆款拆解", "情绪钩子", "内容生成", "平台改写", "转化优化", "发布适配"],
+      "这一区更适合需要传播力、节奏感和转化表达的写作任务。现在保留的是能直接打开 ClawHub 原 Skill 页的文案类工具，覆盖热点调研、竞品拆解、内容策划、内容生产、成交链路、短视频口播和终稿润色。",
+    workflowTags: ["热点/需求调研", "竞品调研与拆解", "内容策划与矩阵设计", "内容生产与平台改写", "成交链路与活动转化", "短视频与直播表达", "润色去 AI 味"],
     audienceTitle: "这类页面适合更偏传播与转化的创作任务",
     audienceCopy: "文案页会保持同一套版式，但语言和按钮导向会更偏强动作和平台感。",
     audienceBullets: [
@@ -2106,7 +2256,8 @@ export const categories: Category[] = [
         copy: "确认文案有没有明确下一步动作，而不是停在信息说明层面。",
       },
     ],
-    featuredSkills: copywritingSkills,
+    featuredSkills: copywritingFeaturedSkills,
+    catalogSkills: copywritingCatalogSkills,
     pageCtaTitle: "文案页已经复制同一套页面结构",
     pageCtaCopy:
       "接下来如果你要继续扩首页卡片内容，只需要把真实数据补到这套模板里，不用再改整体布局。",
@@ -2367,7 +2518,7 @@ export const categories: Category[] = [
 
 export const editorChoices: SkillPreview[] = [
   booksFeaturedSkills[0],
-  copywritingSkills[0],
+  copywritingFeaturedSkills[0],
   academicFeaturedSkills[0],
 ];
 

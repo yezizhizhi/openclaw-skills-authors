@@ -124,6 +124,7 @@ export async function getCategoryExplorerData(categorySlug: string): Promise<Cat
   if (
     categorySlug === "books" ||
     categorySlug === "articles" ||
+    categorySlug === "copywriting" ||
     categorySlug === "reports" ||
     categorySlug === "academic" ||
     categorySlug === "courses"
@@ -226,6 +227,7 @@ export async function getSkillDetail(skillId: string): Promise<SkillDetail | nul
   if (
     skillId.startsWith("books-") ||
     skillId.startsWith("articles-") ||
+    skillId.startsWith("copywriting-") ||
     skillId.startsWith("reports-") ||
     skillId.startsWith("academic-") ||
     skillId.startsWith("courses-")
