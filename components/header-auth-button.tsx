@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { AuthDialogTrigger } from "@/components/auth-dialog-trigger";
@@ -13,6 +14,7 @@ function formatIdentity(session: Session | null) {
 
 export function HeaderAuthButton() {
   const [session, setSession] = useState<Session | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [busy, setBusy] = useState(false);
   const supabase = useMemo(() => getSupabaseBrowserClient(), []);
 
@@ -31,6 +33,9 @@ export function HeaderAuthButton() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession);
+      if (!nextSession) {
+        setIsAdmin(false);
+      }
     });
 
     return () => {
@@ -38,6 +43,38 @@ export function HeaderAuthButton() {
       subscription.unsubscribe();
     };
   }, [supabase]);
+
+  useEffect(() => {
+    if (!supabase || !session?.access_token) {
+      return;
+    }
+
+    let active = true;
+    const accessToken = session.access_token;
+
+    async function loadAdminStatus() {
+      try {
+        const response = await fetch("/api/admin/status", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          cache: "no-store",
+        });
+        const payload = (await response.json()) as { isAdmin?: boolean };
+        if (!active) return;
+        setIsAdmin(Boolean(payload.isAdmin));
+      } catch {
+        if (!active) return;
+        setIsAdmin(false);
+      }
+    }
+
+    void loadAdminStatus();
+
+    return () => {
+      active = false;
+    };
+  }, [session, supabase]);
 
   async function handleSignOut() {
     if (!supabase) return;
@@ -56,6 +93,11 @@ export function HeaderAuthButton() {
 
   return (
     <div className="header-user-shell">
+      {isAdmin ? (
+        <Link href="/admin/skill-submissions" className="header-nav-link">
+          后台
+        </Link>
+      ) : null}
       <span className="header-user-badge" title={formatIdentity(session)}>
         {formatIdentity(session)}
       </span>
