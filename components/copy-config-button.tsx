@@ -4,9 +4,15 @@ import { useState } from "react";
 
 type CopyConfigButtonProps = {
   configSnippet: string;
+  idleLabel?: string;
+  successLabel?: string;
 };
 
-export function CopyConfigButton({ configSnippet }: CopyConfigButtonProps) {
+export function CopyConfigButton({
+  configSnippet,
+  idleLabel = "复制配置",
+  successLabel = "已复制配置",
+}: CopyConfigButtonProps) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -25,7 +31,7 @@ export function CopyConfigButton({ configSnippet }: CopyConfigButtonProps) {
       className={copied ? "secondary-button success skill-detail-button" : "primary-button skill-detail-button"}
       onClick={handleCopy}
     >
-      {copied ? "已复制配置" : "复制配置"}
+      {copied ? successLabel : idleLabel}
     </button>
   );
 }

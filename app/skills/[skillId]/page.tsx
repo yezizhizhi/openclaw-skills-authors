@@ -31,6 +31,35 @@ export async function generateMetadata({ params }: SkillDetailPageProps): Promis
   };
 }
 
+function buildOpenClawPrompt(
+  skill: NonNullable<Awaited<ReturnType<typeof getSkillDetail>>>,
+) {
+  const scenarioLine = skill.scenarioNames.length
+    ? skill.scenarioNames.join("、")
+    : skill.workflow;
+
+  const tagLine = skill.tags.length ? skill.tags.join("、") : `${skill.categoryLabel}、${skill.workflow}`;
+  const sourceLine = skill.sourceUrl ?? "未提供";
+
+  return [
+    `请调用 OpenClaw Skill：${skill.name}`,
+    "",
+    `分类：${skill.categoryLabel}`,
+    `工作环节：${skill.workflow}`,
+    `适用场景：${scenarioLine}`,
+    `标签：${tagLine}`,
+    `来源：${sourceLine}`,
+    "",
+    "目标：",
+    skill.description,
+    "",
+    "请按这个 Skill 的能力，输出：",
+    "1. 适合当前任务的执行步骤",
+    "2. 可直接继续写作的结构化结果",
+    "3. 如有必要，给出下一步继续调用建议",
+  ].join("\n");
+}
+
 export default async function SkillDetailPage({ params }: SkillDetailPageProps) {
   const { skillId } = await params;
   const skill = await getSkillDetail(skillId);
@@ -38,6 +67,8 @@ export default async function SkillDetailPage({ params }: SkillDetailPageProps) 
   if (!skill) {
     notFound();
   }
+
+  const openClawPrompt = buildOpenClawPrompt(skill);
 
   return (
     <main className="pb-24">
@@ -58,14 +89,23 @@ export default async function SkillDetailPage({ params }: SkillDetailPageProps) 
           <p className="hero-copy hero-copy-lg skill-detail-copy">{skill.description}</p>
 
           <div className="hero-actions">
-            <CopyConfigButton configSnippet={skill.configSnippet} />
+            <CopyConfigButton
+              configSnippet={openClawPrompt}
+              idleLabel="复制给 OpenClaw"
+              successLabel="已复制调用提示"
+            />
             <Link href="/install-guide" className="secondary-button skill-detail-button">
               查看安装指南
             </Link>
             {skill.sourceUrl ? (
-              <Link href={skill.sourceUrl} className="secondary-button skill-detail-button">
-                查看来源
-              </Link>
+              <a
+                href={skill.sourceUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="secondary-button skill-detail-button"
+              >
+                ClawHub ↗
+              </a>
             ) : null}
           </div>
 
@@ -120,10 +160,10 @@ export default async function SkillDetailPage({ params }: SkillDetailPageProps) 
           </article>
 
           <article className="skill-detail-card">
-            <p className="skill-detail-label">配置预览</p>
-            <h2 className="skill-detail-card-title">可直接复制的配置片段</h2>
+            <p className="skill-detail-label">调用提示预览</p>
+            <h2 className="skill-detail-card-title">可直接复制给 OpenClaw 的提示片段</h2>
             <pre className="skill-detail-code">
-              <code>{skill.configSnippet}</code>
+              <code>{openClawPrompt}</code>
             </pre>
           </article>
         </div>
