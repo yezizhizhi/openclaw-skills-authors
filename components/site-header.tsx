@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HeaderAuthButton } from "@/components/header-auth-button";
 
 const navItems = [
   { href: "/#categories", label: "快速搜索skills" },
@@ -30,6 +31,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <HeaderAuthButton />
         </nav>
       </div>
     </header>
