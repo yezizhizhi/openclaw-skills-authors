@@ -46,12 +46,14 @@ const scenarioAliases: Record<string, string[]> = {
   "academic:语言润色 / 学术语体优化": ["学术润色", "语体优化", "表达改进", "摘要浓缩", "段落优化", "学术表达"],
   "academic:引用辅助 / 参考文献管理": ["引用辅助", "参考文献", "citation", "文献库", "知识库", "zotero"],
   "academic:逻辑一致性 / 终稿审校": ["终稿审校", "逻辑一致性", "格式统一", "文档规范", "自检", "一致性检查"],
-  "courses:课程定位": ["课程方向", "课程策划", "受众定位"],
-  "courses:大纲规划": ["课程大纲", "课纲设计", "模块规划"],
-  "courses:讲义整理": ["讲义编排", "讲义结构", "讲义制作"],
-  "courses:案例设计": ["案例策划", "案例组织", "示例设计"],
-  "courses:脚本编写": ["授课脚本", "课程脚本", "讲解脚本"],
-  "courses:表达优化": ["表达润色", "讲解优化", "表达打磨"],
+  "courses:课程定义与定位": ["课程定位", "课程方向", "课程策划", "受众定位", "课程结构", "学习目标"],
+  "courses:大纲规划与学习路径": ["课程大纲", "课纲设计", "模块规划", "学习路径", "章节结构", "模块结构"],
+  "courses:讲义整理与资料重组": ["讲义整理", "讲义编排", "讲义结构", "讲义制作", "资料重组", "资料整理"],
+  "courses:转写与多源内容转课程": ["视频转文字", "转写", "字幕提取", "视频转讲义", "多源内容转课程", "音频转文本"],
+  "courses:案例、练习与测验设计": ["案例设计", "案例策划", "练习设计", "测验设计", "quiz", "flashcards"],
+  "courses:脚本编写与课件展开": ["授课脚本", "课程脚本", "讲解脚本", "课件设计", "slides", "presentation"],
+  "courses:表达优化与教学可理解性": ["表达润色", "讲解优化", "表达打磨", "难点解释", "教学表达", "concept explainer"],
+  "courses:内容产品化与交付包装": ["内容产品化", "课程包装", "课程交付", "培训交付", "课程推广", "视频交付"],
 };
 
 const skillScenarioNames: Record<string, string[]> = {
@@ -134,8 +136,6 @@ const skillScenarioNames: Record<string, string[]> = {
   "academic:markdown-converter": ["逻辑一致性 / 终稿审校"],
   "academic:markdown-formatter": ["逻辑一致性 / 终稿审校"],
   "academic:docsync": ["逻辑一致性 / 终稿审校"],
-  "courses:Course Outline Architect": ["课程定位", "大纲规划", "讲义整理"],
-  "courses:Lesson Script Polish Coach": ["案例设计", "脚本编写", "表达优化"],
 };
 
 const skillSourceUrls: Record<string, string> = {

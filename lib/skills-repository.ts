@@ -125,7 +125,8 @@ export async function getCategoryExplorerData(categorySlug: string): Promise<Cat
     categorySlug === "books" ||
     categorySlug === "articles" ||
     categorySlug === "reports" ||
-    categorySlug === "academic"
+    categorySlug === "academic" ||
+    categorySlug === "courses"
   ) {
     return fallback;
   }
@@ -226,7 +227,8 @@ export async function getSkillDetail(skillId: string): Promise<SkillDetail | nul
     skillId.startsWith("books-") ||
     skillId.startsWith("articles-") ||
     skillId.startsWith("reports-") ||
-    skillId.startsWith("academic-")
+    skillId.startsWith("academic-") ||
+    skillId.startsWith("courses-")
   ) {
     return fallback;
   }

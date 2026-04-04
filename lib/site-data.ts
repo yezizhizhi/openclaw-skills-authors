@@ -1452,49 +1452,455 @@ const academicFeaturedSkills = academicCatalogSkills.filter((skill) =>
   ["academic-deep-research", "literature-manager", "academic-writing"].includes(skill.name),
 );
 
-const courseSkills: SkillPreview[] = [
-  {
-    name: "Course Outline Architect",
-    version: "v0.1 static preview",
-    workflow: "课程大纲",
-    description:
-      "帮助讲师和知识创作者把主题拆成模块、课次和学习成果，更快形成可交付的课程结构。",
-    models: ["GPT-4.1", "Claude 3.7"],
-    inputPreview: "课程主题有了，但内容层级和课次节奏还没有真正成型。",
-    outputPreview: "输出模块设计、单元目标和课程节奏安排。",
-    primaryAction: "Download Skill Pack",
-    configSnippet: `skill: course_outline_architect
-category: courses
-workflow: outline
-inputs:
-  - topic
-  - learner_level
-outputs:
-  - modules
-  - outcomes
-  - session_plan`,
+const courseWorkflowPrompts: Record<string, { input: string; output: string }> = {
+  "课程定义与定位": {
+    input: "需要先把这门课到底教谁、解决什么问题、要交付怎样的学习结果讲清楚。",
+    output: "输出课程定位、模块结构和更适合继续展开的学习路径。",
   },
-  {
-    name: "Lesson Script Polish Coach",
-    version: "v0.1 static preview",
-    workflow: "脚本编写",
-    description:
-      "适合把讲义内容转成更适合讲述的授课脚本，减少文字感过重的问题。",
-    models: ["Claude 3.7", "DeepSeek"],
-    inputPreview: "讲义内容信息齐全，但直接拿来讲会太书面、不够顺口。",
-    outputPreview: "输出更适合口头表达、节奏更清楚的授课脚本版本。",
-    primaryAction: "Copy-first Setup",
-    badge: "Editor’s Choice",
-    configSnippet: `skill: lesson_script_polish_coach
-category: courses
-workflow: script
-inputs:
-  - lecture_notes
-style:
-  spoken_clarity: true
-  example_density: medium`,
+  "大纲规划与学习路径": {
+    input: "课程主题已经明确，但还需要把课次顺序、模块结构和学习路径真正排出来。",
+    output: "输出更适合交付的课程大纲、模块骨架和单课顺序。",
   },
+  "讲义整理与资料重组": {
+    input: "手里已经有材料、文档或旧内容，但还没有整理成可复用的课程讲义。",
+    output: "输出更适合教学场景的讲义结构、摘要和资料整理结果。",
+  },
+  "转写与多源内容转课程": {
+    input: "需要把视频、音频、直播或课堂记录转成后续可直接改写的课程资料。",
+    output: "输出文字稿、结构化讲义素材和可继续加工的课程输入。",
+  },
+  "案例、练习与测验设计": {
+    input: "课程主线已有，但还需要练习题、知识卡片和课后测验来支撑学习效果。",
+    output: "输出测验、练习和更适合巩固知识点的学习材料。",
+  },
+  "脚本编写与课件展开": {
+    input: "结构和讲义都有了，但还需要脚本、逐字稿和课件页来进入制作阶段。",
+    output: "输出授课脚本、演示文稿和更适合讲述的单课展开内容。",
+  },
+  "表达优化与教学可理解性": {
+    input: "内容已经基本成型，但还需要把难点讲得更清楚、更适合教学场景。",
+    output: "输出更容易理解的解释方式、教程表达和讲解优化版本。",
+  },
+  "内容产品化与交付包装": {
+    input: "课程内容已经具备，但还需要包装成真正可交付、可推广的课程产品。",
+    output: "输出课程视频、培训交付物和更完整的产品化包装结果。",
+  },
+};
+
+function createCourseSkill(
+  name: string,
+  workflow: string,
+  description: string,
+  sourceUrl: string,
+  badge?: string,
+): SkillPreview {
+  const prompts = courseWorkflowPrompts[workflow];
+
+  return {
+    name,
+    version: "ClawHub verified",
+    workflow,
+    description,
+    sourceUrl,
+    models: ["OpenClaw"],
+    inputPreview: prompts.input,
+    outputPreview: prompts.output,
+    primaryAction: "ClawHub ↗",
+    badge,
+    configSnippet: `skill: ${name}
+source: ${sourceUrl}
+category: courses
+focus: ${workflow}`,
+  };
+}
+
+const coursesCatalogSkills: SkillPreview[] = [
+  createCourseSkill(
+    "curriculum-designer",
+    "课程定义与定位",
+    "适合课程定位、模块拆分和难度设计，先把课程结构和学习路径定清楚。",
+    "https://clawhub.ai/tarasinghrajput/curriculum-designer",
+    "Editor’s Choice",
+  ),
+  createCourseSkill(
+    "online-course-creator",
+    "课程定义与定位",
+    "适合把知识经验快速组织成一套完整课程产品，覆盖整体创建流程。",
+    "https://clawhub.ai/lvjunjie-byte/online-course-creator",
+  ),
+  createCourseSkill(
+    "course-prep-afp",
+    "课程定义与定位",
+    "适合备课和单课准备，在正式制作前明确每一节课的目标与输入。",
+    "https://clawhub.ai/yipng05-max/course-prep-afp",
+  ),
+  createCourseSkill(
+    "teacher-kit",
+    "课程定义与定位",
+    "适合备课、教学资料准备和教学目标定义，帮助先搭出授课底稿。",
+    "https://clawhub.ai/dongsheng123132/teacher-kit",
+  ),
+  createCourseSkill(
+    "teaching-plan-writer",
+    "课程定义与定位",
+    "适合教学计划、课程目标和节次安排，先把整体节奏排出来。",
+    "https://clawhub.ai/hwx1971/teaching-plan-writer",
+  ),
+  createCourseSkill(
+    "openclaw-teaching",
+    "课程定义与定位",
+    "适合教学型内容设计和课程生产辅助，把知识表达转成更可教的结构。",
+    "https://clawhub.ai/roadherogb/openclaw-teaching",
+  ),
+  createCourseSkill(
+    "ai-shifu-course-creator",
+    "课程定义与定位",
+    "适合把知识、经验和案例重组为课程产品，帮助课程产品化落地。",
+    "https://clawhub.ai/heshaofu2/ai-shifu-course-creator",
+  ),
+  createCourseSkill(
+    "recipe-create-classroom-course",
+    "大纲规划与学习路径",
+    "适合课堂型课程设计和模块拆分，把课程大纲组织成清晰的课堂路径。",
+    "https://clawhub.ai/googleworkspace-bot/recipe-create-classroom-course",
+  ),
+  createCourseSkill(
+    "training-course-designer",
+    "大纲规划与学习路径",
+    "适合培训课程设计、章节顺序和学习路径安排。",
+    "https://clawhub.ai/brandon-zhanghaodong/training-course-designer",
+  ),
+  createCourseSkill(
+    "cntrain-outline",
+    "大纲规划与学习路径",
+    "适合企业培训提纲和交付版大纲文档，帮助快速形成可展示结构。",
+    "https://clawhub.ai/kingyw/cntrain-outline",
+  ),
+  createCourseSkill(
+    "cn-ppt-outline-writer",
+    "大纲规划与学习路径",
+    "适合课件大纲和 PPT 结构编排，先把单课框架搭出来。",
+    "https://clawhub.ai/ryanlee-gemini/cn-ppt-outline-writer",
+  ),
+  createCourseSkill(
+    "outline",
+    "大纲规划与学习路径",
+    "适合通用课程提纲和模块骨架设计，快速排好章节顺序。",
+    "https://clawhub.ai/ckchzh/outline",
+  ),
+  createCourseSkill(
+    "jackyshen-design-workshop-outline",
+    "大纲规划与学习路径",
+    "适合工作坊和训练营流程设计，让体验式课程更有推进节奏。",
+    "https://clawhub.ai/mebusw/jackyshen-design-workshop-outline",
+  ),
+  createCourseSkill(
+    "course-study",
+    "大纲规划与学习路径",
+    "适合从学员视角检查课程目标和学习路径，帮助课程更易学。",
+    "https://clawhub.ai/vincentjiang06/course-study",
+  ),
+  createCourseSkill(
+    "personalized-learning",
+    "大纲规划与学习路径",
+    "适合分层课程和个性化学习路径，帮助控制难度和节奏。",
+    "https://clawhub.ai/vaintwyt/personalized-learning",
+  ),
+  createCourseSkill(
+    "teaching-materials",
+    "讲义整理与资料重组",
+    "适合讲义整理、教学资料归档和素材重组，把散材料变成可交付讲义。",
+    "https://clawhub.ai/ahao2001/teaching-materials",
+    "Editor’s Choice",
+  ),
+  createCourseSkill(
+    "training-content-extractor",
+    "讲义整理与资料重组",
+    "适合从现有内容中抽取培训材料和知识点，先做内容清洗。",
+    "https://clawhub.ai/0x00pluto/training-content-extractor",
+  ),
+  createCourseSkill(
+    "lecture-notes-master",
+    "讲义整理与资料重组",
+    "适合课堂笔记结构化和知识点提炼，让讲义更容易复用。",
+    "https://clawhub.ai/schaeferanjon/lecture-notes-master",
+  ),
+  createCourseSkill(
+    "ppt-lecture-notes",
+    "讲义整理与资料重组",
+    "适合把教案写入 PPT 备注并整理讲解备注。",
+    "https://clawhub.ai/wuxixixi/ppt-lecture-notes",
+  ),
+  createCourseSkill(
+    "document-summary",
+    "讲义整理与资料重组",
+    "适合长资料压缩和课程资料前处理，先把背景材料读薄。",
+    "https://clawhub.ai/kelevis/document-summary",
+  ),
+  createCourseSkill(
+    "content-summary",
+    "讲义整理与资料重组",
+    "适合文章、播客和直播内容转讲义摘要。",
+    "https://clawhub.ai/allens0104/content-summary",
+  ),
+  createCourseSkill(
+    "summary-generator",
+    "讲义整理与资料重组",
+    "适合素材压缩和章节摘要，帮助快速形成讲义初稿。",
+    "https://clawhub.ai/vishalgojha/summary-generator",
+  ),
+  createCourseSkill(
+    "feishu-doc-summarizer",
+    "讲义整理与资料重组",
+    "适合把飞书文档转成课程资料，方便团队整理知识资产。",
+    "https://clawhub.ai/victor-thu/feishu-doc-summarizer",
+  ),
+  createCourseSkill(
+    "video-transcript-downloader",
+    "转写与多源内容转课程",
+    "适合把视频课转成文字，快速进入课程资料整理流程。",
+    "https://clawhub.ai/steipete/video-transcript-downloader",
+  ),
+  createCourseSkill(
+    "youtube-transcript",
+    "转写与多源内容转课程",
+    "适合把 YouTube 内容直接转成讲义素材。",
+    "https://clawhub.ai/xthezealot/youtube-transcript",
+  ),
+  createCourseSkill(
+    "youtube-transcript-analyzer",
+    "转写与多源内容转课程",
+    "适合拆解视频内容和抽取知识点，便于课程改写。",
+    "https://clawhub.ai/xanderrey/youtube-transcript-analyzer",
+  ),
+  createCourseSkill(
+    "bilibili-transcript",
+    "转写与多源内容转课程",
+    "适合把 B 站视频转为课程讲义或素材文本。",
+    "https://clawhub.ai/54lynnn/bilibili-transcript",
+  ),
+  createCourseSkill(
+    "youtube-transcript-generator",
+    "转写与多源内容转课程",
+    "适合视频口播转文字，形成单课讲义初稿。",
+    "https://clawhub.ai/floriandarroman/youtube-transcript-generator",
+  ),
+  createCourseSkill(
+    "youtube-transcript-pipeline-lite",
+    "转写与多源内容转课程",
+    "适合批量视频转课程资料，做系列课程时更省力。",
+    "https://clawhub.ai/bluebirdback/youtube-transcript-pipeline-lite",
+  ),
+  createCourseSkill(
+    "ytdlp-transcript",
+    "转写与多源内容转课程",
+    "适合抓取视频并转文本，统一归档到课程资料库。",
+    "https://clawhub.ai/nerikko/ytdlp-transcript",
+  ),
+  createCourseSkill(
+    "lecture-transcript-study-notes",
+    "转写与多源内容转课程",
+    "适合把讲课过程直接转成学习笔记和单课讲义。",
+    "https://clawhub.ai/yvette1226/lecture-transcript-study-notes",
+  ),
+  createCourseSkill(
+    "training-quiz",
+    "案例、练习与测验设计",
+    "适合培训测验和课后小测，帮助验证学员是否真正吸收。",
+    "https://clawhub.ai/fangwei-frank/training-quiz",
+  ),
+  createCourseSkill(
+    "quiz-generator-cp3d",
+    "案例、练习与测验设计",
+    "适合批量生成练习题和测验题。",
+    "https://clawhub.ai/cp3d1455926-svg/quiz-generator-cp3d",
+  ),
+  createCourseSkill(
+    "quiz",
+    "案例、练习与测验设计",
+    "适合通用 quiz、课堂互动和复习题设计。",
+    "https://clawhub.ai/ivangdavila/quiz",
+  ),
+  createCourseSkill(
+    "flashcards",
+    "案例、练习与测验设计",
+    "适合把课程知识点拆成记忆卡片和复习材料。",
+    "https://clawhub.ai/ivangdavila/flashcards",
+  ),
+  createCourseSkill(
+    "learning-cards",
+    "案例、练习与测验设计",
+    "适合课后巩固和间隔重复型学习卡片。",
+    "https://clawhub.ai/guoqunabc/learning-cards",
+  ),
+  createCourseSkill(
+    "anki",
+    "案例、练习与测验设计",
+    "适合把课程知识点卡片化，形成复习体系。",
+    "https://clawhub.ai/ivangdavila/anki",
+  ),
+  createCourseSkill(
+    "anki-card-creator",
+    "案例、练习与测验设计",
+    "适合从讲义批量生成 Anki 卡片。",
+    "https://clawhub.ai/aipoch-ai/anki-card-creator",
+  ),
+  createCourseSkill(
+    "flash-forge",
+    "案例、练习与测验设计",
+    "适合批量生成 Flashcard 和课后练习。",
+    "https://clawhub.ai/theshadowrose/flash-forge",
+  ),
+  createCourseSkill(
+    "ai-video-script-automaton",
+    "脚本编写与课件展开",
+    "适合课程视频脚本和逐字稿生成。",
+    "https://clawhub.ai/chenghaifeng08-creator/ai-video-script-automaton",
+  ),
+  createCourseSkill(
+    "video-gen-script",
+    "脚本编写与课件展开",
+    "适合单课视频脚本和口播结构设计。",
+    "https://clawhub.ai/itspremkumar/video-gen-script",
+  ),
+  createCourseSkill(
+    "short-video-script-generator-intl",
+    "脚本编写与课件展开",
+    "适合微课、短课和宣传课脚本。",
+    "https://clawhub.ai/baolige2023/short-video-script-generator-intl",
+  ),
+  createCourseSkill(
+    "ai-video-script-1-0-0",
+    "脚本编写与课件展开",
+    "适合口播稿和视频课脚本展开。",
+    "https://clawhub.ai/zou-cc/ai-video-script-1-0-0",
+  ),
+  createCourseSkill(
+    "slides-cog",
+    "脚本编写与课件展开",
+    "适合课程课件和讲解页设计，让 Slides 更快成型。",
+    "https://clawhub.ai/nitishgargiitd/slides-cog",
+    "Editor’s Choice",
+  ),
+  createCourseSkill(
+    "openclaw-slides",
+    "脚本编写与课件展开",
+    "适合培训型幻灯片和课程演示文稿。",
+    "https://clawhub.ai/leoyeai/openclaw-slides",
+  ),
+  createCourseSkill(
+    "generate-presentation",
+    "脚本编写与课件展开",
+    "适合课程演示稿和模块讲解页。",
+    "https://clawhub.ai/nhype/generate-presentation",
+  ),
+  createCourseSkill(
+    "presentation-html-generator-skill",
+    "脚本编写与课件展开",
+    "适合 HTML 课件和在线课程演示稿。",
+    "https://clawhub.ai/revolgmphl/presentation-html-generator-skill",
+  ),
+  createCourseSkill(
+    "concept-explainer",
+    "表达优化与教学可理解性",
+    "适合抽象概念讲解和教学表达优化，把难点讲清楚。",
+    "https://clawhub.ai/aipoch-ai/concept-explainer",
+  ),
+  createCourseSkill(
+    "feynman-technique-explainer",
+    "表达优化与教学可理解性",
+    "适合复杂知识简化和难点解释。",
+    "https://clawhub.ai/arbazex/feynman-technique-explainer",
+  ),
+  createCourseSkill(
+    "tutorial-video-maker",
+    "表达优化与教学可理解性",
+    "适合教程课和步骤型内容视频化。",
+    "https://clawhub.ai/siddylcon/tutorial-video-maker",
+  ),
+  createCourseSkill(
+    "product-tutorial-video",
+    "表达优化与教学可理解性",
+    "适合软件课和工具课的教学视频。",
+    "https://clawhub.ai/imo14reifey/product-tutorial-video",
+  ),
+  createCourseSkill(
+    "coding-tutorial-video",
+    "表达优化与教学可理解性",
+    "适合编程课程和实操演示。",
+    "https://clawhub.ai/siddylcon/coding-tutorial-video",
+  ),
+  createCourseSkill(
+    "explainer-video-maker",
+    "表达优化与教学可理解性",
+    "适合知识讲解视频和概念说明视频。",
+    "https://clawhub.ai/siddylcon/explainer-video-maker",
+  ),
+  createCourseSkill(
+    "university-solution-explainer",
+    "表达优化与教学可理解性",
+    "适合方案讲解、问题拆解和案例授课。",
+    "https://clawhub.ai/eloklam/university-solution-explainer",
+  ),
+  createCourseSkill(
+    "ai-video-study-guide-video",
+    "表达优化与教学可理解性",
+    "适合学习指南、复习导学和伴学内容。",
+    "https://clawhub.ai/imo14reifey/ai-video-study-guide-video",
+  ),
+  createCourseSkill(
+    "course-video-maker",
+    "内容产品化与交付包装",
+    "适合课程视频成品和课程交付形式制作。",
+    "https://clawhub.ai/udnerc/course-video-maker",
+  ),
+  createCourseSkill(
+    "training-video-maker",
+    "内容产品化与交付包装",
+    "适合培训视频和交付版培训内容。",
+    "https://clawhub.ai/siddylcon/training-video-maker",
+  ),
+  createCourseSkill(
+    "corporate-training-video-maker",
+    "内容产品化与交付包装",
+    "适合企业培训课程和 LMS 交付内容。",
+    "https://clawhub.ai/siddylcon/corporate-training-video-maker",
+  ),
+  createCourseSkill(
+    "certification-training-video",
+    "内容产品化与交付包装",
+    "适合认证类课程和考试准备内容。",
+    "https://clawhub.ai/udnerc/certification-training-video",
+  ),
+  createCourseSkill(
+    "soft-skills-training-video",
+    "内容产品化与交付包装",
+    "适合沟通、领导力等软技能课程包装。",
+    "https://clawhub.ai/peandrover/soft-skills-training-video",
+  ),
+  createCourseSkill(
+    "afrexai-training-program",
+    "内容产品化与交付包装",
+    "适合培训项目打包和课程项目化交付。",
+    "https://clawhub.ai/1kalin/afrexai-training-program",
+  ),
+  createCourseSkill(
+    "training-delivery-manager",
+    "内容产品化与交付包装",
+    "适合培训项目交付流程和课程交付管理。",
+    "https://clawhub.ai/brandon-zhanghaodong/training-delivery-manager",
+  ),
+  createCourseSkill(
+    "ai-course-promo-video",
+    "内容产品化与交付包装",
+    "适合课程包装、课程介绍和推广素材制作。",
+    "https://clawhub.ai/nemovideonemo/ai-course-promo-video",
+  ),
 ];
+
+const coursesFeaturedSkills = coursesCatalogSkills.filter((skill) =>
+  ["curriculum-designer", "teaching-materials", "slides-cog"].includes(skill.name),
+);
 
 export const categories: Category[] = [
   {
@@ -1880,18 +2286,27 @@ export const categories: Category[] = [
   {
     slug: "courses",
     navLabel: "写课程",
-    cardSubtitle: "课程大纲｜讲义设计｜脚本编排",
+    cardSubtitle: "课程大纲｜讲义整理｜内容产品化",
     cardCopy:
-      "从课程结构规划到讲义整理与表达打磨，帮助你更高效地完成内容产品化。",
+      "围绕课程定义、大纲规划、讲义整理、脚本编写和交付包装，筛出能直接跳到 ClawHub 原 Skill 页的课程类工具。",
     metaTitle: "OpenClaw Skills for Course Creation",
     metaDescription:
       "OpenClaw Skills for course creation, outlines, teaching scripts, and educational content systems.",
     heroTag: "Courses",
     heroTitle: "OpenClaw Skills for Course Creation",
-    heroSubtitle: "适合课程大纲、讲义整理、脚本设计与内容产品化的 OpenClaw Skills",
+    heroSubtitle: "课程大纲、讲义整理、内容产品化等等\n把知识、经验、案例整理成一套可交付的课程产品",
     heroDescription:
-      "从课程定位、结构拆分到讲义编排、案例组织与讲解脚本打磨，这里的 OpenClaw Skills 适合知识型创作者、老师与培训内容设计者，帮助你更系统地完成课程内容生产。",
-    workflowTags: ["课程定位", "大纲规划", "讲义整理", "案例设计", "脚本编写", "表达优化"],
+      "我按课程定义与定位、大纲规划与学习路径、讲义整理与资料重组、转写与多源内容转课程、案例与测验设计、脚本与课件展开、表达优化和内容产品化这 8 个环节筛了一轮，只保留能直接打开 ClawHub 原 Skill 页的课程生产工具。",
+    workflowTags: [
+      "课程定义与定位",
+      "大纲规划与学习路径",
+      "讲义整理与资料重组",
+      "转写与多源内容转课程",
+      "案例、练习与测验设计",
+      "脚本编写与课件展开",
+      "表达优化与教学可理解性",
+      "内容产品化与交付包装",
+    ],
     audienceTitle: "这类页面适合知识型创作者和课程设计者",
     audienceCopy: "课程页需要兼顾结构感和可执行性，因此更适合用模块化内容来组织页面。",
     audienceBullets: [
@@ -1930,7 +2345,8 @@ export const categories: Category[] = [
         copy: "让讲解更像自然表达，而不是直接照着讲义念。",
       },
     ],
-    featuredSkills: courseSkills,
+    featuredSkills: coursesFeaturedSkills,
+    catalogSkills: coursesCatalogSkills,
     pageCtaTitle: "课程页同样已经落到统一模板里",
     pageCtaCopy:
       "这意味着首页和 6 个分类页的静态架构已经齐了，后续最主要的工作就会转向数据字段和嵌入逻辑。",
