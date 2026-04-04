@@ -445,52 +445,272 @@ const booksFeaturedSkills = booksCatalogSkills.filter((skill) =>
   ["Last30days", "Deep Research Pro", "Academic Deep Research"].includes(skill.name),
 );
 
-const articlesSkills: SkillPreview[] = [
+const articlesCatalogSkills: SkillPreview[] = [
   {
-    name: "Angle Finder Brief",
-    version: "v0.1 static preview",
-    workflow: "选题拆解",
+    name: "wechat-writer",
+    version: "ClawHub verified",
+    workflow: "全流程公众号写作",
     description:
-      "适合从同类内容中拆出值得写的切入角度，避免文章刚开头就失去辨识度。",
-    models: ["GPT-4.1", "Claude 3.7"],
-    inputPreview: "主题方向有了，但不知道应该从哪个角度切进去才更容易被读完。",
-    outputPreview: "给出多个写作角度、目标读者和篇章风险，帮助快速定题。",
-    primaryAction: "Copy-first Setup",
+      "7 步公众号写作流水线，从确认需求、资料检索到三遍审校与最终稿，适合完整接管公众号文章生产。",
+    sourceUrl: "https://clawhub.ai/wzdavid/wechat-writer",
+    models: ["OpenClaw"],
+    inputPreview: "需要从选题到定稿一条龙完成公众号文章，而不是只解决某一个局部环节。",
+    outputPreview: "输出完整的公众号写作流程结果，覆盖选题、大纲、初稿和审校。",
+    primaryAction: "ClawHub ↗",
     badge: "Editor’s Choice",
-    configSnippet: `skill: angle_finder_brief
+    configSnippet: `skill: wechat-writer
+source: https://clawhub.ai/wzdavid/wechat-writer
 category: articles
-workflow: ideation
-inputs:
-  - topic
-  - audience
-outputs:
-  - three_angles
-  - title_directions
-  - avoid_points`,
+focus: 全流程公众号写作`,
   },
   {
-    name: "Headline Refinery",
-    version: "v0.1 static preview",
-    workflow: "标题优化",
+    name: "WeChat MP Multi-Publisher",
+    version: "ClawHub verified",
+    workflow: "全流程公众号写作",
     description:
-      "适合长文、公众号和观点文章的标题迭代，兼顾信息密度和可读性。",
-    models: ["Claude 3.7", "Gemini 2.5"],
-    inputPreview: "内容已经基本成稿，但标题要么太平，要么像平台文案，气质不对。",
-    outputPreview: "输出多种不同力度的标题方向，便于根据平台和读者预期选择。",
-    primaryAction: "Copy-first Setup",
-    configSnippet: `skill: headline_refinery
+      "把 Markdown 文章一键推送到公众号草稿箱，支持封面图、引用块和微信 CDN 图片上传。",
+    sourceUrl: "https://clawhub.ai/x402spark-jpg/wechat-multi-publisher",
+    models: ["OpenClaw"],
+    inputPreview: "文章已经写完，需要更快地进入公众号发布准备环节。",
+    outputPreview: "返回可直接进入微信草稿箱的发布结果，减少手动排版工作。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: WeChat MP Multi-Publisher
+source: https://clawhub.ai/x402spark-jpg/wechat-multi-publisher
 category: articles
-workflow: title
-inputs:
-  - article_summary
-  - platform
-style:
-  tone_range:
-    - calm
-    - sharp
-    - story-led`,
+focus: 全流程公众号写作`,
+  },
+  {
+    name: "Last30days",
+    version: "ClawHub verified",
+    workflow: "选题热度调研",
+    description:
+      "跨平台聚合近 30 天热点，自动去重评分，适合公众号选题、新闻追踪和评论文章找热度入口。",
+    sourceUrl: "https://clawhub.ai/mvanhorn/last30days-official",
+    models: ["OpenClaw"],
+    inputPreview: "想知道最近哪些话题在持续发酵，值得进入公众号或评论选题池。",
+    outputPreview: "输出带引用的热点报告和趋势判断，帮助快速筛题。",
+    primaryAction: "ClawHub ↗",
+    badge: "Editor’s Choice",
+    configSnippet: `skill: Last30days
+source: https://clawhub.ai/mvanhorn/last30days-official
+category: articles
+focus: 选题热度调研`,
+  },
+  {
+    name: "Hacker News Daily",
+    version: "ClawHub verified",
+    workflow: "选题热度调研",
+    description:
+      "抓取 Hacker News 热门帖并按技术关键词过滤，适合科技类公众号和新闻报道做选题判断。",
+    sourceUrl: "https://clawhub.ai/osgood001/hn-daily",
+    models: ["OpenClaw"],
+    inputPreview: "需要追踪技术圈最近的热门讨论，快速确定新闻和评论切口。",
+    outputPreview: "返回按主题过滤的热门技术话题和原始讨论入口。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Hacker News Daily
+source: https://clawhub.ai/osgood001/hn-daily
+category: articles
+focus: 选题热度调研`,
+  },
+  {
+    name: "Tavily Web Search",
+    version: "ClawHub verified",
+    workflow: "选题热度调研",
+    description:
+      "为 AI Agent 优化的结构化搜索结果，适合快速调研选题背景、补充论据和新闻线索。",
+    sourceUrl: "https://clawhub.ai/arun-8687/tavily-search",
+    models: ["OpenClaw"],
+    inputPreview: "想快速把一个选题的背景信息拉齐，不想自己在多个网页里来回跳转。",
+    outputPreview: "输出精简且结构化的搜索结果，便于继续推理和写作。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Tavily Web Search
+source: https://clawhub.ai/arun-8687/tavily-search
+category: articles
+focus: 选题热度调研`,
+  },
+  {
+    name: "Brave Search",
+    version: "ClawHub verified",
+    workflow: "选题热度调研",
+    description:
+      "轻量级搜索和内容抓取工具，适合快速验证热度、补充信息和做第一轮新闻核查。",
+    sourceUrl: "https://clawhub.ai/steipete/brave-search",
+    models: ["OpenClaw"],
+    inputPreview: "只想快速补几个事实点或验证话题热度，不需要完整研究流程。",
+    outputPreview: "提供简洁的搜索和抓取结果，方便马上进入写作。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Brave Search
+source: https://clawhub.ai/steipete/brave-search
+category: articles
+focus: 选题热度调研`,
+  },
+  {
+    name: "Marketing Mode",
+    version: "ClawHub verified",
+    workflow: "选题策划",
+    description:
+      "集成大量营销框架和策略模块，适合公众号栏目策划、品牌内容方向设计和评论视角拆解。",
+    sourceUrl: "https://clawhub.ai/TheSethRose/marketing-mode",
+    models: ["OpenClaw"],
+    inputPreview: "热点有了，但还需要把它变成可执行的选题方向和表达策略。",
+    outputPreview: "输出更适合传播和转化的内容方向、框架和策略建议。",
+    primaryAction: "ClawHub ↗",
+    badge: "Editor’s Choice",
+    configSnippet: `skill: Marketing Mode
+source: https://clawhub.ai/TheSethRose/marketing-mode
+category: articles
+focus: 选题策划`,
+  },
+  {
+    name: "Marketing Skills",
+    version: "ClawHub verified",
+    workflow: "选题策划",
+    description:
+      "包含多种独立营销模块，可按需调用做选题策划、社交内容拆解和宣传稿方向设计。",
+    sourceUrl: "https://clawhub.ai/jchopard69/marketing-skills",
+    models: ["OpenClaw"],
+    inputPreview: "需要从营销目标倒推文章主题、结构和表达重点。",
+    outputPreview: "返回适合品牌传播的内容策略和模块化策划建议。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Marketing Skills
+source: https://clawhub.ai/jchopard69/marketing-skills
+category: articles
+focus: 选题策划`,
+  },
+  {
+    name: "SEO",
+    version: "ClawHub verified",
+    workflow: "选题策划",
+    description:
+      "结合关键词研究、竞品分析和搜索意图，帮助判断稿件选题的搜索价值与差异化方向。",
+    sourceUrl: "https://clawhub.ai/ivangdavila/seo",
+    models: ["OpenClaw"],
+    inputPreview: "想知道一个选题是否有搜索空间、竞品是否拥挤、该从哪个角度切入。",
+    outputPreview: "给出关键词、竞品和内容差异化方向建议。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: SEO
+source: https://clawhub.ai/ivangdavila/seo
+category: articles
+focus: 选题策划`,
+  },
+  {
+    name: "Summarize",
+    version: "ClawHub verified",
+    workflow: "素材处理",
+    description:
+      "通吃网页、PDF、图片、音频和 YouTube，快速提炼要点、执行摘要和详细拆解。",
+    sourceUrl: "https://clawhub.ai/steipete/summarize",
+    models: ["OpenClaw"],
+    inputPreview: "参考资料太杂，写之前需要先把关键信息压缩成可用笔记。",
+    outputPreview: "输出摘要、要点、详细拆解或行动项，适合作为写作输入。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Summarize
+source: https://clawhub.ai/steipete/summarize
+category: articles
+focus: 素材处理`,
+  },
+  {
+    name: "OpenClaw YouTube Transcript",
+    version: "ClawHub verified",
+    workflow: "素材处理",
+    description:
+      "直接提取 YouTube 字幕，把视频内容快速转成可用文字素材，适合新闻评论和素材整理。",
+    sourceUrl: "https://clawhub.ai/YoavRez/openclaw-youtube-transcript",
+    models: ["OpenClaw"],
+    inputPreview: "需要把视频或访谈内容快速纳入文章素材库。",
+    outputPreview: "返回可继续摘要、整理和引用的字幕文本。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: OpenClaw YouTube Transcript
+source: https://clawhub.ai/YoavRez/openclaw-youtube-transcript
+category: articles
+focus: 素材处理`,
+  },
+  {
+    name: "Nano Pdf",
+    version: "ClawHub verified",
+    workflow: "素材处理",
+    description:
+      "用自然语言处理 PDF，适合报告、白皮书、研究文档等参考资料的快速消化。",
+    sourceUrl: "https://clawhub.ai/steipete/nano-pdf",
+    models: ["OpenClaw"],
+    inputPreview: "参考 PDF 太多，需要快速抽取可写内容和关键数据。",
+    outputPreview: "输出段落重点、表格信息和可引用数据。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Nano Pdf
+source: https://clawhub.ai/steipete/nano-pdf
+category: articles
+focus: 素材处理`,
+  },
+  {
+    name: "WeChat Article Extractor",
+    version: "ClawHub verified",
+    workflow: "素材处理",
+    description:
+      "直接解析公众号文章链接，提取标题、正文、作者和封面图，适合对标内容拆解和素材归档。",
+    sourceUrl: "https://clawhub.ai/freestylefly/wechat-article-extractor-skill",
+    models: ["OpenClaw"],
+    inputPreview: "需要批量整理公众号参考文章，而不是手动复制内容。",
+    outputPreview: "输出结构化的公众号文章素材，便于继续整理和对标。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: WeChat Article Extractor
+source: https://clawhub.ai/freestylefly/wechat-article-extractor-skill
+category: articles
+focus: 素材处理`,
+  },
+  {
+    name: "SEO Content Writer",
+    version: "ClawHub verified",
+    workflow: "大纲结构",
+    description:
+      "按不同内容类型输出 H1-H6 结构模板和关键词布局，适合长文、专题稿和品牌白皮书做骨架规划。",
+    sourceUrl: "https://clawhub.ai/aaron-he-zhu/seo-content-writer",
+    models: ["OpenClaw"],
+    inputPreview: "需要先把文章骨架和层级规划清楚，再进入正文扩写。",
+    outputPreview: "输出结构模板、标题层级和适合继续写作的大纲框架。",
+    primaryAction: "ClawHub ↗",
+    badge: "Editor’s Choice",
+    configSnippet: `skill: SEO Content Writer
+source: https://clawhub.ai/aaron-he-zhu/seo-content-writer
+category: articles
+focus: 大纲结构`,
+  },
+  {
+    name: "Humanizer",
+    version: "ClawHub verified",
+    workflow: "终稿质检",
+    description:
+      "逐项消除 AI 写作痕迹，修复模板化结构和过度解释，让终稿读起来更像真人写的。",
+    sourceUrl: "https://clawhub.ai/biostartechnology/humanizer",
+    models: ["OpenClaw"],
+    inputPreview: "稿子已经完成，但语感太像 AI，发布前需要做一轮去痕迹处理。",
+    outputPreview: "输出更自然的表达节奏和更像人工写作的终稿版本。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Humanizer
+source: https://clawhub.ai/biostartechnology/humanizer
+category: articles
+focus: 终稿质检`,
+  },
+  {
+    name: "self-improving-agent",
+    version: "ClawHub verified",
+    workflow: "终稿质检",
+    description:
+      "捕获每次修订错误与修正经验，持续积累你的风格和标准，更适合长期迭代内容质量。",
+    sourceUrl: "https://clawhub.ai/pskoett/self-improving-agent",
+    models: ["OpenClaw"],
+    inputPreview: "希望每次终稿修订都能沉淀经验，而不是从零开始重复改同类问题。",
+    outputPreview: "输出带记忆的修订结果，后续会越来越贴近你的标准。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: self-improving-agent
+source: https://clawhub.ai/pskoett/self-improving-agent
+category: articles
+focus: 终稿质检`,
   },
 ];
+
+const articlesFeaturedSkills = articlesCatalogSkills.filter((skill) =>
+  ["wechat-writer", "Last30days", "SEO Content Writer"].includes(skill.name),
+);
 
 const copywritingSkills: SkillPreview[] = [
   {
@@ -751,18 +971,18 @@ export const categories: Category[] = [
   {
     slug: "articles",
     navLabel: "写文章",
-    cardSubtitle: "公众号｜专栏｜长文表达",
+    cardSubtitle: "公众号｜新闻报道｜评论文章｜品牌营销宣传稿",
     cardCopy:
-      "适合选题拆解、结构优化、观点展开与标题打磨，让文章更清晰、更完整、更好读。",
+      "围绕公众号、新闻报道、评论文章与品牌营销宣传稿的常见流程，筛出能直接跳转来源的通用 Skills。",
     metaTitle: "OpenClaw Skills for Articles",
     metaDescription:
       "OpenClaw Skills for article writing, newsletters, columns, and long-form publishing.",
     heroTag: "Articles",
     heroTitle: "OpenClaw Skills for Articles",
-    heroSubtitle: "适合公众号、专栏与长文表达的 OpenClaw Skills",
+    heroSubtitle: "公众号、新闻报道、评论文章、品牌营销宣传稿等等",
     heroDescription:
-      "如果你正在写公众号文章、专题长文或观点类内容，这里的 OpenClaw Skills 可以帮助你更快完成选题拆解、结构优化、观点展开、标题打磨与全文润色，让文章更清晰、更有完成度。",
-    workflowTags: ["选题拆解", "提纲整理", "观点展开", "标题优化", "段落润色", "发布前校对"],
+      "适合这几类别的通用环节包括全流程公众号写作、选题热度调研、选题策划、素材处理、大纲结构、正文写作和终稿质检。你可以先看本周精选，再按具体环节检索更适合的 Skills。",
+    workflowTags: ["全流程公众号写作", "选题热度调研", "选题策划", "素材处理", "大纲结构", "正文写作", "终稿质检"],
     audienceTitle: "这类页面适合怎样的文章型写作",
     audienceCopy:
       "文章页更强调观点组织和信息结构，因此保留同一套骨架，但文案会更偏向内容表达而不是长篇叙事。",
@@ -802,7 +1022,8 @@ export const categories: Category[] = [
         copy: "检查是否有重复表达、跳跃句和不必要的赘述。",
       },
     ],
-    featuredSkills: articlesSkills,
+    featuredSkills: articlesFeaturedSkills,
+    catalogSkills: articlesCatalogSkills,
     pageCtaTitle: "文章页已经沿用同一套模板完成复制",
     pageCtaCopy:
       "这页和写书页使用同一套信息架构，只替换入口文案、流程标签和示例卡片，后续维护会很轻。",
