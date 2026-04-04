@@ -1,6 +1,7 @@
 import "server-only";
 import type { CategoryExplorerData, ExplorerScenario, ExplorerSkill } from "@/lib/skill-search";
-import { getStaticCategoryExplorerData } from "@/lib/static-catalog";
+import { categories } from "@/lib/site-data";
+import { getStaticCategoryExplorerData, getStaticSkillDetail, type StaticSkillDetail } from "@/lib/static-catalog";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 type DbScenarioRow = {
@@ -40,6 +41,13 @@ type DbSkillScenarioRow = {
   sort_order: number;
   relevance_score: number;
 };
+
+type DbCategoryRow = {
+  slug: string;
+  label: string;
+};
+
+export type SkillDetail = StaticSkillDetail;
 
 function getFallback(categorySlug: string) {
   return getStaticCategoryExplorerData(categorySlug);
@@ -193,6 +201,103 @@ export async function getCategoryExplorerData(categorySlug: string): Promise<Cat
     };
   } catch (error) {
     logFallback(categorySlug, error instanceof Error ? error.message : "Unknown error");
+    return fallback;
+  }
+}
+
+export async function getSkillDetail(skillId: string): Promise<SkillDetail | null> {
+  const fallback = getStaticSkillDetail(skillId);
+  const supabase = getSupabaseServerClient();
+
+  if (!supabase) {
+    return fallback;
+  }
+
+  try {
+    const { data: skillRow, error: skillError } = await supabase
+      .from("skills")
+      .select(
+        "id, category_slug, name, workflow, description, source_url, install_mode, primary_action, badge, models, tags, input_preview, output_preview, config_snippet, sort_order, is_published",
+      )
+      .eq("id", skillId)
+      .eq("is_published", true)
+      .maybeSingle();
+
+    if (skillError || !skillRow) {
+      logFallback(skillId, skillError?.message ?? "Skill not found");
+      return fallback;
+    }
+
+    const categoryMeta = categories.find((category) => category.slug === skillRow.category_slug);
+
+    if (!categoryMeta) {
+      logFallback(skillId, "Category metadata not found");
+      return fallback;
+    }
+
+    const { data: categoryRow, error: categoryError } = await supabase
+      .from("categories")
+      .select("slug, label")
+      .eq("slug", skillRow.category_slug)
+      .maybeSingle();
+
+    if (categoryError) {
+      logFallback(skillId, categoryError.message);
+      return fallback;
+    }
+
+    const { data: scenarioRows, error: scenariosError } = await supabase
+      .from("scenarios")
+      .select("id, category_slug, name, sort_order")
+      .eq("category_slug", skillRow.category_slug)
+      .order("sort_order", { ascending: true });
+
+    if (scenariosError || !scenarioRows?.length) {
+      logFallback(skillId, scenariosError?.message ?? "No scenarios found for skill");
+      return fallback;
+    }
+
+    const { data: mappings, error: mappingsError } = await supabase
+      .from("skill_scenarios")
+      .select("skill_id, scenario_id, sort_order, relevance_score")
+      .eq("skill_id", skillId)
+      .order("sort_order", { ascending: true });
+
+    if (mappingsError) {
+      logFallback(skillId, mappingsError.message);
+      return fallback;
+    }
+
+    const scenarios = (scenarioRows as DbScenarioRow[]).map<ExplorerScenario>((scenario) => ({
+      id: scenario.id,
+      categorySlug: scenario.category_slug,
+      name: scenario.name,
+      sortOrder: scenario.sort_order,
+      aliases: [],
+    }));
+
+    const normalizedSkill = normalizeSkills(
+      skillRow.category_slug,
+      scenarios,
+      [skillRow as DbSkillRow],
+      (mappings ?? []) as DbSkillScenarioRow[],
+    )[0];
+
+    const scenarioNameById = new Map(scenarios.map((scenario) => [scenario.id, scenario.name]));
+
+    return {
+      ...normalizedSkill,
+      categoryLabel: (categoryRow as DbCategoryRow | null)?.label ?? categoryMeta.navLabel,
+      categoryTitle: categoryMeta.heroTitle,
+      categorySubtitle: categoryMeta.heroSubtitle,
+      categoryDescription: categoryMeta.heroDescription,
+      workflowTags: categoryMeta.workflowTags,
+      scenarioNames: normalizedSkill.scenarioIds
+        .map((scenarioId) => scenarioNameById.get(scenarioId))
+        .filter((value): value is string => Boolean(value)),
+    };
+  } catch (error) {
+    logFallback(skillId, error instanceof Error ? error.message : "Unknown error");
     return fallback;
   }
 }

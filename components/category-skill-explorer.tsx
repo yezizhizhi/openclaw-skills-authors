@@ -83,7 +83,7 @@ export function CategorySkillExplorer({
 
             <p className="explorer-copy">{skill.description}</p>
 
-            <Link href="/install-guide" className="secondary-button explorer-button">
+            <Link href={`/skills/${skill.id}`} className="secondary-button explorer-button">
               查看详情
             </Link>
           </article>

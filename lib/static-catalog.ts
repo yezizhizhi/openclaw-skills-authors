@@ -1,6 +1,15 @@
 import { categories } from "@/lib/site-data";
 import type { CategoryExplorerData, ExplorerScenario, ExplorerSkill } from "@/lib/skill-search";
 
+export type StaticSkillDetail = ExplorerSkill & {
+  categoryLabel: string;
+  categoryTitle: string;
+  categorySubtitle: string;
+  categoryDescription: string;
+  workflowTags: string[];
+  scenarioNames: string[];
+};
+
 const scenarioAliases: Record<string, string[]> = {
   "books:素材清洗": ["素材整理", "资料清洗", "资料整理"],
   "books:角色设定": ["人物设定", "角色创建", "角色塑造"],
@@ -146,6 +155,42 @@ const staticCategoryExplorerData = new Map<string, CategoryExplorerData>(
   }),
 );
 
+const staticSkillDetails = new Map<string, StaticSkillDetail>();
+
+for (const category of categories) {
+  const categoryExplorer = staticCategoryExplorerData.get(category.slug);
+
+  if (!categoryExplorer) {
+    continue;
+  }
+
+  const scenarioNameById = new Map(
+    categoryExplorer.scenarios.map((scenario) => [scenario.id, scenario.name]),
+  );
+
+  for (const skill of categoryExplorer.skills) {
+    staticSkillDetails.set(skill.id, {
+      ...skill,
+      categoryLabel: category.navLabel,
+      categoryTitle: category.heroTitle,
+      categorySubtitle: category.heroSubtitle,
+      categoryDescription: category.heroDescription,
+      workflowTags: category.workflowTags,
+      scenarioNames: skill.scenarioIds
+        .map((scenarioId) => scenarioNameById.get(scenarioId))
+        .filter((value): value is string => Boolean(value)),
+    });
+  }
+}
+
 export function getStaticCategoryExplorerData(categorySlug: string) {
   return staticCategoryExplorerData.get(categorySlug) ?? null;
+}
+
+export function getStaticSkillDetail(skillId: string) {
+  return staticSkillDetails.get(skillId) ?? null;
+}
+
+export function getStaticSkillIds() {
+  return Array.from(staticSkillDetails.keys());
 }

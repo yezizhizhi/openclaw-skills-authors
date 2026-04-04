@@ -10,19 +10,19 @@ export default function HomePage() {
       name: "Chapter Blueprint Forge",
       scene: "适用场景：长篇书稿、章节大纲、故事推进",
       tags: ["适合新手", "热门", "长篇创作"],
-      href: "/categories/books#featured-skills",
+      href: "/skills/books-chapter-blueprint-forge",
     },
     {
       name: "Angle Finder Brief",
       scene: "适用场景：公众号选题、专栏切入、观点文章",
       tags: ["适合新手", "热门", "文章写作"],
-      href: "/categories/articles#featured-skills",
+      href: "/skills/articles-angle-finder-brief",
     },
     {
       name: "Literature Review Mapper",
       scene: "适用场景：文献整理、综述摘要、研究脉络梳理",
       tags: ["学术整理", "热门", "研究写作"],
-      href: "/categories/academic#featured-skills",
+      href: "/skills/academic-literature-review-mapper",
     },
   ];
   const reasonCards = [
