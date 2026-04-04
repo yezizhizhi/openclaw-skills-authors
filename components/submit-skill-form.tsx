@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { GoogleLoginButton } from "@/components/google-login-button";
+import { AuthDialogTrigger } from "@/components/auth-dialog-trigger";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 function getSubmitterEmail(session: Session | null) {
@@ -94,7 +94,7 @@ export function SubmitSkillForm() {
           推荐提交需要先登录，这样我们才能记录推荐来源，并在后续收录时和你同步结果。
         </p>
         <div className="mx-auto w-full max-w-sm">
-          <GoogleLoginButton nextPath="/submit-skills" />
+          <AuthDialogTrigger label="登录后提交推荐" className="primary-button w-full" />
         </div>
       </div>
     );

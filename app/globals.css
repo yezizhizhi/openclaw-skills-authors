@@ -218,6 +218,102 @@ a {
   color: var(--soft-ink);
 }
 
+.auth-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.auth-modal-dismiss {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(6, 9, 16, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.auth-modal-shell {
+  position: relative;
+  z-index: 1;
+  width: min(28rem, 100%);
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(15, 22, 35, 0.98), rgba(10, 15, 24, 0.98));
+  box-shadow: var(--shadow);
+  padding: 1.6rem;
+}
+
+.auth-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  height: 2.2rem;
+  width: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--soft-ink);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.auth-modal-kicker {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--accent-soft);
+}
+
+.auth-modal-title {
+  margin: 1rem 0 0;
+  font-size: 2.2rem;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.auth-modal-copy {
+  margin-top: 1rem;
+  color: var(--muted-ink);
+  line-height: 1.85;
+}
+
+.auth-modal-divider {
+  position: relative;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.auth-modal-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--line);
+}
+
+.auth-modal-divider span {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2rem;
+  border-radius: 999px;
+  background: rgba(10, 15, 24, 0.98);
+  color: var(--muted-ink);
+  font-size: 0.9rem;
+}
+
 .footer-shell,
 .preview-frame,
 .category-hero-card,

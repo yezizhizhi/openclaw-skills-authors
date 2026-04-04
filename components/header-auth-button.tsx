@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
+import { AuthDialogTrigger } from "@/components/auth-dialog-trigger";
 import { getSupabaseBrowserClient, hasSupabaseBrowserEnv } from "@/lib/supabase/browser";
 
 function formatIdentity(session: Session | null) {
@@ -51,11 +51,7 @@ export function HeaderAuthButton() {
   }
 
   if (!session) {
-    return (
-      <Link href="/login" className="header-nav-link">
-        登录
-      </Link>
-    );
+    return <AuthDialogTrigger label="登录" className="header-nav-link" />;
   }
 
   return (
