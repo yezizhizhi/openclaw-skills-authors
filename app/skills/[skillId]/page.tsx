@@ -31,15 +31,37 @@ export async function generateMetadata({ params }: SkillDetailPageProps): Promis
   };
 }
 
+function getStableSourceLink(
+  skill: NonNullable<Awaited<ReturnType<typeof getSkillDetail>>>,
+) {
+  if (!skill.sourceUrl) {
+    return null;
+  }
+
+  try {
+    const sourceUrl = new URL(skill.sourceUrl);
+
+    if (sourceUrl.hostname === "clawhub.ai") {
+      const slug = sourceUrl.pathname.split("/").filter(Boolean).pop();
+      const query = slug ? slug.replace(/-/g, " ") : skill.name;
+      return `https://clawhub.ai/skills?q=${encodeURIComponent(query)}`;
+    }
+
+    return skill.sourceUrl;
+  } catch {
+    return skill.sourceUrl;
+  }
+}
+
 function buildOpenClawPrompt(
   skill: NonNullable<Awaited<ReturnType<typeof getSkillDetail>>>,
 ) {
+  const sourceLine = getStableSourceLink(skill) ?? "未提供";
   const scenarioLine = skill.scenarioNames.length
     ? skill.scenarioNames.join("、")
     : skill.workflow;
 
   const tagLine = skill.tags.length ? skill.tags.join("、") : `${skill.categoryLabel}、${skill.workflow}`;
-  const sourceLine = skill.sourceUrl ?? "未提供";
 
   return [
     `请调用 OpenClaw Skill：${skill.name}`,
@@ -68,6 +90,7 @@ export default async function SkillDetailPage({ params }: SkillDetailPageProps) 
     notFound();
   }
 
+  const stableSourceLink = getStableSourceLink(skill);
   const openClawPrompt = buildOpenClawPrompt(skill);
 
   return (
@@ -97,9 +120,9 @@ export default async function SkillDetailPage({ params }: SkillDetailPageProps) 
             <Link href="/install-guide" className="secondary-button skill-detail-button">
               查看安装指南
             </Link>
-            {skill.sourceUrl ? (
+            {stableSourceLink ? (
               <a
-                href={skill.sourceUrl}
+                href={stableSourceLink}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="secondary-button skill-detail-button"
