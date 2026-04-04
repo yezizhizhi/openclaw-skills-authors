@@ -49,23 +49,8 @@ type DbCategoryRow = {
 
 export type SkillDetail = StaticSkillDetail;
 
-function getCanonicalSkillName(skillName: string, sourceUrl: string | null) {
-  if (!sourceUrl) {
-    return skillName;
-  }
-
-  try {
-    const url = new URL(sourceUrl);
-
-    if (url.hostname !== "clawhub.ai") {
-      return skillName;
-    }
-
-    const slug = url.pathname.split("/").filter(Boolean).pop();
-    return slug || skillName;
-  } catch {
-    return skillName;
-  }
+function getCanonicalSkillName(skillName: string) {
+  return skillName;
 }
 
 function getFallback(categorySlug: string) {
@@ -115,7 +100,7 @@ function normalizeSkills(
     return {
       id: skill.id,
       categorySlug,
-      name: getCanonicalSkillName(skill.name, skill.source_url),
+      name: getCanonicalSkillName(skill.name),
       workflow: skill.workflow,
       description: skill.description,
       models: skill.models ?? [],
@@ -135,6 +120,11 @@ function normalizeSkills(
 
 export async function getCategoryExplorerData(categorySlug: string): Promise<CategoryExplorerData | null> {
   const fallback = getFallback(categorySlug);
+
+  if (categorySlug === "books") {
+    return fallback;
+  }
+
   const supabase = getSupabaseServerClient();
 
   if (!supabase) {
@@ -226,6 +216,11 @@ export async function getCategoryExplorerData(categorySlug: string): Promise<Cat
 
 export async function getSkillDetail(skillId: string): Promise<SkillDetail | null> {
   const fallback = getStaticSkillDetail(skillId);
+
+  if (skillId.startsWith("books-")) {
+    return fallback;
+  }
+
   const supabase = getSupabaseServerClient();
 
   if (!supabase) {

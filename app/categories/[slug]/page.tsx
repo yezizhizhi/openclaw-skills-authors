@@ -100,7 +100,48 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </div>
       </section>
 
-      <section className="site-shell category-search-section section-gap" id="featured-skills">
+      <section className="site-shell section-gap" id="featured-skills">
+        <div className="section-heading centered category-search-heading">
+          <h2 className="section-title">{category.navLabel}类别的精选 Skills</h2>
+          <p className="section-copy">先看少量更通用、更高频的优质 Skills，不把所有结果一次堆给你。</p>
+        </div>
+
+        <div className="grid gap-4 mt-8 md:grid-cols-3">
+          {category.featuredSkills.map((skill) => (
+            <article key={skill.name} className="category-skill-card">
+              <div>
+                <p className="category-card-label">精选 Skill</p>
+                <h3 className="category-skill-title">{skill.name}</h3>
+              </div>
+
+              <div className="category-skill-block">
+                <p className="category-skill-scene">
+                  {category.navLabel} / {skill.workflow}
+                </p>
+              </div>
+
+              <p className="category-skill-copy">{skill.description}</p>
+
+              {skill.sourceUrl ? (
+                <a
+                  href={skill.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="primary-button category-skill-button"
+                >
+                  前往 ClawHub ↗
+                </a>
+              ) : (
+                <Link href={`/skills/${category.slug}-${skill.name.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-").replace(/^-+|-+$/g, "")}`} className="secondary-button category-skill-button">
+                  查看详情
+                </Link>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="site-shell category-search-section section-gap" id="search-skills">
         <div className="section-heading centered category-search-heading">
           <h2 className="section-title">输入你需要的场景，快速找到对应 Skills</h2>
           <p className="section-copy">试试输入当前工作环节，系统会优先输入匹配的skills</p>

@@ -8,6 +8,7 @@ export type SkillPreview = {
   version: string;
   workflow: string;
   description: string;
+  sourceUrl?: string;
   models: string[];
   inputPreview: string;
   outputPreview: string;
@@ -45,6 +46,7 @@ export type Category = {
   flowDescription: string;
   flowCards: FlowCard[];
   featuredSkills: SkillPreview[];
+  catalogSkills?: SkillPreview[];
   pageCtaTitle: string;
   pageCtaCopy: string;
   faqs: FaqItem[];
@@ -133,130 +135,315 @@ export const homeFaqs: FaqItem[] = [
   },
 ];
 
-const booksSkills: SkillPreview[] = [
+const booksCatalogSkills: SkillPreview[] = [
   {
-    name: "outline-mainline-extraction",
+    name: "Last30days",
     version: "ClawHub verified",
-    workflow: "全书主线提炼",
-    description:
-      "从大量素材和支线里提炼整本书真正要持续推进的主线，帮助作者先稳住主题、冲突和叙事方向。",
-    models: ["GPT-4.1", "Claude 3.7"],
-    inputPreview: "选题、素材和章节想法很多，但整本书到底围绕哪条主线推进还不够清晰。",
-    outputPreview: "输出全书主问题、核心推进线、关键转折和可持续延展的叙事骨架。",
-    primaryAction: "View Source Notes",
+    workflow: "选题调研",
+    description: "聚合多平台近 30 天热点，自动去重评分并输出趋势报告，适合判断一本书值不值得写。",
+    sourceUrl: "https://clawhub.ai/mvanhorn/last30days-official",
+    models: ["OpenClaw"],
+    inputPreview: "想知道某个选题最近是不是正在升温，读者真实在讨论什么。",
+    outputPreview: "输出近期热点、话题趋势和带来源引用的调研结果。",
+    primaryAction: "ClawHub ↗",
     badge: "Editor’s Choice",
-    configSnippet: `skill: outline-mainline-extraction
-source: https://clawhub.ai/skills/outline-mainline-extraction
+    configSnippet: `skill: Last30days
+source: https://clawhub.ai/mvanhorn/last30days-official
 category: books
-focus: 全书主线提炼`,
+focus: 选题调研`,
   },
   {
-    name: "structure-building",
+    name: "Google News API Skill",
     version: "ClawHub verified",
-    workflow: "整体结构搭建",
-    description:
-      "把主线、章节层级和前后承接关系搭成可执行结构，减少写着写着整体散掉的风险。",
-    models: ["GPT-4.1", "Gemini 2.5"],
-    inputPreview: "知道大概要写什么，但全书结构层级和章节承接还没有真正搭起来。",
-    outputPreview: "输出更清楚的上中下段、章节职责和结构推进顺序。",
-    primaryAction: "View Source Notes",
-    configSnippet: `skill: structure-building
-source: https://clawhub.ai/skills/structure-building
+    workflow: "选题调研",
+    description: "按关键词和时间段抓取 Google News，适合纪实和商业书做行业监控、竞品追踪、媒体热度分析。",
+    sourceUrl: "https://clawhub.ai/phheng/google-news-api-skill",
+    models: ["OpenClaw"],
+    inputPreview: "要判断某个领域最近的新闻密度、媒体关注度和事件脉络。",
+    outputPreview: "返回标题、来源、时间和原文链接，快速搭起新闻素材池。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Google News API Skill
+source: https://clawhub.ai/phheng/google-news-api-skill
 category: books
-focus: 整体结构搭建`,
+focus: 选题调研`,
   },
   {
-    name: "chapter-responsibility-split",
+    name: "Google Trends",
     version: "ClawHub verified",
-    workflow: "章节职责拆分",
-    description:
-      "为每一章分配明确职责，区分信息交代、冲突推进、人物变化和悬念承接。",
-    models: ["Claude 3.7", "GPT-4.1"],
-    inputPreview: "有全书大纲，但每章为什么存在、各自负责什么还比较模糊。",
-    outputPreview: "输出章节职责清单，明确每章承担的推进任务和不可替代性。",
-    primaryAction: "View Source Notes",
-    configSnippet: `skill: chapter-responsibility-split
-source: https://clawhub.ai/skills/chapter-responsibility-split
+    workflow: "选题调研",
+    description: "分析搜索量、地域分布和相关话题，适合判断方法论和商业类书稿的市场潜力。",
+    sourceUrl: "https://clawhub.ai/satnamra/google-trends",
+    models: ["OpenClaw"],
+    inputPreview: "想判断某个书名方向或关键词是否具备持续增长空间。",
+    outputPreview: "给出趋势对比、相关主题和热度变化信号。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Google Trends
+source: https://clawhub.ai/satnamra/google-trends
 category: books
-focus: 章节职责拆分`,
+focus: 选题调研`,
   },
   {
-    name: "chapter-content-prompts",
+    name: "Web Search by Exa",
     version: "ClawHub verified",
-    workflow: "章节重点内容提示",
-    description:
-      "围绕章节目标生成更具体的内容提示，帮助作者在扩写前先抓住这一章最该写的内容。",
-    models: ["GPT-4.1", "DeepSeek"],
-    inputPreview: "已经知道这一章要写什么，但下笔时容易空、散、缺重点。",
-    outputPreview: "输出每章应重点展开的场景、情绪、信息点和推进提示。",
-    primaryAction: "View Source Notes",
-    configSnippet: `skill: chapter-content-prompts
-source: https://clawhub.ai/skills/chapter-content-prompts
+    workflow: "选题调研",
+    description: "按语义搜索论文、报告和人物资料，适合纪实、文学和方法论书的深度背景调研。",
+    sourceUrl: "https://clawhub.ai/theishangoswami/web-search-exa",
+    models: ["OpenClaw"],
+    inputPreview: "需要跳出关键词检索，快速理解一个主题背后的背景材料。",
+    outputPreview: "返回更贴近问题本身的语义检索结果和高质量来源。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Web Search by Exa
+source: https://clawhub.ai/theishangoswami/web-search-exa
 category: books
-focus: 章节重点内容提示`,
+focus: 选题调研`,
   },
   {
-    name: "structure-conflict-check",
+    name: "Academic Deep Research",
     version: "ClawHub verified",
-    workflow: "结构重复与冲突检查",
-    description:
-      "检查章节之间是否有重复功能、信息打架或前后承接冲突，避免结构层面的返工。",
-    models: ["Claude 3.7", "Gemini 2.5"],
-    inputPreview: "大纲写出来了，但担心章节功能重复、冲突或前后不顺。",
-    outputPreview: "标出结构重复、职责冲突和承接断点，方便在扩写前先修结构。",
-    primaryAction: "View Source Notes",
-    configSnippet: `skill: structure-conflict-check
-source: https://clawhub.ai/skills/structure-conflict-check
+    workflow: "资料搜集",
+    description: "按严谨研究流程循环搜集资料并生成 APA 7 引用，适合纪实、方法论和商业书稿。",
+    sourceUrl: "https://clawhub.ai/kesslerio/academic-deep-research",
+    models: ["OpenClaw"],
+    inputPreview: "需要带引用地收集文献与研究材料，保证资料可信度。",
+    outputPreview: "输出分轮研究结果、引用格式和研究计划检查点。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Academic Deep Research
+source: https://clawhub.ai/kesslerio/academic-deep-research
 category: books
-focus: 结构重复与冲突检查`,
+focus: 资料搜集`,
   },
   {
-    name: "rhythm-control",
+    name: "Deep Research Pro",
     version: "ClawHub verified",
-    workflow: "节奏控制",
-    description:
-      "帮助作者检查整书或单章的推进节奏，平衡信息密度、情节推进和停顿位置。",
-    models: ["Claude 3.7", "GPT-4.1"],
-    inputPreview: "内容不算少，但读起来快慢失衡，有的地方拖，有的地方又跳太快。",
-    outputPreview: "给出节奏调整建议，指出该压缩、放慢或提前铺垫的位置。",
-    primaryAction: "View Source Notes",
-    configSnippet: `skill: rhythm-control
-source: https://clawhub.ai/skills/rhythm-control
-category: books
-focus: 节奏控制`,
-  },
-  {
-    name: "writing-feasibility-check",
-    version: "ClawHub verified",
-    workflow: "写作可执行性验证",
-    description:
-      "在正式开写前检查当前大纲是否真的可写，识别空章、虚章和难以落地的部分。",
-    models: ["GPT-4.1", "Claude 3.7"],
-    inputPreview: "大纲看起来完整，但不确定每一部分是否真的能顺利写成正文。",
-    outputPreview: "指出可执行性薄弱的章节、信息断层和需要补足的前置条件。",
-    primaryAction: "View Source Notes",
-    configSnippet: `skill: writing-feasibility-check
-source: https://clawhub.ai/skills/writing-feasibility-check
-category: books
-focus: 写作可执行性验证`,
-  },
-  {
-    name: "multi-outline-design",
-    version: "ClawHub verified",
-    workflow: "多方案大纲设计",
-    description:
-      "一次生成多套不同推进逻辑的大纲方案，帮助作者在正式定稿前比较路径和风险。",
-    models: ["Claude 3.7", "Gemini 2.5"],
-    inputPreview: "主题确定了，但不知道应该走线性推进、双线对照还是更强冲突的结构。",
-    outputPreview: "给出多套大纲方案、各自优缺点和更适合的叙事方向。",
-    primaryAction: "View Source Notes",
+    workflow: "资料搜集",
+    description: "把研究主题拆成子问题并行搜索多个来源，生成带引用的结构化 Markdown 报告。",
+    sourceUrl: "https://clawhub.ai/parags/deep-research-pro",
+    models: ["OpenClaw"],
+    inputPreview: "一个主题下有很多支线问题，需要系统梳理后再写作。",
+    outputPreview: "输出带引用的研究报告和已拆解的子问题结构。",
+    primaryAction: "ClawHub ↗",
     badge: "Editor’s Choice",
-    configSnippet: `skill: multi-outline-design
-source: https://clawhub.ai/skills/multi-outline-design
+    configSnippet: `skill: Deep Research Pro
+source: https://clawhub.ai/parags/deep-research-pro
 category: books
-focus: 多方案大纲设计`,
+focus: 资料搜集`,
+  },
+  {
+    name: "Web Search Plus",
+    version: "ClawHub verified",
+    workflow: "资料搜集",
+    description: "聚合 7 大搜索引擎并自动路由最优引擎，适合做大批量资料搜集与事实查找。",
+    sourceUrl: "https://clawhub.ai/robbyczgw-cla/web-search-plus",
+    models: ["OpenClaw"],
+    inputPreview: "想把多个搜索源的结果一次聚齐，减少来回切换。",
+    outputPreview: "返回多来源搜索结果，适合快速搭建资料库。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Web Search Plus
+source: https://clawhub.ai/robbyczgw-cla/web-search-plus
+category: books
+focus: 资料搜集`,
+  },
+  {
+    name: "Perplexity",
+    version: "ClawHub verified",
+    workflow: "资料搜集",
+    description: "用带引用的 AI 搜索快速核实事实，适合纪实和商业书稿的事实确认。",
+    sourceUrl: "https://clawhub.ai/zats/perplexity",
+    models: ["OpenClaw"],
+    inputPreview: "要快速确认某个事实或数据点，而不是完整做一轮研究。",
+    outputPreview: "直接给出答案和引用来源，适合事实核验。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Perplexity
+source: https://clawhub.ai/zats/perplexity
+category: books
+focus: 资料搜集`,
+  },
+  {
+    name: "Faster Whisper",
+    version: "ClawHub verified",
+    workflow: "资料搜集",
+    description: "本地高速语音转文字，适合课程录音、访谈音频、讲座资料转稿。",
+    sourceUrl: "https://clawhub.ai/theplasmak/faster-whisper",
+    models: ["OpenClaw"],
+    inputPreview: "需要把长音频或课程录音先转成文字资料再进入整理。",
+    outputPreview: "输出可继续归纳的转录文本和字幕结果。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Faster Whisper
+source: https://clawhub.ai/theplasmak/faster-whisper
+category: books
+focus: 资料搜集`,
+  },
+  {
+    name: "OpenClaw YouTube Transcript",
+    version: "ClawHub verified",
+    workflow: "资料搜集",
+    description: "直接提取 YouTube 字幕，适合课程转书、纪实素材整理和访谈转录。",
+    sourceUrl: "https://clawhub.ai/YoavRez/openclaw-youtube-transcript",
+    models: ["OpenClaw"],
+    inputPreview: "想把公开视频或访谈的字幕快速纳入书稿素材池。",
+    outputPreview: "返回可继续总结和拆分的文字稿。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: OpenClaw YouTube Transcript
+source: https://clawhub.ai/YoavRez/openclaw-youtube-transcript
+category: books
+focus: 资料搜集`,
+  },
+  {
+    name: "Summarize",
+    version: "ClawHub verified",
+    workflow: "素材整理",
+    description: "通吃网页、PDF、图片、音频和 YouTube，快速压缩海量素材，适合任何书型。",
+    sourceUrl: "https://clawhub.ai/steipete/summarize",
+    models: ["OpenClaw"],
+    inputPreview: "素材来源很多，信息量大，写作前需要先提炼重点。",
+    outputPreview: "输出摘要、要点、详细拆解或行动项版本。",
+    primaryAction: "ClawHub ↗",
+    badge: "Editor’s Choice",
+    configSnippet: `skill: Summarize
+source: https://clawhub.ai/steipete/summarize
+category: books
+focus: 素材整理`,
+  },
+  {
+    name: "Nano Pdf",
+    version: "ClawHub verified",
+    workflow: "素材整理",
+    description: "用自然语言处理 PDF，提取段落、表格和数据，适合白皮书、报告和学术资料整理。",
+    sourceUrl: "https://clawhub.ai/steipete/nano-pdf",
+    models: ["OpenClaw"],
+    inputPreview: "手头有大量 PDF 材料，需要快速抽出可写内容。",
+    outputPreview: "输出表格、段落要点和可引用数据。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Nano Pdf
+source: https://clawhub.ai/steipete/nano-pdf
+category: books
+focus: 素材整理`,
+  },
+  {
+    name: "Ontology",
+    version: "ClawHub verified",
+    workflow: "素材整理",
+    description: "构建人物、事件和概念之间的知识图谱，特别适合纪实类人物关系和时间线管理。",
+    sourceUrl: "https://clawhub.ai/oswalpalash/ontology",
+    models: ["OpenClaw"],
+    inputPreview: "人物关系复杂、事件很多，普通笔记已经不好管理。",
+    outputPreview: "输出结构化关系图，帮助后续章节编排。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Ontology
+source: https://clawhub.ai/oswalpalash/ontology
+category: books
+focus: 素材整理`,
+  },
+  {
+    name: "Obsidian",
+    version: "ClawHub verified",
+    workflow: "素材整理",
+    description: "让 Agent 直接读写本地 Obsidian Vault，把阅读笔记和素材库接入写作流程。",
+    sourceUrl: "https://clawhub.ai/steipete/obsidian",
+    models: ["OpenClaw"],
+    inputPreview: "已有 Obsidian 素材库，希望它直接服务写书流程。",
+    outputPreview: "可直接搜索、创建双链并组织本地笔记。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Obsidian
+source: https://clawhub.ai/steipete/obsidian
+category: books
+focus: 素材整理`,
+  },
+  {
+    name: "Notion",
+    version: "ClawHub verified",
+    workflow: "素材整理",
+    description: "读写 Notion 页面与数据库，适合团队协作整理素材、管理章节进度和内容库。",
+    sourceUrl: "https://clawhub.ai/steipete/notion",
+    models: ["OpenClaw"],
+    inputPreview: "素材和章节计划都在 Notion 里，希望写作过程打通。",
+    outputPreview: "让 Notion 数据库直接参与整理和管理。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Notion
+source: https://clawhub.ai/steipete/notion
+category: books
+focus: 素材整理`,
+  },
+  {
+    name: "SEO Content Writer",
+    version: "ClawHub verified",
+    workflow: "大纲创建",
+    description: "按内容类型生成结构模板和完整层级规划，也能延伸到方法论和商业书的正文写作。",
+    sourceUrl: "https://clawhub.ai/aaron-he-zhu/seo-content-writer",
+    models: ["OpenClaw"],
+    inputPreview: "要先搭一套结构清楚、可扩展的章节框架。",
+    outputPreview: "给出完整层级规划，并可延展到正文草稿。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: SEO Content Writer
+source: https://clawhub.ai/aaron-he-zhu/seo-content-writer
+category: books
+focus: 大纲创建`,
+  },
+  {
+    name: "Marketing Mode",
+    version: "ClawHub verified",
+    workflow: "大纲创建",
+    description: "内置 140+ 商业框架，适合商业书和方法论书做逻辑骨架设计，也适合后续正文推进。",
+    sourceUrl: "https://clawhub.ai/TheSethRose/marketing-mode",
+    models: ["OpenClaw"],
+    inputPreview: "需要把方法论或商业逻辑先搭成有框架的章节体系。",
+    outputPreview: "输出更清楚的商业框架、大纲和行动逻辑。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Marketing Mode
+source: https://clawhub.ai/TheSethRose/marketing-mode
+category: books
+focus: 大纲创建`,
+  },
+  {
+    name: "Marketing Skills",
+    version: "ClawHub verified",
+    workflow: "正文写作",
+    description: "23 个独立营销写作模块，适合商业书、课程转书中的案例、对话与行动指南章节。",
+    sourceUrl: "https://clawhub.ai/jchopard69/marketing-skills",
+    models: ["OpenClaw"],
+    inputPreview: "正文需要更强的案例、行动建议和转化表达。",
+    outputPreview: "输出更适合商业叙事的章节内容和营销写作模块。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Marketing Skills
+source: https://clawhub.ai/jchopard69/marketing-skills
+category: books
+focus: 正文写作`,
+  },
+  {
+    name: "Humanizer",
+    version: "ClawHub verified",
+    workflow: "质检修订",
+    description: "逐项消除 AI 写作痕迹和模板化表达，让书稿更接近真人写作质感。",
+    sourceUrl: "https://clawhub.ai/biostartechnology/humanizer",
+    models: ["OpenClaw"],
+    inputPreview: "正文已经成型，但语感仍然偏模板化、像 AI 生成。",
+    outputPreview: "输出更自然的语言节奏，减少明显 AI 痕迹。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: Humanizer
+source: https://clawhub.ai/biostartechnology/humanizer
+category: books
+focus: 质检修订`,
+  },
+  {
+    name: "self-improving-agent",
+    version: "ClawHub verified",
+    workflow: "质检修订",
+    description: "记录每轮修订错误与修正，持续积累你的写作偏好，适合长期打磨整本书稿。",
+    sourceUrl: "https://clawhub.ai/pskoett/self-improving-agent",
+    models: ["OpenClaw"],
+    inputPreview: "希望修订过程能越改越懂你的标准，而不是每次从零开始。",
+    outputPreview: "持续沉淀修订记忆，帮助后续章节风格越来越统一。",
+    primaryAction: "ClawHub ↗",
+    configSnippet: `skill: self-improving-agent
+source: https://clawhub.ai/pskoett/self-improving-agent
+category: books
+focus: 质检修订`,
   },
 ];
+
+const booksFeaturedSkills = booksCatalogSkills.filter((skill) =>
+  ["Last30days", "Deep Research Pro", "Summarize"].includes(skill.name),
+);
 
 const articlesSkills: SkillPreview[] = [
   {
@@ -486,18 +673,18 @@ export const categories: Category[] = [
   {
     slug: "books",
     navLabel: "写书",
-    cardSubtitle: "小说｜非虚构｜传记｜个人成长",
+    cardSubtitle: "文学｜纪实｜方法论｜商业｜课程转书",
     cardCopy:
-      "从素材整理、结构搭建到章节扩写与审校修订，帮助你把零散灵感推进成完整书稿。",
+      "从选题调研、资料搜集到正文写作与质检修订，帮助你把零散素材推进成完整书稿。",
     metaTitle: "OpenClaw Skills for Book Writing",
     metaDescription:
       "OpenClaw Skills for books, fiction, nonfiction, memoir, and long-form writing workflows.",
     heroTag: "Books",
     heroTitle: "OpenClaw Skills for Book Writing",
-    heroSubtitle: "面向小说、非虚构、传记与个人成长写作的 OpenClaw Skills",
+    heroSubtitle: "文学、纪实、方法论、商业、课程转书",
     heroDescription:
-      "从素材整理、人物设定、结构搭建到章节扩写与审校修订，这里收录了更适合长篇创作流程的 OpenClaw Skills，帮助作者把零散想法推进成可执行、可持续的写作系统。",
-    workflowTags: ["素材清洗", "角色设定", "章节大纲", "初稿扩写", "风格润色", "交叉校对"],
+      "从选题调研、资料搜集、素材整理，到大纲创建、正文写作和质检修订，我们将适合长篇创作的 OpenClaw Skills 按流程整理，帮助作者把零散想法推进成可执行、可持续的写作系统。",
+    workflowTags: ["选题调研", "资料搜集", "素材整理", "大纲创建", "正文写作", "质检修订"],
     audienceTitle: "这类页面最适合先服务哪些长篇创作场景",
     audienceCopy:
       "我们先把“写书”页做成模板页，因为它的流程最长、信息密度最高，也最能验证整站的视觉和结构是否成立。",
@@ -538,7 +725,8 @@ export const categories: Category[] = [
         copy: "让前后设定对齐、删除重复信息，把读者最容易卡住的断点提前处理掉。",
       },
     ],
-    featuredSkills: booksSkills,
+    featuredSkills: booksFeaturedSkills,
+    catalogSkills: booksCatalogSkills,
     pageCtaTitle: "“写书”页已经可以作为后续 5 个分类页的结构模板",
     pageCtaCopy:
       "如果你认可这页的视觉密度、卡片交互和信息分层，我们接下来只需要替换文案与示例卡片，就能很快铺开写文章、写文案、写报告、写论文和写课程五类页面。",
@@ -914,7 +1102,7 @@ export const categories: Category[] = [
 ];
 
 export const editorChoices: SkillPreview[] = [
-  booksSkills[0],
+  booksFeaturedSkills[0],
   copywritingSkills[0],
   academicSkills[0],
 ];

@@ -11,12 +11,12 @@ export type StaticSkillDetail = ExplorerSkill & {
 };
 
 const scenarioAliases: Record<string, string[]> = {
-  "books:素材清洗": ["素材整理", "资料清洗", "资料整理"],
-  "books:角色设定": ["人物设定", "角色创建", "角色塑造"],
-  "books:章节大纲": ["大纲创建", "大纲生成", "章节规划"],
-  "books:初稿扩写": ["样稿写作", "扩写正文", "正文扩写"],
-  "books:风格润色": ["文风润色", "语气调整", "风格调整"],
-  "books:交叉校对": ["终稿质检", "逻辑校对", "全文校对"],
+  "books:选题调研": ["选题分析", "市场调研", "热点判断"],
+  "books:资料搜集": ["资料收集", "深度研究", "一手资料"],
+  "books:素材整理": ["资料整理", "知识库整理", "素材归纳"],
+  "books:大纲创建": ["大纲生成", "结构搭建", "章节框架"],
+  "books:正文写作": ["样稿写作", "全书写稿", "章节成稿"],
+  "books:质检修订": ["终稿质检", "逻辑校对", "AI痕迹修订"],
   "articles:选题拆解": ["选题方向", "选题分析", "角度拆解"],
   "articles:提纲整理": ["提纲创建", "结构提纲", "文章提纲"],
   "articles:观点展开": ["论点展开", "内容展开", "观点延展"],
@@ -50,14 +50,26 @@ const scenarioAliases: Record<string, string[]> = {
 };
 
 const skillScenarioNames: Record<string, string[]> = {
-  "books:outline-mainline-extraction": ["素材清洗", "章节大纲"],
-  "books:structure-building": ["素材清洗", "章节大纲"],
-  "books:chapter-responsibility-split": ["章节大纲", "初稿扩写"],
-  "books:chapter-content-prompts": ["章节大纲", "初稿扩写"],
-  "books:structure-conflict-check": ["风格润色", "交叉校对"],
-  "books:rhythm-control": ["初稿扩写", "风格润色"],
-  "books:writing-feasibility-check": ["章节大纲", "交叉校对"],
-  "books:multi-outline-design": ["素材清洗", "章节大纲"],
+  "books:Last30days": ["选题调研"],
+  "books:Google News API Skill": ["选题调研"],
+  "books:Google Trends": ["选题调研"],
+  "books:Web Search by Exa": ["选题调研", "资料搜集"],
+  "books:Academic Deep Research": ["资料搜集"],
+  "books:Deep Research Pro": ["资料搜集"],
+  "books:Web Search Plus": ["资料搜集"],
+  "books:Perplexity": ["资料搜集"],
+  "books:Faster Whisper": ["资料搜集"],
+  "books:OpenClaw YouTube Transcript": ["资料搜集"],
+  "books:Summarize": ["素材整理"],
+  "books:Nano Pdf": ["素材整理"],
+  "books:Ontology": ["素材整理"],
+  "books:Obsidian": ["素材整理"],
+  "books:Notion": ["素材整理"],
+  "books:SEO Content Writer": ["大纲创建", "正文写作"],
+  "books:Marketing Mode": ["大纲创建", "正文写作"],
+  "books:Marketing Skills": ["正文写作"],
+  "books:Humanizer": ["质检修订"],
+  "books:self-improving-agent": ["质检修订"],
   "articles:Angle Finder Brief": ["选题拆解", "提纲整理", "观点展开"],
   "articles:Headline Refinery": ["标题优化", "段落润色", "发布前校对"],
   "copywriting:Hook Pulse Lab": ["爆款拆解", "情绪钩子", "内容生成"],
@@ -71,14 +83,26 @@ const skillScenarioNames: Record<string, string[]> = {
 };
 
 const skillSourceUrls: Record<string, string> = {
-  "books:outline-mainline-extraction": "https://clawhub.ai/skills/outline-mainline-extraction",
-  "books:structure-building": "https://clawhub.ai/skills/structure-building",
-  "books:chapter-responsibility-split": "https://clawhub.ai/skills/chapter-responsibility-split",
-  "books:chapter-content-prompts": "https://clawhub.ai/skills/chapter-content-prompts",
-  "books:structure-conflict-check": "https://clawhub.ai/skills/structure-conflict-check",
-  "books:rhythm-control": "https://clawhub.ai/skills/rhythm-control",
-  "books:writing-feasibility-check": "https://clawhub.ai/skills/writing-feasibility-check",
-  "books:multi-outline-design": "https://clawhub.ai/skills/multi-outline-design",
+  "books:Last30days": "https://clawhub.ai/mvanhorn/last30days-official",
+  "books:Google News API Skill": "https://clawhub.ai/phheng/google-news-api-skill",
+  "books:Google Trends": "https://clawhub.ai/satnamra/google-trends",
+  "books:Web Search by Exa": "https://clawhub.ai/theishangoswami/web-search-exa",
+  "books:Academic Deep Research": "https://clawhub.ai/kesslerio/academic-deep-research",
+  "books:Deep Research Pro": "https://clawhub.ai/parags/deep-research-pro",
+  "books:Web Search Plus": "https://clawhub.ai/robbyczgw-cla/web-search-plus",
+  "books:Perplexity": "https://clawhub.ai/zats/perplexity",
+  "books:Faster Whisper": "https://clawhub.ai/theplasmak/faster-whisper",
+  "books:OpenClaw YouTube Transcript": "https://clawhub.ai/YoavRez/openclaw-youtube-transcript",
+  "books:Summarize": "https://clawhub.ai/steipete/summarize",
+  "books:Nano Pdf": "https://clawhub.ai/steipete/nano-pdf",
+  "books:Ontology": "https://clawhub.ai/oswalpalash/ontology",
+  "books:Obsidian": "https://clawhub.ai/steipete/obsidian",
+  "books:Notion": "https://clawhub.ai/steipete/notion",
+  "books:SEO Content Writer": "https://clawhub.ai/aaron-he-zhu/seo-content-writer",
+  "books:Marketing Mode": "https://clawhub.ai/TheSethRose/marketing-mode",
+  "books:Marketing Skills": "https://clawhub.ai/jchopard69/marketing-skills",
+  "books:Humanizer": "https://clawhub.ai/biostartechnology/humanizer",
+  "books:self-improving-agent": "https://clawhub.ai/pskoett/self-improving-agent",
 };
 
 function slugify(value: string) {
@@ -131,7 +155,7 @@ function buildSkills(
       models: skill.models,
       tags: [categoryLabel, skill.workflow, skill.badge ?? "精选"].filter(Boolean),
       badge: skill.badge,
-      sourceUrl: skillSourceUrls[`${categorySlug}:${skill.name}`] ?? null,
+      sourceUrl: skill.sourceUrl ?? skillSourceUrls[`${categorySlug}:${skill.name}`] ?? null,
       installMode:
         skill.primaryAction === "Download Skill Pack"
           ? "download"
@@ -155,7 +179,7 @@ const staticCategoryExplorerData = new Map<string, CategoryExplorerData>(
       category.slug,
       category.navLabel,
       category.workflowTags,
-      category.featuredSkills,
+      category.catalogSkills ?? category.featuredSkills,
     );
 
     return [
