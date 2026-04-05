@@ -28,13 +28,13 @@ export function CategoryPageClient({
       <section className="site-shell category-page-shell pt-10 md:pt-16">
         <div className="hero-center category-page-hero">
           <h1 className="display-title hero-headline category-page-title">
-            {category.heroTitle}
+            {categories[slug].title}
           </h1>
           <h2 className="hero-subheadline category-page-subtitle">
-            {category.heroSubtitle}
+            {categories[slug].subtitle}
           </h2>
           <h3 className="hero-copy hero-copy-lg category-page-copy">
-            {category.heroDescription}
+            {categories[slug].copy}
           </h3>
 
           <div className="hero-actions">
@@ -65,7 +65,7 @@ export function CategoryPageClient({
         <div className="mt-8">
           <CategorySkillExplorer
             categorySlug={category.slug}
-            categoryLabel={category.navLabel}
+            categoryLabel={categories[slug].title}
             workflowTags={workflowTags}
             scenarios={explorerScenarios}
             skills={explorerSkills}
@@ -89,7 +89,7 @@ export function CategoryPageClient({
 
               <div className="category-skill-block">
                 <p className="category-skill-scene">
-                  {category.navLabel} / {skill.workflow}
+                  {categories[slug].title} / {skill.workflow}
                 </p>
               </div>
 
