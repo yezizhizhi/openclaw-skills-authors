@@ -23,31 +23,26 @@ export function CategoryPageClient({
   const { home, categories } = translations;
   const slug = category.slug as keyof typeof categories;
 
-  const heroCtas = {
-    primary: categories[slug].title,
-    secondary: home.spotlightTitle,
-  };
-
   return (
     <main className="pb-24">
       <section className="site-shell category-page-shell pt-10 md:pt-16">
         <div className="hero-center category-page-hero">
           <h1 className="display-title hero-headline category-page-title">
-            {categories[slug].title}
+            {category.heroTitle}
           </h1>
           <h2 className="hero-subheadline category-page-subtitle">
-            {categories[slug].subtitle}
+            {category.heroSubtitle}
           </h2>
           <h3 className="hero-copy hero-copy-lg category-page-copy">
-            {categories[slug].copy}
+            {category.heroDescription}
           </h3>
 
           <div className="hero-actions">
             <Link href="#search-skills" className="primary-button">
-              {heroCtas.primary}
+              {home.browseAll}
             </Link>
             <Link href="#featured-skills" className="secondary-button">
-              {heroCtas.secondary}
+              {home.spotlightTitle}
             </Link>
           </div>
 
@@ -63,7 +58,7 @@ export function CategoryPageClient({
 
       <section className="site-shell category-search-section section-gap" id="search-skills">
         <div className="section-heading centered category-search-heading">
-          <h2 className="section-title">{categories[slug].title}</h2>
+          <h2 className="section-title">{home.categoriesTitle}</h2>
           <p className="section-copy">{home.categoriesDescription}</p>
         </div>
 
@@ -94,7 +89,7 @@ export function CategoryPageClient({
 
               <div className="category-skill-block">
                 <p className="category-skill-scene">
-                  {categories[slug].title} / {skill.workflow}
+                  {category.navLabel} / {skill.workflow}
                 </p>
               </div>
 
