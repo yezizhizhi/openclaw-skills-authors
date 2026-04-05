@@ -1,14 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import { HeaderAuthButton } from "@/components/header-auth-button";
 import { LanguageSwitcher } from "@/components/language-switcher";
-
-const navItems = [
-  { href: "/#categories", label: "快速搜索skills" },
-  { href: "/submit-skills", label: "推荐/提交skills" },
-  { href: "/#faq", label: "FAQ" },
-];
+import { useLanguage } from "@/components/language-provider";
 
 export function SiteHeader() {
+  const { translations } = useLanguage();
+  const { header, brandCopy } = translations;
+
+  const navItems = [
+    { href: "/#categories", label: header.quickSearch },
+    { href: "/submit-skills", label: header.submit },
+    { href: "/#faq", label: header.faq },
+  ];
+
   return (
     <header className="site-shell sticky top-0 z-50 pt-5">
       <div className="header-shell">
@@ -21,7 +27,7 @@ export function SiteHeader() {
               OpenClaw Skills for Authors
             </p>
             <p className="header-brand-copy">
-              为创作者筛选可直达的优质 Skills
+              {brandCopy}
             </p>
           </div>
         </Link>
