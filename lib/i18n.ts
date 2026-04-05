@@ -196,12 +196,36 @@ const translations: Record<LanguageCode, TranslationSet> = {
       ],
     },
     categories: {
-      books: { title: "写书", subtitle: "小说｜非虚构｜传记｜个人成长", copy: "从素材整理、结构搭建到章节扩写与审校修订，帮助你把零散灵感推进成完整书稿。" },
-      articles: { title: "写文章", subtitle: "公众号｜专栏｜长文表达", copy: "适合选题拆解、结构优化、观点展开与标题打磨，让文章更清晰、更完整、更好读。" },
-      copywriting: { title: "写文案", subtitle: "小红书｜营销内容｜带货脚本", copy: "围绕情绪钩子、内容节奏与转化表达，快速生成更适合传播与互动的文案内容。" },
-      reports: { title: "写报告", subtitle: "商业计划｜行业分析｜汇报材料", copy: "帮助你梳理信息、组织结构、压缩表达与统一逻辑，让报告更专业、更有说服力。" },
-      academic: { title: "写论文", subtitle: "开题报告｜文献综述｜润色校对", copy: "聚焦摘要提炼、资料整理、逻辑一致性与语言修订，减少重复性编辑工作。" },
-      courses: { title: "写课程", subtitle: "课程大纲｜讲义设计｜脚本编排", copy: "从课程结构规划到讲义整理与表达打磨，帮助你更高效地完成内容产品化。" },
+      books: {
+        title: "OpenClaw Skills for Book Writing",
+        subtitle: "文学、纪实、方法论、商业、课程转书",
+        copy: "从选题调研、资料搜集、素材整理，到大纲创建、正文写作和质检修订，我们将适合长篇创作的 OpenClaw Skills 按流程整理，帮助作者把零散想法推进成可执行、可持续的写作系统。"
+      },
+      articles: {
+        title: "OpenClaw Skills for Articles",
+        subtitle: "公众号、新闻报道、评论文章，品牌营销宣传稿等等",
+        copy: "适合这几类别的通用环节包括全流程公众号写作、选题热度调研、选题策划、素材处理、大纲结构、正文写作和终稿质检。你可以先看本周精选，再按具体环节检索更适合的 Skills。"
+      },
+      copywriting: {
+        title: "OpenClaw Skills for Copywriting",
+        subtitle: "小红书、抖音文案、带货脚本、短视频口播、种草文案、活动宣传文案等等",
+        copy: "围绕情绪钩子、内容节奏与转化表达，快速生成更适合传播与互动的文案内容。"
+      },
+      reports: {
+        title: "OpenClaw Skills for Reports",
+        subtitle: "商业计划、汇报材料、行业报告、演讲稿等等",
+        copy: "帮助你梳理信息、组织结构、压缩表达与统一逻辑，让报告更专业、更有说服力。"
+      },
+      academic: {
+        title: "OpenClaw Skills for Academic Writing",
+        subtitle: "学术写作与研究支持",
+        copy: "聚焦摘要提炼、资料整理、逻辑一致性与语言修订，减少重复性编辑工作。"
+      },
+      courses: {
+        title: "OpenClaw Skills for Course Creation",
+        subtitle: "课程大纲、讲义整理、内容产品化等等\n把知识、经验、案例整理成一套可交付的课程产品",
+        copy: "从课程结构规划到讲义整理与表达打磨，帮助你更高效地完成内容产品化。"
+      },
     },
     categoryChips: {
       books: "写书",
@@ -301,12 +325,36 @@ const translations: Record<LanguageCode, TranslationSet> = {
       ],
     },
     categories: {
-      books: { title: "Books", subtitle: "Fiction | Non-fiction | Memoir | Personal Growth", copy: "Move from raw notes and structure planning to chapter drafting and revision." },
-      articles: { title: "Articles", subtitle: "Newsletters | Columns | Long-form", copy: "Useful for topic framing, argument structure, outlining, and sharper headlines." },
-      copywriting: { title: "Copywriting", subtitle: "Xiaohongshu | Marketing Copy | Sales Scripts", copy: "Built for hooks, pacing, persuasion, and platform-aware content adaptation." },
-      reports: { title: "Reports", subtitle: "Business Plans | Industry Analysis | Briefings", copy: "Turn dense information into structured, persuasive, and readable reports." },
-      academic: { title: "Academic Writing", subtitle: "Proposal | Literature Review | Polishing", copy: "Support for literature digestion, structure checks, and academic tone refinement." },
-      courses: { title: "Courses", subtitle: "Course Outline | Teaching Notes | Scripts", copy: "Shape knowledge into teachable modules, notes, scripts, and delivery assets." },
+      books: {
+        title: "OpenClaw Skills for Book Writing",
+        subtitle: "Fiction, Non-fiction, Memoir, Personal Growth, Business, and Course-to-Book",
+        copy: "From topic research, source gathering, and material organization to outline creation, drafting, and quality inspection — we organize OpenClaw Skills by workflow to help authors turn scattered ideas into an executable, sustainable writing system."
+      },
+      articles: {
+        title: "OpenClaw Skills for Articles",
+        subtitle: "Official Accounts, News Reporting, Commentary, Brand Marketing Copy, and More",
+        copy: "Universal workflow steps across these formats include full-process official account writing, topic trend research, topic planning, material processing, outline structuring, drafting, and final quality inspection. Browse featured picks first or search by specific workflow step."
+      },
+      copywriting: {
+        title: "OpenClaw Skills for Copywriting",
+        subtitle: "Xiaohongshu, Douyin Copy, E-commerce Scripts, Short Video Voiceovers, Product Seeding Copy, Event Promotional Copy, and More",
+        copy: "Focus on emotional hooks, content pacing, and conversion expression to quickly generate copy content better suited for传播 and engagement."
+      },
+      reports: {
+        title: "OpenClaw Skills for Reports",
+        subtitle: "Business Plans, Reporting Materials, Industry Reports, Speeches, and More",
+        copy: "Help you organize information, structure content, condense expression, and unify logic to make reports more professional and persuasive."
+      },
+      academic: {
+        title: "OpenClaw Skills for Academic Writing",
+        subtitle: "Academic Writing and Research Support",
+        copy: "Focus on abstract extraction, material organization, logical consistency, and language refinement to reduce repetitive editing work."
+      },
+      courses: {
+        title: "OpenClaw Skills for Course Creation",
+        subtitle: "Course Outlines, Lecture Notes, Content Productization, and More\nTurn knowledge, experience, and cases into a deliverable course product",
+        copy: "From course structure planning to lecture organization and expression refinement, help you more efficiently complete content productization."
+      },
     },
     categoryChips: {
       books: "Books",
@@ -380,12 +428,36 @@ const translations: Record<LanguageCode, TranslationSet> = {
       ],
     },
     categories: {
-      books: { title: "Книги", subtitle: "Художественное | Нон-фикшн | Мемуары", copy: "От заметок и структуры до черновиков глав и финальной правки." },
-      articles: { title: "Статьи", subtitle: "Колонки | Longread | Публицистика", copy: "Для выбора темы, структуры аргумента и более сильных заголовков." },
-      copywriting: { title: "Копирайтинг", subtitle: "Маркетинг | Соцсети | Продажи", copy: "Для хуков, темпа, убеждения и адаптации под площадку." },
-      reports: { title: "Отчеты", subtitle: "Планы | Аналитика | Презентации", copy: "Превращает сложные данные в читаемый и убедительный отчет." },
-      academic: { title: "Научные тексты", subtitle: "Proposal | Review | Полировка", copy: "Поддержка обзоров литературы, структуры и академического стиля." },
-      courses: { title: "Курсы", subtitle: "План курса | Конспекты | Скрипты", copy: "Помогает превратить знания в учебные модули и материалы." },
+      books: {
+        title: "OpenClaw Skills for Book Writing",
+        subtitle: "Художественная литература, нон-фикшн, мемуары, личностный рост, бизнес и адаптация курса в книгу",
+        copy: "От исследования темы, сбора источников и организации материалов до создания структуры, написания черновиков и финальной проверки качества — мы систематизируем OpenClaw Skills по этапам работы, чтобы помочь авторам превратить разрозненные идеи в исполняемую, устойчивую писательскую систему."
+      },
+      articles: {
+        title: "OpenClaw Skills for Articles",
+        subtitle: "Официальные аккаунты, новостная журналистика, комментарии, бренд-маркетинг и другое",
+        copy: "Универсальные этапы работы включают полный процесс написания для официальных аккаунтов, исследование трендов тем, планирование тем, обработку материалов, структурирование плана, написание черновиков и финальную проверку качества. Сначала посмотрите подборку или ищите по конкретному этапу."
+      },
+      copywriting: {
+        title: "OpenClaw Skills for Copywriting",
+        subtitle: "Сяохуншу, копия для Douyin, сценарии электронной коммерции, закадровый голос для коротких видео,Seeder-копия, промо-тексты мероприятий и другое",
+        copy: "Фокус на эмоциональных крючках, ритме контента и конверсионном выражении для быстрой генерации контента, лучше подходящего для распространения и взаимодействия."
+      },
+      reports: {
+        title: "OpenClaw Skills for Reports",
+        subtitle: "Бизнес-планы, отчетные материалы, отраслевые отчеты, речи и другое",
+        copy: "Помогает систематизировать информацию, структурировать контент, сжимать выражение и унифицировать логику, чтобы сделать отчеты более профессиональными и убедительными."
+      },
+      academic: {
+        title: "OpenClaw Skills for Academic Writing",
+        subtitle: "Академическое письмо и исследовательская поддержка",
+        copy: "Фокус на извлечении реферата, организации материалов, логической согласованности и языковой редактуре для сокращения повторной редакторской работы."
+      },
+      courses: {
+        title: "OpenClaw Skills for Course Creation",
+        subtitle: "Структура курса, конспекты лекций, превращение контента в продукт и другое\nПревратите знания, опыт и案例в готовый курсовой продукт",
+        copy: "От планирования структуры курса до организации конспектов и совершенствования выражения — помогает вам эффективнее завершить превращение контента в продукт."
+      },
     },
     categoryChips: {
       books: "Книги",
@@ -459,12 +531,36 @@ const translations: Record<LanguageCode, TranslationSet> = {
       ],
     },
     categories: {
-      books: { title: "書籍", subtitle: "小説｜ノンフィクション｜自伝", copy: "素材整理、構成設計、章執筆、推敲までを支える Skill。" },
-      articles: { title: "記事", subtitle: "ニュースレター｜コラム｜長文", copy: "選題、構成、論点展開、見出し改善に役立ちます。" },
-      copywriting: { title: "コピー", subtitle: "SNS｜販促｜販売スクリプト", copy: "フック、テンポ、訴求、媒体別の書き換えに対応。" },
-      reports: { title: "レポート", subtitle: "事業計画｜分析｜報告資料", copy: "複雑な情報を読みやすく説得力ある形に整えます。" },
-      academic: { title: "論文", subtitle: "計画書｜レビュー｜校正", copy: "文献整理、構造確認、学術表現の改善を支援します。" },
-      courses: { title: "講座", subtitle: "講座設計｜講義ノート｜台本", copy: "知識を授業モジュールと教材に変えるための支援。" },
+      books: {
+        title: "OpenClaw Skills for Book Writing",
+        subtitle: "小説、ノンフィクション、回想録、自己成長、ビジネス、コースから本への変換",
+        copy: "テーマ調査、资料収集、素材整理から、章構成作成、下書き、品質検査まで、長編創作に適したOpenClaw Skillsをワークフローに沿って整理し、著者が散らかったアイデアを実行可能で持続可能な執筆システムに変えられるよう支援します。"
+      },
+      articles: {
+        title: "OpenClaw Skills for Articles",
+        subtitle: "公式アカウント、ニュース報道、評論、ブラドマーケティングコピーなど",
+        copy: "これらのカテゴリに共通する汎用工程には、全流程の公式アカウント執筆、テーマトレンド調査、テーマ企画、素材処理、章構成、下書き、最終品質検査が含まれます。"
+      },
+      copywriting: {
+        title: "OpenClaw Skills for Copywriting",
+        subtitle: "小红書、Douyinコピー、eコマーススクリプト、短動画ナレーション、Seederコピー、イベントプロモコピーなど",
+        copy: "感情的なフック、コンテンツリズム、変換表現に焦点化し、より普及と交流に適したコピーコンテンツを迅速に生成します。"
+      },
+      reports: {
+        title: "OpenClaw Skills for Reports",
+        subtitle: "事業計画、報告資料、業界報告、プレゼンテーションなど",
+        copy: "情報の整理、コンテンツ構造化、表現簡略化、論理統一を支援し、報告をより専門的かつ説得力のあるものにします。"
+      },
+      academic: {
+        title: "OpenClaw Skills for Academic Writing",
+        subtitle: "学術執筆と研究支援",
+        copy: "要約抽出、資料整理、論理的整合性、言語校正に焦点化し、繰り返しの編集作業を軽減します。"
+      },
+      courses: {
+        title: "OpenClaw Skills for Course Creation",
+        subtitle: "コース構成、講義メモ、コンテンツ製品化など\n知識、経験、案例を実行可能なコース製品に変える",
+        copy: "コース構造計画から講義整理と表現打磨まで、コンテンツ製品化を効率的に完了するよう支援します。"
+      },
     },
     categoryChips: {
       books: "書籍",
@@ -537,13 +633,37 @@ const translations: Record<LanguageCode, TranslationSet> = {
         { question: "Puis-je recommander un nouveau Skill ?", answer: "Oui. Une fois connecté, vous pouvez envoyer un lien, un package et une raison." },
       ],
     },
-    categories: {
-      books: { title: "Livres", subtitle: "Roman | Non-fiction | Mémoire", copy: "De la matière brute à la structure, aux chapitres et à la révision." },
-      articles: { title: "Articles", subtitle: "Newsletter | Tribune | Long format", copy: "Pour cadrer un angle, structurer une idée et renforcer un titre." },
-      copywriting: { title: "Copywriting", subtitle: "Marketing | Social | Vente", copy: "Pour les hooks, le rythme, la persuasion et l’adaptation par canal." },
-      reports: { title: "Rapports", subtitle: "Plan d’affaires | Analyse | Brief", copy: "Transforme une masse d’information en document clair et convaincant." },
-      academic: { title: "Académique", subtitle: "Proposal | Revue | Polissage", copy: "Aide à la synthèse bibliographique, à la structure et au ton académique." },
-      courses: { title: "Cours", subtitle: "Plan de cours | Notes | Scripts", copy: "Convertit un savoir en modules, supports et séquences enseignables." },
+categories: {
+      books: {
+        title: "OpenClaw Skills for Book Writing",
+        subtitle: "Fiction, Non-fiction, Mémoires, Développement personnel, Business, Adaptation de cours en livre",
+        copy: "De la recherche de sujet, la collecte de sources et l'organisation des matériaux à la création de plan, la rédaction de brouillons et la révision finale — nous organisons les OpenClaw Skills par flux de travail pour aider les auteurs à transformer leurs idées dispersées en un système d'écriture durable et exécutable."
+      },
+      articles: {
+        title: "OpenClaw Skills for Articles",
+        subtitle: "Comptes officiels, Reportages, Commentaires, Copywriting marketing de marque et plus",
+        copy: "Les étapes universelles incluent l'écriture complète de comptes officiels, la recherche de tendances, la planification de sujets, le traitement des matériaux, la structuration de plan, la rédaction et la révision finale."
+      },
+      copywriting: {
+        title: "OpenClaw Skills for Copywriting",
+        subtitle: "Xiaohongshu, Douyin Copy, Scripts e-commerce, Voiceovers court, Seeder copy, Promos événements et plus",
+        copy: "Centré sur les hooks émotionnels, le rythme du contenu et l'expression de conversion pour générer rapidement du copy adapté à la diffusion et l'engagement."
+      },
+      reports: {
+        title: "OpenClaw Skills for Reports",
+        subtitle: "Plans d'affaires, Matériaux de rapport, Rapports sectoriels, Discours et plus",
+        copy: "Vous aide à organiser l'information, structurer le contenu, condenser l'expression et unifier la logique pour des rapports plus professionnels et persuasifs."
+      },
+      academic: {
+        title: "OpenClaw Skills for Academic Writing",
+        subtitle: "Rédaction académique et soutien à la recherche",
+        copy: "Centré sur l'extraction de résumé, l'organisation des matériaux, la cohérence logique et la révision linguistique pour réduire le travail d'édition répétitif."
+      },
+      courses: {
+        title: "OpenClaw Skills for Course Creation",
+        subtitle: "Structure de cours, Notes de cours, Productisation de contenu et plus\nTransformez connaissances, expériences et cas en un produit de cours livrable",
+        copy: "De la planification de structure de cours à l'organisation des notes et l'affinage de l'expression, vous aide à compléter efficacement la productisation du contenu."
+      },
     },
     categoryChips: {
       books: "Livres",
@@ -617,12 +737,36 @@ const translations: Record<LanguageCode, TranslationSet> = {
       ],
     },
     categories: {
-      books: { title: "책 쓰기", subtitle: "소설 | 논픽션 | 회고", copy: "메모 정리, 구조 설계, 장 초안, 수정까지 돕습니다." },
-      articles: { title: "글쓰기", subtitle: "뉴스레터 | 칼럼 | 장문", copy: "주제 설정, 구조 정리, 논지 전개, 제목 보강에 적합합니다." },
-      copywriting: { title: "카피", subtitle: "마케팅 | SNS | 세일즈", copy: "훅, 리듬, 설득, 플랫폼별 재작성에 초점을 둡니다." },
-      reports: { title: "보고서", subtitle: "사업계획 | 분석 | 브리핑", copy: "복잡한 정보를 읽기 쉬운 보고서로 정리합니다." },
-      academic: { title: "논문", subtitle: "계획서 | 문헌검토 | 교정", copy: "문헌 정리, 구조 점검, 학술 문체 다듬기를 지원합니다." },
-      courses: { title: "강의", subtitle: "강의 개요 | 교안 | 스크립트", copy: "지식을 모듈, 교안, 전달 자료로 바꾸는 데 적합합니다." },
+      books: {
+        title: "OpenClaw Skills for Book Writing",
+        subtitle: "소설, 논픽션, 회고록, 자기계발, 비즈니스, 코스에서 책으로 변환",
+        copy: "주제 조사, 자료 수집, 소재 정리부터 구조 설계, 본문 초안 작성, 품질 검사까지 - 장편 창작에 적합한 OpenClaw Skills를 워크플로우별로 정리하여 작가가分散된 아이디어를 실행 가능한 지속 가능한 작성 시스템으로 전환할 수 있도록 돕습니다."
+      },
+      articles: {
+        title: "OpenClaw Skills for Articles",
+        subtitle: "공식 계정, 뉴스 보도, 논평, 브랜드 마케팅 카피 등",
+        copy: "이러한 카테고리에 공통적인 범용 공정에는 전체 공식 계정 글쓰기, 주제 트렌드 조사, 주제 기획, 자료 처리, 구조 설계, 본문 작성, 최종 품질 검사가 포함됩니다."
+      },
+      copywriting: {
+        title: "OpenClaw Skills for Copywriting",
+        subtitle: "샤오홍슈, Douyin 카피, 이커머스 스크립트, 숏폼 내레이션, 시딩 카피, 이벤트 홍보 카피 등",
+        copy: "감정적 후크, 콘텐츠 리듬, 전환 표현에 초점을 맞춰 더 확산되고 소통友好的인 카피 콘텐츠를 빠르게 생성합니다."
+      },
+      reports: {
+        title: "OpenClaw Skills for Reports",
+        subtitle: "사업계획, 보고 자료, 업계 보고서, 프레젠테이션 등",
+        copy: "정보 정리, 콘텐츠 구조화, 표현 압축, 논리 통일을 도와 보고서를 더욱 전문적이고 설득력 있게 만듭니다."
+      },
+      academic: {
+        title: "OpenClaw Skills for Academic Writing",
+        subtitle: "학술 글쓰기와 연구 지원",
+        copy: "초록 추출, 자료 정리, 논리적 일관성, 언어 교정에 초점을 맞춰 반복적인 편집 작업을 줄입니다."
+      },
+      courses: {
+        title: "OpenClaw Skills for Course Creation",
+        subtitle: "강의 구조, 강의 노트, 콘텐츠 제품화 등\n지식, 경험, 사례를 실행 가능한 강의 제품으로 변환",
+        copy: "강의 구조 기획부터 강의 노트 정리와 표현 다듬기까지, 콘텐츠 제품화를 효율적으로 완료하도록 돕습니다."
+      },
     },
     categoryChips: {
       books: "책",
@@ -696,12 +840,36 @@ const translations: Record<LanguageCode, TranslationSet> = {
       ],
     },
     categories: {
-      books: { title: "Bücher", subtitle: "Roman | Sachbuch | Memoir", copy: "Von Notizen und Struktur bis zu Kapiteln und Endredaktion." },
-      articles: { title: "Artikel", subtitle: "Newsletter | Kolumne | Longform", copy: "Hilft bei Themenwahl, Struktur, Argumenten und Überschriften." },
-      copywriting: { title: "Copywriting", subtitle: "Marketing | Social | Sales", copy: "Für Hooks, Timing, Überzeugungskraft und Kanal-Anpassung." },
-      reports: { title: "Reports", subtitle: "Business Plan | Analyse | Briefing", copy: "Verdichtet komplexe Informationen zu klaren und überzeugenden Berichten." },
-      academic: { title: "Wissenschaft", subtitle: "Proposal | Review | Polishing", copy: "Unterstützt Literaturarbeit, Strukturprüfung und akademischen Stil." },
-      courses: { title: "Kurse", subtitle: "Kursstruktur | Notizen | Skripte", copy: "Macht aus Wissen lehrbare Module, Unterlagen und Skripte." },
+      books: {
+        title: "OpenClaw Skills for Book Writing",
+        subtitle: "Fiction, Sachbuch, Memoiren, Persönlichkeitsentwicklung, Business, Kurs-zu-Buch",
+        copy: "Von Themenrecherche, Quellensammlung und Materialorganisation über Gliederungserstellung, Entwurfschreibung bis zur Endredaktion – wir organisieren OpenClaw Skills nach Workflow, um Autoren zu helfen, verstreute Ideen in ein ausführbares, nachhaltiges Schreibsystem zu verwandeln."
+      },
+      articles: {
+        title: "OpenClaw Skills for Articles",
+        subtitle: "Offizielle Accounts, Nachrichtenberichterstattung, Kommentare, Markenmarketing-Text und mehr",
+        copy: "Universelle Workflow-Schritte umfassen vollständiges Schreiben für offizielle Accounts, Trendrecherche, Themenplanung, Materialverarbeitung, Gliederung, Entwurf und Endkorrektur."
+      },
+      copywriting: {
+        title: "OpenClaw Skills for Copywriting",
+        subtitle: "Xiaohongshu, Douyin-Text, E-Commerce-Skripte, Short-Video-Voiceover, Seeder-Text, Event-Promo-Text und mehr",
+        copy: "Fokus auf emotionale Hooks, Content-Pacing und Konversionsausdruck für schnelle Generierung von besser für Verbreitung und Engagement geeignetem Content."
+      },
+      reports: {
+        title: "OpenClaw Skills for Reports",
+        subtitle: "Geschäftspläne, Berichtsmaterialien, Branchenberichte, Präsentationen und mehr",
+        copy: "Hilft Ihnen, Informationen zu organisieren, Inhalte zu strukturieren, Ausdruck zu komprimieren und Logik zu vereinheitlichen, um professionellere und überzeugendere Berichte zu erstellen."
+      },
+      academic: {
+        title: "OpenClaw Skills for Academic Writing",
+        subtitle: "Akademisches Schreiben und Forschungsunterstützung",
+        copy: "Fokus auf Abstract-Extraktion, Materialorganisation, logischer Konsistenz und Sprachüberarbeitung zur Reduzierung repetitiver Bearbeitungsarbeit."
+      },
+      courses: {
+        title: "OpenClaw Skills for Course Creation",
+        subtitle: "Kursstruktur, Vorlesungsnotizen, Content-Produktisierung und mehr\nVerwandeln Sie Wissen, Erfahrung und Fälle in ein lieferbares Kursprodukt",
+        copy: "Von der Kursstrukturplanung über Vorlesungsorganisation bis zur Ausdrucksverfeinerung – hilft Ihnen, die Content-Produktisierung effizient abzuschließen."
+      },
     },
     categoryChips: {
       books: "Bücher",
@@ -775,12 +943,36 @@ const translations: Record<LanguageCode, TranslationSet> = {
       ],
     },
     categories: {
-      books: { title: "Libros", subtitle: "Ficción | No ficción | Memorias", copy: "Desde notas y estructura hasta capítulos, borradores y revisión." },
-      articles: { title: "Artículos", subtitle: "Newsletter | Columna | Largo formato", copy: "Ayuda con el enfoque, la estructura, la idea central y los títulos." },
-      copywriting: { title: "Copywriting", subtitle: "Marketing | Social | Ventas", copy: "Pensado para hooks, ritmo, persuasión y adaptación por canal." },
-      reports: { title: "Informes", subtitle: "Plan de negocio | Análisis | Briefing", copy: "Convierte información compleja en informes claros y convincentes." },
-      academic: { title: "Académico", subtitle: "Propuesta | Revisión | Pulido", copy: "Apoya la revisión bibliográfica, la estructura y el tono académico." },
-      courses: { title: "Cursos", subtitle: "Esquema | Apuntes | Guiones", copy: "Transforma conocimiento en módulos, materiales y guiones enseñables." },
+      books: {
+        title: "OpenClaw Skills for Book Writing",
+        subtitle: "Ficción, No ficción, Memorias, Crecimiento personal, Negocios, Adaptación de curso a libro",
+        copy: "Desde investigación de temas, recolección de fuentes y organización de materiales hasta creación de estructura, redacción de borradores y revisión final — organizamos OpenClaw Skills por flujo de trabajo para ayudar a los autores a transformar ideas dispersas en un sistema de escritura ejecutable y sostenible."
+      },
+      articles: {
+        title: "OpenClaw Skills for Articles",
+        subtitle: "Cuentas oficiales, Reportajes, Comentarios, Copywriting de marketing de marca y más",
+        copy: "Los pasos universales incluyen escritura completa de cuentas oficiales, investigación de tendencias, planificación de temas, procesamiento de materiales, estructuración de esquema, redacción y revisión final."
+      },
+      copywriting: {
+        title: "OpenClaw Skills for Copywriting",
+        subtitle: "Xiaohongshu, Texto Douyin, Scripts de comercio electrónico, Locución de cortos, Texto Seeder, Promo de eventos y más",
+        copy: "Enfocado en ganchos emocionales, ritmo de contenido y expresión de conversión para generar rápidamente contenido de copy más adecuado para difusión e interacción."
+      },
+      reports: {
+        title: "OpenClaw Skills for Reports",
+        subtitle: "Planes de negocio, Materiales de informe, Informes de industria, Presentaciones y más",
+        copy: "Te ayuda a organizar información, estructurar contenido, comprimir expresión y unificar lógica para informes más profesionales y persuasivos."
+      },
+      academic: {
+        title: "OpenClaw Skills for Academic Writing",
+        subtitle: "Escritura académica y apoyo a la investigación",
+        copy: "Enfocado en extracción de resumen, organización de materiales, consistencia lógica y revisión de lenguaje para reducir trabajo de edición repetitivo."
+      },
+      courses: {
+        title: "OpenClaw Skills for Course Creation",
+        subtitle: "Estructura de curso, Notas de clase, Productización de contenido y más\nTransforma conocimiento, experiencia y casos en un producto de curso entregable",
+        copy: "Desde planificación de estructura de curso hasta organización de notas y refinamiento de expresión — te ayuda a completar la productización de contenido de manera eficiente."
+      },
     },
     categoryChips: {
       books: "Libros",
