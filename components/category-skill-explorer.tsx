@@ -8,6 +8,7 @@ import {
   type ExplorerScenario,
   type ExplorerSkill,
 } from "@/lib/skill-search";
+import { useLanguage } from "@/components/language-provider";
 
 type CategorySkillExplorerProps = {
   categorySlug: string;
@@ -24,6 +25,8 @@ export function CategorySkillExplorer({
   scenarios,
   skills,
 }: CategorySkillExplorerProps) {
+  const { translations } = useLanguage();
+  const { home } = translations;
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
   const normalizedQuery = deferredQuery.trim();
@@ -43,7 +46,7 @@ export function CategorySkillExplorer({
           type="text"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder={`输入你需要的场景，例如：${workflowTags.slice(0, 3).join("、")}`}
+          placeholder={`${home.categoriesTitle} ${workflowTags.slice(0, 3).join(", ")}`}
         />
       </div>
 
@@ -62,8 +65,8 @@ export function CategorySkillExplorer({
 
       <p className="explorer-meta">
         {normalizedQuery
-          ? `已为你找到 ${filteredSkills.length} 个与“${normalizedQuery}”相关的 ${categoryLabel} Skills`
-          : `先输入具体工作环节，再查看我们已经筛过的 ${categoryLabel} Skills`}
+          ? `${filteredSkills.length} ${home.spotlightTitle} ${normalizedQuery}`
+          : `${home.categoriesDescription}`}
       </p>
 
       {filteredSkills.length ? (
@@ -71,12 +74,12 @@ export function CategorySkillExplorer({
           {filteredSkills.map((skill) => (
             <article key={skill.name} className="explorer-card">
               <div>
-                <p className="explorer-label">Skill 名称</p>
+                <p className="explorer-label">{home.spotlightName}</p>
                 <h3 className="explorer-title">{skill.name}</h3>
               </div>
 
               <div className="explorer-block">
-                <p className="explorer-label">适用场景</p>
+                <p className="explorer-label">{home.spotlightScene}</p>
                 <p className="explorer-scene">
                   {categoryLabel} / {skill.workflow}
                 </p>
@@ -91,11 +94,11 @@ export function CategorySkillExplorer({
                   rel="noreferrer noopener"
                   className="primary-button explorer-button"
                 >
-                  前往 ClawHub ↗
+                  {home.spotlightCta}
                 </a>
               ) : (
                 <Link href={`/skills/${skill.id}`} className="secondary-button explorer-button">
-                  查看详情
+                  {home.spotlightCta}
                 </Link>
               )}
             </article>
@@ -105,18 +108,18 @@ export function CategorySkillExplorer({
 
       {normalizedQuery && filteredSkills.length === 0 ? (
         <div className="explorer-empty">
-          <p className="explorer-empty-title">暂时没有完全匹配的结果</p>
+          <p className="explorer-empty-title">{home.spotlightTitle}</p>
           <p className="explorer-empty-copy">
-            试试输入更接近流程的词，比如“{workflowTags[0]}”或“{workflowTags[1]}”。
+            {workflowTags[0]} / {workflowTags[1]}
           </p>
         </div>
       ) : null}
 
       {!normalizedQuery ? (
         <div className="explorer-empty">
-          <p className="explorer-empty-title">先输入工作环节，再看对应 Skills</p>
+          <p className="explorer-empty-title">{home.categoriesTitle}</p>
           <p className="explorer-empty-copy">
-            比如输入“{workflowTags[2]}”“{workflowTags[3]}”，系统会优先返回已经筛选过、可直跳 ClawHub 的结果。
+            {workflowTags[2]} / {workflowTags[3]}
           </p>
         </div>
       ) : null}

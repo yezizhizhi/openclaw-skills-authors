@@ -15,13 +15,18 @@ type CategoryPageClientProps = {
 
 export function CategoryPageClient({
   category,
-  workflowTags,
+  workflowTags: originalWorkflowTags,
   explorerScenarios,
   explorerSkills,
 }: CategoryPageClientProps) {
-  const { translations } = useLanguage();
-  const { home, categories } = translations;
+  const { translations, language } = useLanguage();
+  const { home, categories, categoryData, skillWorkflows } = translations;
   const slug = category.slug as keyof typeof categories;
+
+  // Get translated workflow tags, fallback to original if not available
+  const translatedWorkflowTags = categoryData[slug]?.workflowTags?.length
+    ? categoryData[slug].workflowTags
+    : originalWorkflowTags;
 
   return (
     <main className="pb-24">
@@ -47,8 +52,8 @@ export function CategoryPageClient({
           </div>
 
           <div className="hero-chip-row category-flow-row">
-            {workflowTags.map((tag) => (
-              <span key={tag} className="chip-link category-flow-chip">
+            {translatedWorkflowTags.map((tag, index) => (
+              <span key={`${tag}-${index}`} className="chip-link category-flow-chip">
                 {tag}
               </span>
             ))}
@@ -66,7 +71,7 @@ export function CategoryPageClient({
           <CategorySkillExplorer
             categorySlug={category.slug}
             categoryLabel={categories[slug].title}
-            workflowTags={workflowTags}
+            workflowTags={translatedWorkflowTags}
             scenarios={explorerScenarios}
             skills={explorerSkills}
           />
@@ -89,7 +94,7 @@ export function CategoryPageClient({
 
               <div className="category-skill-block">
                 <p className="category-skill-scene">
-                  {categories[slug].title} / {skill.workflow}
+                  {categories[slug].title} / {skillWorkflows[skill.workflow] || skill.workflow}
                 </p>
               </div>
 
