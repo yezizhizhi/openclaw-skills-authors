@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeaderAuthButton } from "@/components/header-auth-button";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 const navItems = [
   { href: "/#categories", label: "快速搜索skills" },
@@ -31,6 +32,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <LanguageSwitcher />
           <HeaderAuthButton />
         </nav>
       </div>

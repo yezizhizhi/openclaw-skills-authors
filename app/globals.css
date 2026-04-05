@@ -194,6 +194,63 @@ a {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.header-language-shell {
+  position: relative;
+}
+
+.header-language-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.header-language-current {
+  color: var(--muted-ink);
+  font-size: 0.85rem;
+}
+
+.header-language-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 10rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(15, 22, 35, 0.98), rgba(10, 15, 24, 0.98));
+  box-shadow: var(--shadow);
+  padding: 0.5rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.header-language-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--soft-ink);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.header-language-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--ink);
+}
+
+.header-language-option[data-active="true"] {
+  background: rgba(255, 98, 76, 0.12);
+  color: var(--accent-soft);
+}
+
 .header-user-shell {
   display: inline-flex;
   align-items: center;
