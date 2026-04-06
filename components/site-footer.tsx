@@ -1,6 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/components/language-provider";
 
 export function SiteFooter() {
+  const { translations } = useLanguage();
+  const { home } = translations;
+
   return (
     <footer className="site-shell pb-8 pt-16">
       <div className="footer-shell px-6 py-8 md:px-8">
@@ -10,19 +16,25 @@ export function SiteFooter() {
               OPENCLAW SKILLS FOR AUTHORS
             </p>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--muted-ink)]">
-              这是一版独立的 Next.js + Tailwind 静态原型，用来先验证首页、分类页和 Skill 卡片的视觉节奏，再在下一阶段接入动态技能库。
+              {home.faqDescription}
             </p>
           </div>
 
           <div className="grid gap-3 text-sm text-[var(--soft-ink)] sm:grid-cols-2">
             <Link href="/" className="transition hover:text-[var(--accent)]">
-              首页
+              {home.faqTitle}
             </Link>
             <Link href="/#categories" className="transition hover:text-[var(--accent)]">
-              分类浏览
+              {home.categoriesTitle}
             </Link>
             <Link href="/categories/books" className="transition hover:text-[var(--accent)]">
-              写书页
+              {home.spotlightTitle}
+            </Link>
+            <Link href="/privacy-policy" className="transition hover:text-[var(--accent)]">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="transition hover:text-[var(--accent)]">
+              Terms of Service
             </Link>
           </div>
         </div>
