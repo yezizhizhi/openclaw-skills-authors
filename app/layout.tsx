@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { LanguageProvider } from "@/components/language-provider";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -76,6 +77,7 @@ export default function RootLayout({
           <div className="site-chrome min-h-full">
             <SiteHeader />
             {children}
+            <SiteFooter />
           </div>
         </LanguageProvider>
       </body>
