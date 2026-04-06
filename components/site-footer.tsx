@@ -10,10 +10,11 @@ export function SiteFooter() {
   return (
     <footer className="site-shell pb-8 pt-16">
       <div className="footer-shell px-6 py-8 md:px-8">
-        <div className="flex flex-col items-center gap-4 text-sm text-[var(--soft-ink)] sm:flex-row sm:gap-6">
+        <div className="flex flex-row items-center justify-center gap-6 text-sm text-[var(--soft-ink)]">
           <Link href="/privacy-policy" className="transition hover:text-[var(--accent)]">
             {footer.privacy}
           </Link>
+          <span className="text-[var(--muted-ink)]">|</span>
           <Link href="/terms" className="transition hover:text-[var(--accent)]">
             {footer.terms}
           </Link>

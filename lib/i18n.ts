@@ -134,6 +134,22 @@ export type TranslationSet = {
     privacy: string;
     terms: string;
   };
+  legal?: {
+    privacyPolicy: {
+      lastUpdated: string;
+      sections: Array<{
+        title: string;
+        content: string | string[];
+      }>;
+    };
+    termsOfService: {
+      lastUpdated: string;
+      sections: Array<{
+        title: string;
+        content: string | string[];
+      }>;
+    };
+  };
   categories: Record<HomeCategoryKey, HomeCategoryContent>;
   categoryChips: Record<HomeCategoryKey, string>;
   // Global workflow stages
@@ -244,6 +260,41 @@ const translations: Record<LanguageCode, TranslationSet> = {
     footer: {
       privacy: "隐私政策",
       terms: "服务条款",
+    },
+    legal: {
+      privacyPolicy: {
+        lastUpdated: "最近更新：2026年4月",
+        sections: [
+          { title: "信息的收集", content: "我们收集您直接向我们提供的信息，包括当您提交Skill推荐、创建账户或联系我们寻求支持时。这可能包括您的姓名、电子邮件地址和您提交的内容。" },
+          { title: "信息的使用方式", content: ["提供、维护和改进我们的服务", "处理和展示Skill提交", "向您发送更新和管理通讯", "回复您的评论和问题"] },
+          { title: "信息共享", content: "我们不会向第三方出售、交易或以其他方式转让您的个人信息。我们可能会分享无法识别您身份的汇总匿名信息。" },
+          { title: "数据安全", content: "我们实施合理的安全措施来保护您的个人信息。然而，通过互联网传输的方法并非100%安全。" },
+          { title: "Cookie", content: "我们可能使用Cookie和类似技术来增强您的体验。您可以通过浏览器设置控制Cookie偏好。" },
+          { title: "您的权利", content: "您有权访问、更正或删除您的个人信息。请通过以下电子邮件联系我们以行使这些权利。" },
+          { title: "第三方链接", content: "我们的网站可能包含指向第三方网站的链接。我们不对这些外部网站的隐私惯例负责。" },
+          { title: "儿童隐私", content: "我们的服务不面向16岁以下的用户。我们不会故意收集儿童的信息。" },
+          { title: "政策变更", content: "我们可能会不时更新本隐私政策。我们将通过在此页面上发布新政策来通知您任何变更。" },
+          { title: "联系我们", content: "如果您对本隐私政策有任何疑问，请通过以下方式联系我们：support@clawauthor.com" },
+        ],
+      },
+      termsOfService: {
+        lastUpdated: "最近更新：2026年4月",
+        sections: [
+          { title: "条款接受", content: "通过访问和使用OpenClaw Skills for Authors，您同意受这些服务条款的约束。如果您不同意这些条款，请不要使用本服务。" },
+          { title: "服务描述", content: "OpenClaw Skills for Authors是为作者、作家、研究人员和课程创作者整理的AI工作流精选库。" },
+          { title: "用户行为", content: ["将服务用于任何非法目的", "提交虚假、误导性或欺诈性的Skill推荐", "试图未经授权访问我们的系统", "干扰或破坏服务", "骚扰、虐待或伤害其他用户"] },
+          { title: "Skill提交", content: "通过提交Skill推荐，您授予我们使用、展示和分发所提交内容的非独占性、免版税权利。" },
+          { title: "知识产权", content: "服务及其原始内容、功能和功能由OpenClaw Skills for Authors所有，受国际版权法保护。" },
+          { title: "第三方内容", content: "服务可能包含指向第三方网站或资源的链接。我们不对此类第三方表达的内容、准确性或观点负责。" },
+          { title: "免责声明", content: "服务按「原样」和「可用」提供，不提供任何明示或暗示的保证。我们不保证服务将不间断或无错误。" },
+          { title: "责任限制", content: "在法律允许的最大范围内，我们不对因您使用服务而导致的任何间接、附带、特殊或后果性损害负责。" },
+          { title: "赔偿", content: "您同意对OpenClaw Skills for Authors及其关联公司因您违反这些条款而导致的任何索赔或要求进行赔偿。" },
+          { title: "终止", content: "我们保留出于任何原因自行决定终止或暂停您访问服务的权利，恕不另行通知。" },
+          { title: "适用法律", content: "这些条款应受适用法律管辖并按其解释，不考虑法律冲突规定。" },
+          { title: "条款变更", content: "我们保留随时修改这些条款的权利。我们将通过在此页面上发布新条款来通知您变更。" },
+          { title: "联系信息", content: "如果您对这些条款有任何疑问，请通过以下方式联系我们：support@clawauthor.com" },
+        ],
+      },
     },
     categories: {
       books: {
@@ -817,6 +868,41 @@ const translations: Record<LanguageCode, TranslationSet> = {
       privacy: "Privacy Policy",
       terms: "Terms of Service",
     },
+    legal: {
+      privacyPolicy: {
+        lastUpdated: "Last updated: April 2026",
+        sections: [
+          { title: "Information We Collect", content: "We collect information you provide directly to us, including when you submit a Skill recommendation, create an account, or contact us for support. This may include your name, email address, and the content of your submissions." },
+          { title: "How We Use Your Information", content: ["Provide, maintain, and improve our services", "Process and display Skill submissions", "Send you updates and administrative communications", "Respond to your comments and questions"] },
+          { title: "Information Sharing", content: "We do not sell, trade, or otherwise transfer your personal information to third parties. We may share aggregated, anonymized information that cannot identify you." },
+          { title: "Data Security", content: "We implement reasonable security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure." },
+          { title: "Cookies", content: "We may use cookies and similar technologies to enhance your experience. You can control cookie preferences through your browser settings." },
+          { title: "Your Rights", content: "You have the right to access, correct, or delete your personal information. Contact us at the email below to exercise these rights." },
+          { title: "Third-Party Links", content: "Our site may contain links to third-party websites. We are not responsible for the privacy practices of these external sites." },
+          { title: "Children's Privacy", content: "Our services are not intended for users under 16 years of age. We do not knowingly collect information from children." },
+          { title: "Changes to This Policy", content: "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page." },
+          { title: "Contact Us", content: "If you have questions about this Privacy Policy, please contact us at: support@clawauthor.com" },
+        ],
+      },
+      termsOfService: {
+        lastUpdated: "Last updated: April 2026",
+        sections: [
+          { title: "Acceptance of Terms", content: "By accessing and using OpenClaw Skills for Authors, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service." },
+          { title: "Description of Service", content: "OpenClaw Skills for Authors is a curated library of AI workflows organized for authors, writers, researchers, and course creators." },
+          { title: "User Conduct", content: ["Use the Service for any unlawful purpose", "Submit false, misleading, or fraudulent Skill recommendations", "Attempt to gain unauthorized access to our systems", "Interfere with or disrupt the Service", "Harass, abuse, or harm other users"] },
+          { title: "Skill Submissions", content: "By submitting a Skill recommendation, you grant us a non-exclusive, royalty-free right to use, display, and distribute the submitted content." },
+          { title: "Intellectual Property", content: "The Service and its original content, features, and functionality are owned by OpenClaw Skills for Authors and are protected by international copyright laws." },
+          { title: "Third-Party Content", content: "The Service may include links to third-party websites or resources. We are not responsible for the content, accuracy, or opinions expressed on such third parties." },
+          { title: "Disclaimer of Warranties", content: "THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED OR ERROR-FREE." },
+          { title: "Limitation of Liability", content: "To the fullest extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the Service." },
+          { title: "Indemnification", content: "You agree to indemnify and hold harmless OpenClaw Skills for Authors and its affiliates from any claim or demand arising from your violation of these Terms." },
+          { title: "Termination", content: "We reserve the right to terminate or suspend your access to the Service at our sole discretion, without prior notice, for any reason." },
+          { title: "Governing Law", content: "These Terms shall be governed by and construed in accordance with applicable laws, without regard to its conflict of law provisions." },
+          { title: "Changes to Terms", content: "We reserve the right to modify these Terms at any time. We will notify you of changes by posting the new Terms on this page." },
+          { title: "Contact Information", content: "If you have any questions about these Terms, please contact us at: support@clawauthor.com" },
+        ],
+      },
+    },
     categories: {
       books: {
         title: "OpenClaw Skills for Book Writing",
@@ -1330,6 +1416,41 @@ const translations: Record<LanguageCode, TranslationSet> = {
       privacy: "Политика конфиденциальности",
       terms: "Условия использования",
     },
+    legal: {
+      privacyPolicy: {
+        lastUpdated: "Последнее обновление: апрель 2026 г.",
+        sections: [
+          { title: "Информация, которую мы собираем", content: "Мы собираем информацию, которую вы предоставляете напрямую, включая когда вы отправляете рекомендацию Skill, создаете аккаунт или связываетесь с нами для получения поддержки. Это может включать ваше имя, адрес электронной почты и содержание ваших материалов." },
+          { title: "Как мы используем вашу информацию", content: ["Предоставление, поддержка и улучшение наших услуг", "Обработка и отображение рекомендаций Skill", "Отправка вам обновлений и административных сообщений", "Ответы на ваши комментарии и вопросы"] },
+          { title: "Обмен информацией", content: "Мы не продаем, не обмениваем и не передаем иным образом вашу личную информацию третьим лицам. Мы можем делиться агрегированной, анонимизированной информацией, которая не может идентифицировать вас." },
+          { title: "Безопасность данных", content: "Мы реализуем разумные меры безопасности для защиты вашей личной информации. Однако ни один метод передачи данных через Интернет не является на 100% безопасным." },
+          { title: "Cookie", content: "Мы можем использовать файлы cookie и аналогичные технологии для улучшения вашего опыта. Вы можете управлять настройками файлов cookie через настройки браузера." },
+          { title: "Ваши права", content: "Вы имеете право на доступ, исправление или удаление вашей личной информации. Свяжитесь с нами по электронной почте, указанной ниже, чтобы воспользоваться этими правами." },
+          { title: "Ссылки на сторонние сайты", content: "Наш сайт может содержать ссылки на сторонние веб-сайты. Мы не несем ответственности за политику конфиденциальности этих внешних сайтов." },
+          { title: "Конфиденциальность детей", content: "Наши услуги не предназначены для пользователей младше 16 лет. Мы сознательно не собираем информацию о детях." },
+          { title: "Изменения в политике", content: "Мы можем время от времени обновлять настоящую Политику конфиденциальности. Мы уведомим вас о любых изменениях, опубликовав новую политику на этой странице." },
+          { title: "Свяжитесь с нами", content: "Если у вас есть вопросы о настоящей Политике конфиденциальности, свяжитесь с нами по адресу: support@clawauthor.com" },
+        ],
+      },
+      termsOfService: {
+        lastUpdated: "Последнее обновление: апрель 2026 г.",
+        sections: [
+          { title: "Принятие условий", content: "Получая доступ к OpenClaw Skills for Authors и используя их, вы соглашаетесь соблюдать настоящие Условия использования. Если вы не согласны с этими условиями, пожалуйста, не используйте Сервис." },
+          { title: "Описание услуги", content: "OpenClaw Skills for Authors — это курируемая библиотека AI-рабочих процессов, организованная для авторов, писателей, исследователей и создателей курсов." },
+          { title: "Поведение пользователя", content: ["Использовать Сервис для любых незаконных целей", "Отправлять ложные, вводящие в заблуждение или мошеннические рекомендации Skill", "Пытаться получить несанкционированный доступ к нашим системам", "Вмешиваться в работу Сервиса или нарушать её", "Преследовать, оскорблять или наносить вред другим пользователям"] },
+          { title: "Отправка Skill", content: "Отправляя рекомендацию Skill, вы предоставляете нам неисключительное, безвозмездное право использовать, отображать и распространять отправленный контент." },
+          { title: "Интеллектуальная собственность", content: "Сервис и его оригинальный контент, функции и функциональность принадлежат OpenClaw Skills for Authors и защищены международными законами об авторском праве." },
+          { title: "Контент третьих лиц", content: "Сервис может содержать ссылки на сторонние веб-сайты или ресурсы. Мы не несем ответственности за контент, точность или мнения, выраженные такими третьими лицами." },
+          { title: "Отказ от гарантий", content: "СЕРВИС ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ» И «КАК ДОСТУПНО» БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ. МЫ НЕ ГАРАНТИРУЕМ, ЧТО СЕРВИС БУДЕТ БЕСПЕРЕБОЙНЫМ ИЛИ БЕЗОШИБОЧНЫМ." },
+          { title: "Ограничение ответственности", content: "В максимальной степени, разрешенной законом, мы не несем ответственности за любые косвенные, случайные, специальные, последующие или штрафные убытки, возникшие в результате использования вами Сервиса." },
+          { title: "Возмещение ущерба", content: "Вы соглашаетесь возмещать ущерб и защищать OpenClaw Skills for Authors и её аффилированных лиц от любых претензий или требований, возникших в результате вашего нарушения настоящих Условий." },
+          { title: "Прекращение", content: "Мы оставляем за собой право прекратить или приостановить ваш доступ к Сервису по нашему собственному усмотрению, без предварительного уведомления, по любой причине." },
+          { title: "Применимое право", content: "Настоящие Условия регулируются и толкуются в соответствии с применимым законодательством без учета положений о коллизионных нормах." },
+          { title: "Изменения в условиях", content: "Мы оставляем за собой право изменять настоящие Условия в любое время. Мы уведомим вас об изменениях, опубликовав новые Условия на этой странице." },
+          { title: "Контактная информация", content: "Если у вас есть вопросы о настоящих Условиях, свяжитесь с нами по адресу: support@clawauthor.com" },
+        ],
+      },
+    },
     categories: {
       books: {
         title: "OpenClaw Skills for Book Writing",
@@ -1666,6 +1787,41 @@ const translations: Record<LanguageCode, TranslationSet> = {
     footer: {
       privacy: "プライバシーポリシー",
       terms: "利用規約",
+    },
+    legal: {
+      privacyPolicy: {
+        lastUpdated: "最終更新日：2026年4月",
+        sections: [
+          { title: "収集する情報", content: "Skillの推薦を送信したり、アカウントを作成したりサポートにご連絡いただいた際に、直接提供していただく情報を収集します。これには、お名前、メールアドレス、送信された内容が含まれる場合があります。" },
+          { title: "情報の使用方法", content: ["サービスの提供、維持、改善", "Skill推薦の処理と表示", "更新情報や管理連絡の送信", "コメントやご質問への回答"] },
+          { title: "情報の共有", content: "私たちは、個人情報を第三者へ販売、交換、またはその他の方法で転送することはしません。私たちを特定できない集約された匿名情報を共有する場合があります。" },
+          { title: "データのセキュリティ", content: "私たちは、あなたの个人信息を保護するために合理的なセキュリティ対策を講じています。しかし、インターネット上での数据传输方法は100%安全ではありません。" },
+          { title: "Cookie", content: "私たちは、Cookieや類似の技術を使用して体験を向上させることができます。ブラウザの設定でCookieの好みをコントロールできます。" },
+          { title: "あなたの権利", content: "あなたは、個人情報へのアクセス、訂正、削除を行う権利があります。これらの権利を行使するには、以下のお問い合わせ先までご連絡ください。" },
+          { title: "サードパーティリンク", content: "当サービスには、第三者のウェブサイトへのリンクが含まれる場合があります。外部サイトのプライバシーポリシーについては責任を負いません。" },
+          { title: "キッズ隐私", content: "当サービスは16歳未満の利用者を対象としていません。意図的に儿童の情報を収集することはしません。" },
+          { title: "ポリシー変更", content: "このプライバシーポリシーは随時更新される場合があります。変更がある場合は、このページに新規ポリシーを掲載して通知します。" },
+          { title: "お問い合わせ", content: "このプライバシーポリシーについてご質問がある場合は、support@clawauthor.comまでお問い合わせください。" },
+        ],
+      },
+      termsOfService: {
+        lastUpdated: "最終更新日：2026年4月",
+        sections: [
+          { title: "利用規約の承認", content: "OpenClaw Skills for Authorsにアクセスして使用することにより、これらの利用規約に拘束されることに同意します。これらの利用規約に同意しない場合は、当サービスを使用しないでください。" },
+          { title: "サービスの説明", content: "OpenClaw Skills for Authorsは、著者、作家、研究者、コース作成者のために整理された、AIワークフローの精选ライブラリです。" },
+          { title: "ユーザーの行為", content: ["いかなる不法目的でもサービスを使用する", "虚偽、有効、または詐欺的なSkill推薦を送信する", "不正にアクセスしようとする", "サービスを妨害または破壊する", "他のユーザーをハラスメント、虐待、または伤害する"] },
+          { title: "Skillの提出", content: "Skill推薦を送信することで、提出したコンテンツを使用、展示、配布する非独占的、ロイヤリティフリーの権利を付与します。" },
+          { title: "知的財産権", content: "サービスとそのオリジナルコンテンツ、機能はOpenClaw Skills for Authorsにより所有され、国際著作権法により保護されています。" },
+          { title: "サードパーティコンテンツ", content: "サービスには、第三者のウェブサイトやリソースへのリンクが含まれる場合があります。当社はそのような第三者のコンテンツ、正確性、または意見について責任を負いません。" },
+          { title: "保証の免責", content: "サービスは「現状のまま」および「利用可能」な状態で提供され、明示または黙示のいかなる保証もありません。当社は、サービスが中断されない、またはエラーがないことを保証しません。" },
+          { title: "責任の制限", content: "適用法で認められる最大限において、当社はサービスの使用から生じるいかなる間接的、偶発的、特殊的、結果的、または懲罰的な損害についても責任を負いません。" },
+          { title: "補償", content: "あなたは、これらの利用規約への違反から生じるいかなるクレームや要求についても、OpenClaw Skills for Authorsとその関連会社を補償し、保護することに同意します。" },
+          { title: "終了", content: "。当社は理由に関係なく、事前の通知なしに独自の裁量によりサービスへのアクセスを終了または一時停止する権利を留保します。" },
+          { title: "準拠法", content: "これらの利用規約は、法的抵触規定を考慮せずに、適用される法律に従って管辖および解釈されるものとします。" },
+          { title: "利用規約の変更", content: "当社はいつでもこれらの利用規約を変更する権利を留保します。変更がある場合は、このページに新しい利用規約を掲載して通知します。" },
+          { title: "連絡先情報", content: "これらの利用規約に関するご質問がある場合は、support@clawauthor.comまでお問い合わせください。" },
+        ],
+      },
     },
     categories: {
       books: {
@@ -2004,6 +2160,41 @@ const translations: Record<LanguageCode, TranslationSet> = {
       privacy: "Politique de confidentialité",
       terms: "Conditions d'utilisation",
     },
+    legal: {
+      privacyPolicy: {
+        lastUpdated: "Dernière mise à jour : avril 2026",
+        sections: [
+          { title: "Informations que nous collectons", content: "Nous collectons les informations que vous nous fournissez directement, y compris lorsque vous soumettez une recommandation de Skill, créez un compte ou nous contactez pour obtenir de l'aide. Cela peut inclure votre nom, adresse e-mail et le contenu de vos soumissions." },
+          { title: "Comment nous utilisons vos informations", content: ["Fournir, maintenir et améliorer nos services", "Traiter et afficher les recommandations de Skill", "Vous envoyer des mises à jour et des communications administratives", "Répondre à vos commentaires et questions"] },
+          { title: "Partage d'informations", content: "Nous ne vendons, n'échangeons et ne transférons pas vos informations personnelles à des tiers. Nous pouvons partager des informations agrégées et anonymisées qui ne permettent pas de vous identifier." },
+          { title: "Sécurité des données", content: "Nous mettons en œuvre des mesures de sécurité raisonnables pour protéger vos informations personnelles. Cependant, aucune méthode de transmission sur Internet n'est sécurisée à 100%." },
+          { title: "Cookies", content: "Nous pouvons utiliser des cookies et des technologies similaires pour améliorer votre expérience. Vous pouvez contrôler les préférences de cookies via les paramètres de votre navigateur." },
+          { title: "Vos droits", content: "Vous avez le droit d'accéder, de rectifier ou de supprimer vos informations personnelles. Contactez-nous à l'adresse ci-dessous pour exercer ces droits." },
+          { title: "Liens vers des tiers", content: "Notre site peut contenir des liens vers des sites Web tiers. Nous ne sommes pas responsables des pratiques de confidentialité de ces sites externes." },
+          { title: "Confidentialité des enfants", content: "Nos services ne sont pas destinés aux utilisateurs de moins de 16 ans. Nous ne collectons pas sciemment d'informations sur les enfants." },
+          { title: "Modifications de cette politique", content: "Nous pouvons mettre à jour cette Politique de confidentialité de temps à autre. Nous vous informerons de toute modification en publiant la nouvelle politique sur cette page." },
+          { title: "Contactez-nous", content: "Si vous avez des questions sur cette Politique de confidentialité, veuillez nous contacter à : support@clawauthor.com" },
+        ],
+      },
+      termsOfService: {
+        lastUpdated: "Dernière mise à jour : avril 2026",
+        sections: [
+          { title: "Acceptation des conditions", content: "En accédant et en utilisant OpenClaw Skills for Authors, vous acceptez d'être lié par ces Conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le Service." },
+          { title: "Description du service", content: "OpenClaw Skills for Authors est une bibliothèque organisée de flux de travail IA pour les auteurs, écrivains, chercheurs et créateurs de cours." },
+          { title: "Conduite de l'utilisateur", content: ["Utiliser le Service à des fins illégales", "Soumettre de fausses recommandations de Skill trompeuses ou frauduleuses", "Tenter d'accéder sans autorisation à nos systèmes", "Interférer ou perturber le Service", "Harceler, maltraiter ou blesser d'autres utilisateurs"] },
+          { title: "Soumissions de Skill", content: "En soumettant une recommandation de Skill, vous nous accordez un droit non exclusif, gratuit d'utiliser, afficher et distribuer le contenu soumis." },
+          { title: "Propriété intellectuelle", content: "Le Service et son contenu original, fonctionnalités et fonctionnalités sont la propriété d'OpenClaw Skills for Authors et sont protégés par les lois internationales sur le droit d'auteur." },
+          { title: "Contenu tiers", content: "Le Service peut inclure des liens vers des sites Web ou ressources tiers. Nous ne sommes pas responsables du contenu, de l'exactitude ou des opinions exprimés par ces tiers." },
+          { title: "Clause de non-responsabilité", content: "LE SERVICE EST FOURNI « EN L'ÉTAT » ET « TEL QUE DISPONIBLE » SANS GARANTIES D'AUCUN TYPE, EXPRESSES OU IMPLICITES. NOUS NE GARANTISSONS PAS QUE LE SERVICE SERA ININTERROMPU OU SANS ERREURS." },
+          { title: "Limitation de responsabilité", content: "Dans la mesure maximale permise par la loi, nous ne serons pas responsables de tout dommage indirect, accidentel, spécial, consécutif ou punitif résultant de votre utilisation du Service." },
+          { title: "Indemnisation", content: "Vous acceptez d'indemniser et de dégager OpenClaw Skills for Authors et ses affiliés de toute réclamation ou demande résultant de votre violation de ces Conditions." },
+          { title: "Résiliation", content: "Nous nous réservons le droit de mettre fin ou de suspendre votre accès au Service à notre seule discrétion, sans préavis, pour quelque raison que ce soit." },
+          { title: "Droit applicable", content: "Ces Conditions seront régies et interprétées conformément aux lois applicables, sans égard à leurs dispositions sur les conflits de lois." },
+          { title: "Modifications des conditions", content: "Nous nous réservons le droit de modifier ces Conditions à tout moment. Nous vous informerons des modifications en pubblicant les nouvelles Conditions sur cette page." },
+          { title: "Informations de contact", content: "Si vous avez des questions sur ces Conditions, veuillez nous contacter à : support@clawauthor.com" },
+        ],
+      },
+    },
     categories: {
       books: {
         title: "OpenClaw Skills for Book Writing",
@@ -2340,6 +2531,41 @@ const translations: Record<LanguageCode, TranslationSet> = {
     footer: {
       privacy: "개인정보 처리방침",
       terms: "서비스약관",
+    },
+    legal: {
+      privacyPolicy: {
+        lastUpdated: "최종 수정일: 2026년 4월",
+        sections: [
+          { title: "수집하는 정보", content: "Skill 추천을 제출하거나, 계정을 생성하거나, 지원 요청을 위해 문의를 요청할 때 직접 제공해 주신 정보를 수집합니다. 이에는 성명, 이메일 주소 및 제출한 내용이 포함될 수 있습니다." },
+          { title: "정보 사용 방법", content: ["서비스 제공, 유지 및 개선", "Skill 추천 처리 및 표시", "업데이트 및 관리 의사소통 전송", "댓글 및 질문에 대한 응답"] },
+          { title: "정보 공유", content: "당사는 개인 정보를 제3자에게 판매, 교환 또는 기타 방식으로 양도하지 않습니다. 사용자를 식별할 수 없는 집계된 익명 정보를 공유할 수 있습니다." },
+          { title: "데이터 보안", content: "당사는 사용자의 개인정보를 보호하기 위해 합리적인 보안 조치를 구현합니다. 그러나 인터넷을 통한 전송 방법은 100% 안전하지 않습니다." },
+          { title: "쿠키", content: "당사는 환경을 개선하기 위해 쿠키 및 유사 기술을 사용할 수 있습니다. 브라우저 설정을 통해 쿠키 기본 설정을 제어할 수 있습니다." },
+          { title: "사용자의 권리", content: "사용자는 개인정보에 대한 접근, 수정 또는 삭제 권한이 있습니다. 이러한 권리 행사를 위해서는 아래 이메일로 당사에 문의해 주세요." },
+          { title: "제3자 링크", content: "본 사이트에는 제3자 웹사이트로의 링크가 포함될 수 있습니다. 당사는 이러한 외부 사이트의 개인정보 보호 관행에 대해 책임을 지지 않습니다." },
+          { title: "어린이 개인정보", content: "본 서비스는 16세 미만 사용자를 대상으로 하지 않습니다. 당사는 의도적으로 아동의 정보를 수집하지 않습니다." },
+          { title: "정책 변경", content: "당사는 이 개인정보 보호정책을 수시로 업데이트할 수 있습니다. 변경 사항은 이 페이지에 새 정책을 게시하여 알려드리겠습니다." },
+          { title: "문의하기", content: "이 개인정보 보호정책에 대한 질문이 있으시면 다음으로 문의해 주세요: support@clawauthor.com" },
+        ],
+      },
+      termsOfService: {
+        lastUpdated: "최종 수정일: 2026년 4월",
+        sections: [
+          { title: "약관 동의", content: "OpenClaw Skills for Authors에 접근하여 사용함으로써 이 서비스 약관에 구속됨에 동의합니다. 이 약관에 동의하지 않으면 서비스를 사용하지 마세요." },
+          { title: "서비스 설명", content: "OpenClaw Skills for Authors는 작가, 작가, 연구자 및 과정 작성자를 위해 정리된 AI 워크플로우의 큐레이션 라이브러리입니다." },
+          { title: "사용자 행동", content: ["법적 목적에 서비스를 사용", "거짓, 오해의 소지가 있거나 사기적인 Skill 추천 제출", "당사의 시스템에 무단 액세스 시도", "서비스 방해 또는 중단", "다른 사용자 괴롭힘, 학대 또는 해침"] },
+          { title: "Skill 제출", content: "Skill 추천을 제출함으로써 제출한 콘텐츠를 사용, 표시 및 배포할 비독점적, 로열티 무료 권리를 당사에 부여합니다." },
+          { title: "지식재산권", content: "서비스 및 그 원본 콘텐츠, 기능은 OpenClaw Skills for Authors가 소유하며 국제 저작권법에 의해 보호됩니다." },
+          { title: "제3자 콘텐츠", content: "서비스에는 제3자 웹사이트 또는 리소스에 대한 링크가 포함될 수 있습니다. 당사는 그러한 제3자가 표현한 콘텐츠, 정확성 또는 의견에 대해 책임을 지지 않습니다." },
+          { title: "보증 면제", content: "서비스는 \"있는 그대로\" 및 \"사용 가능한 상태\"로 제공되며, 명시적이든 암시적이든 어떠한 보증도 없습니다. 당사는 서비스가 중단되지 않거나 오류가 없음을 보장하지 않습니다." },
+          { title: "책임 제한", content: "법으로 허용되는 최대 한도까지, 당사는 서비스 사용으로 인해 발생하는 간접적, 우발적, 특별, 결과적 또는 징벌적 손상에 대해 책임을 지지 않습니다." },
+          { title: "배상", content: "사용자는 이 약관 위반으로 인해 발생하는 모든 클레임 또는 요구에 대해 OpenClaw Skills for Authors 및 그 계열사를 배상하고 면책하는 데 동의합니다." },
+          { title: "종료", content: "당사는 사전 통보 없이 단독 재량에 따라 이유 여부와 관계없이 서비스에 대한 사용자의 액세스를 종료 또는 일시 중단할 권리를 보유합니다." },
+          { title: "관할법", content: "이 약관은 법률 충돌 규정 없이 적용법에 따라 관리되고 해석됩니다." },
+          { title: "약관 변경", content: "당사는 언제든지 이 약관을 수정할 권리를 보유합니다. 변경 사항은 이 페이지에 새 약관을 게시하여 알려드리겠습니다." },
+          { title: "연락처 정보", content: "이 약관에 대한 질문이 있으시면 support@clawauthor.com으로 문의해 주세요." },
+        ],
+      },
     },
     categories: {
       books: {
@@ -2678,6 +2904,41 @@ const translations: Record<LanguageCode, TranslationSet> = {
       privacy: "Datenschutzrichtlinie",
       terms: "Nutzungsbedingungen",
     },
+    legal: {
+      privacyPolicy: {
+        lastUpdated: "Zuletzt aktualisiert: April 2026",
+        sections: [
+          { title: "Informationen, die wir sammeln", content: "Wir sammeln Informationen, die Sie uns direkt zur Verfügung stellen, einschließlich wenn Sie eine Skill-Empfehlung senden, ein Konto erstellen oder uns für Support kontaktieren. Dies kann Ihren Namen, Ihre E-Mail-Adresse und den Inhalt Ihrer Einsendungen umfassen." },
+          { title: "Wie wir Ihre Informationen verwenden", content: ["Bereitstellung, Wartung und Verbesserung unserer Dienste", "Verarbeitung und Anzeige von Skill-Empfehlungen", "Senden von Updates und administrativen Mitteilungen", "Beantwortung Ihrer Kommentare und Fragen"] },
+          { title: "InformationSharing", content: "Wir verkaufen, handeln oder übertragen Ihre persönlichen Informationen nicht an Dritte. Wir können aggregierte, anonymisierte Informationen teilen, die Sie nicht identifizieren." },
+          { title: "Datensicherheit", content: "Wir implementieren angemessene Sicherheitsmaßnahmen zum Schutz Ihrer persönlichen Informationen. Es gibt jedoch keine Methode der Übertragung über das Internet, die 100% sicher ist." },
+          { title: "Cookies", content: "Wir können Cookies und ähnliche Technologien verwenden, um Ihre Erfahrung zu verbessern. Sie können Cookie-Einstellungen über Ihre Browser-Einstellungen kontrollieren." },
+          { title: "Ihre Rechte", content: "Sie haben das Recht, auf Ihre persönlichen Informationen zuzugreifen, diese zu korrigieren oder zu löschen. Kontaktieren Sie uns unter der unten angegebenen E-Mail, um diese Rechte auszuüben." },
+          { title: "Drittanbieter-Links", content: "Unsere Website kann Links zu Drittanbieter-Websites enthalten. Wir sind nicht verantwortlich für die Datenschutzpraktiken dieser externen Seiten." },
+          { title: "Kinder-Datenschutz", content: "Unsere Dienste sind nicht für Nutzer unter 16 Jahren bestimmt. Wir sammeln wissentlich keine Informationen von Kindern." },
+          { title: "Änderungen dieser Richtlinie", content: "Wir können diese Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. Wir werden Sie über Änderungen informieren, indem wir die neue Richtlinie auf dieser Seite veröffentlichen." },
+          { title: "Kontaktieren Sie uns", content: "Wenn Sie Fragen zu dieser Datenschutzrichtlinie haben, kontaktieren Sie uns bitte unter: support@clawauthor.com" },
+        ],
+      },
+      termsOfService: {
+        lastUpdated: "Zuletzt aktualisiert: April 2026",
+        sections: [
+          { title: "Annahme der Bedingungen", content: "Durch den Zugriff auf und die Nutzung von OpenClaw Skills for Authors erklären Sie sich mit diesen Nutzungsbedingungen einverstanden. Wenn Sie diesen Bedingungen nicht zustimmen, nutzen Sie bitte nicht den Dienst." },
+          { title: "Beschreibung des Dienstes", content: "OpenClaw Skills for Authors ist eine kuratierte Bibliothek von KI-Workflows, die für Autoren, Schriftsteller, Forscher und Kursersteller organisiert ist." },
+          { title: "Nutzerverhalten", content: ["Den Dienst für rechtswidrige Zwecke nutzen", "Falsche, irreführende oder betrügerische Skill-Empfehlungen einreichen", "Versuch, unbefugten Zugang zu unseren Systemen zu erhalten", "Den Dienst stören oder unterbrechen", "Andere Nutzer belästigen, missbrauchen oder schädigen"] },
+          { title: "Skill-Einreichungen", content: "Durch die Einreichung einer Skill-Empfehlung erteilen Sie uns das nicht-exklusive, gebührenfreie Recht, die eingereichten Inhalte zu nutzen, anzuzeigen und zu verteilen." },
+          { title: "Geistiges Eigentum", content: "Der Dienst und seine ursprünglichen Inhalte, Funktionen und Funktionalitäten gehören OpenClaw Skills for Authors und sind durch internationale Urheberrechtsgesetze geschützt." },
+          { title: "Drittanbieter-Inhalte", content: "Der Dienst kann Links zu Drittanbieter-Websites oder Ressourcen enthalten. Wir sind nicht verantwortlich für die Inhalte, Genauigkeit oder Meinungen, die von solchen Dritten geäußert werden." },
+          { title: "Haftungsausschluss", content: "DER DIENST WIRD \"WIE BESEHEN\" UND \"WIE VERFÜGBAR\" OHNE JEGLICHE GEWÄHRLEISTUNGEN, EXPRESS ODER IMPLIZIT, BEREITGESTELLT. WIR GARANTIEREN NICHT, DASS DER DIENST UNUNTERBROCHEN ODER FEHLERFREI SEIN WIRD." },
+          { title: "Haftungsbeschränkung", content: "Nach dem gesetzlich maximal zulässigen Umfang haften wir nicht für indirekte, zufällige, spezielle, Folgeschäden oder Strafschäden, die sich aus Ihrer Nutzung des Dienstes ergeben." },
+          { title: "Schadensersatz", content: "Sie erklären sich damit einverstanden, OpenClaw Skills for Authors und seine verbundenen Unternehmen von jeglichen Ansprüchen oder Forderungen freizustellen, die sich aus Ihrer Verletzung dieser Bedingungen ergeben." },
+          { title: "Beendigung", content: "Wir behalten uns das Recht vor, Ihren Zugang zum Dienst nach eigenem Ermessen ohne vorherige Ankündigung aus beliebigem Grund zu beenden oder auszusetzen." },
+          { title: "Anwendbares Recht", content: "Diese Bedingungen unterliegen den geltenden Gesetzen und werden entsprechend ausgelegt, ohne Rücksicht auf Kollisionsnormen." },
+          { title: "Änderungen der Bedingungen", content: "Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Wir werden Sie über Änderungen informieren, indem wir die neuen Bedingungen auf dieser Seite veröffentlichen." },
+          { title: "Kontaktinformationen", content: "Wenn Sie Fragen zu diesen Bedingungen haben, kontaktieren Sie uns bitte unter: support@clawauthor.com" },
+        ],
+      },
+    },
     categories: {
       books: {
         title: "OpenClaw Skills for Book Writing",
@@ -3014,6 +3275,41 @@ const translations: Record<LanguageCode, TranslationSet> = {
     footer: {
       privacy: "Política de privacidad",
       terms: "Términos de servicio",
+    },
+    legal: {
+      privacyPolicy: {
+        lastUpdated: "Última actualización: abril de 2026",
+        sections: [
+          { title: "Información que recopilamos", content: "Recopilamos información que usted nos proporciona directamente, incluyendo cuando envía una recomendación de Skill, crea una cuenta o nos contacta para obtener soporte. Esto puede incluir su nombre, dirección de correo electrónico y el contenido de sus envíos." },
+          { title: "Cómo usamos su información", content: ["Proporcionar, mantener y mejorar nuestros servicios", "Procesar y mostrar recomendaciones de Skill", "Enviarle actualizaciones y comunicaciones administrativas", "Responder a sus comentarios y preguntas"] },
+          { title: "Compartir información", content: "No vendemos, intercambiamos ni transferimos su información personal a terceros. Podemos compartir información agregada y anonimizada que no pueda identificarle." },
+          { title: "Seguridad de datos", content: "Implementamos medidas de seguridad razonables para proteger su información personal. Sin embargo, ningún método de transmisión por Internet es 100% seguro." },
+          { title: "Cookies", content: "Podemos usar cookies y tecnologías similares para mejorar su experiencia. Puede controlar las preferencias de cookies a través de la configuración de su navegador." },
+          { title: "Sus derechos", content: "Tiene derecho a acceder, corregir o eliminar su información personal. Contáctenos al correo a continuación para ejercer estos derechos." },
+          { title: "Enlaces de terceros", content: "Nuestro sitio puede contener enlaces a sitios web de terceros. No somos responsables de las prácticas de privacidad de estos sitios externos." },
+          { title: "Privacidad de menores", content: "Nuestros servicios no están destinados a usuarios menores de 16 años. No recopilamos intencionalmente información de niños." },
+          { title: "Cambios en esta política", content: "Podemos actualizar esta Política de privacidad de vez en cuando. Le notificaremos cualquier cambio publicando la nueva política en esta página." },
+          { title: "Contáctenos", content: "Si tiene preguntas sobre esta Política de privacidad, contáctenos en: support@clawauthor.com" },
+        ],
+      },
+      termsOfService: {
+        lastUpdated: "Última actualización: abril de 2026",
+        sections: [
+          { title: "Aceptación de los términos", content: "Al acceder y usar OpenClaw Skills for Authors, usted acepta estar obligado por estos Términos de Servicio. Si no acepta estos términos, por favor no use el Servicio." },
+          { title: "Descripción del servicio", content: "OpenClaw Skills for Authors es una biblioteca seleccionada de flujos de trabajo de IA organizados para autores, escritores, investigadores y creadores de cursos." },
+          { title: "Conducta del usuario", content: ["Usar el Servicio para cualquier propósito ilegal", "Enviar recomendaciones de Skill falsas, engañosas o fraudulentas", "Intentar obtener acceso no autorizado a nuestros sistemas", "Interferir o interrumpir el Servicio", "Acosar, abusar o dañar a otros usuarios"] },
+          { title: "Envíos de Skill", content: "Al enviar una recomendación de Skill, nos otorga un derecho no exclusivo, libre de regalías para usar, mostrar y distribuir el contenido enviado." },
+          { title: "Propiedad intelectual", content: "El Servicio y su contenido original, características y funcionalidad son propiedad de OpenClaw Skills for Authors y están protegidos por las leyes internacionales de derechos de autor." },
+          { title: "Contenido de terceros", content: "El Servicio puede incluir enlaces a sitios web o recursos de terceros. No somos responsables del contenido, exactitud u opiniones expresadas por dichos terceros." },
+          { title: "Renuncia de garantías", content: "EL SERVICIO SE PROPORCIONA \"TAL CUAL\" Y \"SEGÚN DISPONIBLE\" SIN GARANTÍAS DE NINGÚN TIPO, EXPRESSAS O IMPLÍCITAS. NO GARANTIZAMOS QUE EL SERVICIO SERÁ ININTERRUMPIDO O SIN ERRORES." },
+          { title: "Limitación de responsabilidad", content: "En la medida máxima permitida por la ley, no seremos responsables de ningún daño indirecto, incidental, especial, consecuencial o punitivo resultante de su uso del Servicio." },
+          { title: "Indemnización", content: "Usted acepta indemnizar y mantener indemne a OpenClaw Skills for Authors y sus afiliados de cualquier reclamo o demanda que surja de su violación de estos Términos." },
+          { title: "Terminación", content: "Nos reservamos el derecho de terminar o suspender su acceso al Servicio a nuestra sola discreción, sin previo aviso, por cualquier razón." },
+          { title: "Ley aplicable", content: "Estos Términos se regirán e interpretarán de acuerdo con las leyes aplicables, sin tener en cuenta sus disposiciones sobre conflictos de leyes." },
+          { title: "Cambios en los términos", content: "Nos reservamos el derecho de modificar estos Términos en cualquier momento. Le notificaremos los cambios publicando los nuevos Términos en esta página." },
+          { title: "Información de contacto", content: "Si tiene preguntas sobre estos Términos, contáctenos en: support@clawauthor.com" },
+        ],
+      },
     },
     categories: {
       books: {
