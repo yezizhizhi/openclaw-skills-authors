@@ -16,6 +16,44 @@ const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
 });
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.clawauthor.com/#organization",
+      name: "OpenClaw",
+      url: "https://www.clawauthor.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.clawauthor.com/opengraph-image.png",
+      },
+      sameAs: [
+        "https://twitter.com/openclaw",
+        "https://github.com/openclaw",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.clawauthor.com/#website",
+      url: "https://www.clawauthor.com",
+      name: "OpenClaw Skills for Authors",
+      description:
+        "A curated library of OpenClaw Skills designed for authors, writers, researchers, and course creators.",
+      publisher: { "@id": "https://www.clawauthor.com/#organization" },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate:
+            "https://www.clawauthor.com/?q={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
@@ -73,6 +111,10 @@ export default function RootLayout({
       className={`${manrope.variable} ${sourceSerif.variable} h-full scroll-smooth antialiased`}
     >
       <body className="site-body min-h-full">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <LanguageProvider>
           <div className="site-chrome min-h-full">
             <SiteHeader />
