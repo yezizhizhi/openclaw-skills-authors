@@ -1,41 +1,30 @@
-"use client";
+import type { Metadata } from "next";
+import { getSiteUrl } from "@/lib/site-url";
+import { PrivacyPolicyClient } from "./privacy-policy-client";
 
-import { useLanguage } from "@/components/language-provider";
+export const metadata: Metadata = {
+  title: "隐私政策 | OpenClaw Skills for Authors",
+  description:
+    "了解 OpenClaw Skills for Authors 如何收集、使用和保护您的个人信息。",
+  alternates: {
+    canonical: `${getSiteUrl()}/privacy-policy`,
+  },
+  openGraph: {
+    title: "隐私政策 | OpenClaw Skills for Authors",
+    description:
+      "了解 OpenClaw Skills for Authors 如何收集、使用和保护您的个人信息。",
+    url: `${getSiteUrl()}/privacy-policy`,
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "OpenClaw 隐私政策",
+      },
+    ],
+  },
+};
 
 export default function PrivacyPolicyPage() {
-  const { translations } = useLanguage();
-  const { footer, legal } = translations;
-  if (!legal) return null;
-
-  return (
-    <main className="pb-24">
-      <section className="site-shell pt-10 md:pt-16">
-        <div className="max-w-3xl">
-          <h1 className="display-title hero-headline">{footer.privacy}</h1>
-          <p className="hero-copy mt-4 text-[var(--muted-ink)]">
-            {legal.privacyPolicy.lastUpdated}
-          </p>
-        </div>
-      </section>
-
-      <section className="site-shell section-gap">
-        <div className="max-w-3xl prose prose-invert">
-          {legal.privacyPolicy.sections.map((section, index) => (
-            <div key={index}>
-              <h2>{`${index + 1}. ${section.title}`}</h2>
-              {Array.isArray(section.content) ? (
-                <ul>
-                  {section.content.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>{section.content}</p>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
-  );
+  return <PrivacyPolicyClient />;
 }
