@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Manrope, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
@@ -114,6 +115,11 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <Script
+          defer
+          data-url="https://devhunt.org/tool/openclaw-skills-for-authors"
+          src="https://cdn.jsdelivr.net/gh/devhunt-org/widgets/banner.js"
         />
         <LanguageProvider>
           <div className="site-chrome min-h-full">
