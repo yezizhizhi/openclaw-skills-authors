@@ -1,4 +1,29 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { getSiteUrl } from "@/lib/site-url";
+
+export const metadata: Metadata = {
+  title: "安装指南 | OpenClaw Skills for Authors",
+  description:
+    "了解如何在 OpenClaw 找到适合你的 AI 写作技能。三步快速上手：选分类、搜环节、直接安装。",
+  alternates: {
+    canonical: `${getSiteUrl()}/install-guide`,
+  },
+  openGraph: {
+    title: "安装指南 | OpenClaw Skills for Authors",
+    description:
+      "了解如何在 OpenClaw 找到适合你的 AI 写作技能。三步快速上手：选分类、搜环节、直接安装。",
+    url: `${getSiteUrl()}/install-guide`,
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "OpenClaw 安装指南",
+      },
+    ],
+  },
+};
 
 const quickSteps = [
   {
