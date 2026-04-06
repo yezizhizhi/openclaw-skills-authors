@@ -20,7 +20,7 @@ export function CategoryPageClient({
   explorerSkills,
 }: CategoryPageClientProps) {
   const { translations, language } = useLanguage();
-  const { home, categories, categoryData, skillWorkflows } = translations;
+  const { home, categories, categoryData, skillWorkflows, skillDescriptions } = translations;
   const slug = category.slug as keyof typeof categories;
 
   // Get translated workflow tags, fallback to original if not available
@@ -98,7 +98,7 @@ export function CategoryPageClient({
                 </p>
               </div>
 
-              <p className="category-skill-copy">{skill.description}</p>
+              <p className="category-skill-copy">{skillDescriptions[skill.name] || skill.description}</p>
 
               {skill.sourceUrl ? (
                 <a

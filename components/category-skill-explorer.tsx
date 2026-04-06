@@ -26,7 +26,7 @@ export function CategorySkillExplorer({
   skills,
 }: CategorySkillExplorerProps) {
   const { translations } = useLanguage();
-  const { home } = translations;
+  const { home, skillWorkflows, skillDescriptions } = translations;
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
   const normalizedQuery = deferredQuery.trim();
@@ -81,11 +81,11 @@ export function CategorySkillExplorer({
               <div className="explorer-block">
                 <p className="explorer-label">{home.spotlightScene}</p>
                 <p className="explorer-scene">
-                  {categoryLabel} / {skill.workflow}
+                  {categoryLabel} / {skillWorkflows[skill.workflow] || skill.workflow}
                 </p>
               </div>
 
-              <p className="explorer-copy">{skill.description}</p>
+              <p className="explorer-copy">{skillDescriptions[skill.name] || skill.description}</p>
 
               {skill.sourceUrl ? (
                 <a
