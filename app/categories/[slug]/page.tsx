@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { categories, getCategoryBySlug } from "@/lib/site-data";
 import { getCategoryExplorerData } from "@/lib/skills-repository";
+import { getSiteUrl } from "@/lib/site-url";
 import { CategoryPageClient } from "./category-page-client";
 
 type CategoryPageProps = {
@@ -19,6 +20,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
   const category = getCategoryBySlug(slug);
+  const siteUrl = getSiteUrl();
 
   if (!category) {
     return {};
@@ -27,6 +29,22 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   return {
     title: category.metaTitle,
     description: category.metaDescription,
+    alternates: {
+      canonical: `${siteUrl}/categories/${slug}`,
+    },
+    openGraph: {
+      title: category.metaTitle,
+      description: category.metaDescription,
+      url: `${siteUrl}/categories/${slug}`,
+      images: [
+        {
+          url: `${siteUrl}/opengraph-image.png`,
+          width: 1200,
+          height: 630,
+          alt: category.metaTitle,
+        },
+      ],
+    },
   };
 }
 

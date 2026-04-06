@@ -18,17 +18,44 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: "OpenClaw Skills for Authors",
-    template: "%s | OpenClaw Skills for Authors",
+    default: "OpenClaw: Discover Structured AI Workflows for Authors and Writers",
+    template: "%s | OpenClaw",
   },
   description:
-    "A paper-and-glass landing site prototype for OpenClaw Skills, organized for authors, writers, researchers, and course creators.",
+    "A curated library of OpenClaw Skills designed for authors, writers, researchers, and course creators. Find AI workflows for book writing, articles, copywriting, reports, academic papers, and course creation.",
   keywords: [
-    "openclaw skills for authors",
-    "openclaw skills",
-    "ai skills for writers",
+    "OpenClaw Skills for Authors",
+    "OpenClaw Skills",
+    "AI skills for writers",
     "writing workflow skills",
+    "AI writing tools",
+    "book writing AI",
+    "content creation AI",
   ],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: getSiteUrl(),
+    siteName: "OpenClaw",
+    title: "OpenClaw: Discover Structured AI Workflows for Authors and Writers",
+    description:
+      "A curated library of OpenClaw Skills for authors, writers, and content creators. Find the right AI workflow for your writing projects.",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "OpenClaw Skills for Authors",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OpenClaw: Discover Structured AI Workflows for Authors and Writers",
+    description:
+      "A curated library of OpenClaw Skills for authors, writers, and content creators.",
+    images: ["/opengraph-image.png"],
+  },
   alternates: {
     canonical: "/",
   },
