@@ -1,20 +1,16 @@
-import type { Metadata } from "next";
-import { getSiteUrl } from "@/lib/site-url";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: "Terms of Service for OpenClaw Skills for Authors. Read our terms and conditions.",
-  alternates: {
-    canonical: `${getSiteUrl()}/terms`,
-  },
-};
+import { useLanguage } from "@/components/language-provider";
 
 export default function TermsPage() {
+  const { translations } = useLanguage();
+  const { footer, home } = translations;
+
   return (
     <main className="pb-24">
       <section className="site-shell pt-10 md:pt-16">
         <div className="max-w-3xl">
-          <h1 className="display-title hero-headline">Terms of Service</h1>
+          <h1 className="display-title hero-headline">{footer.terms}</h1>
           <p className="hero-copy mt-4 text-[var(--muted-ink)]">
             Last updated: April 2026
           </p>

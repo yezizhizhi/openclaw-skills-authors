@@ -1,20 +1,16 @@
-import type { Metadata } from "next";
-import { getSiteUrl } from "@/lib/site-url";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Privacy Policy for OpenClaw Skills for Authors. Learn how we collect, use, and protect your information.",
-  alternates: {
-    canonical: `${getSiteUrl()}/privacy-policy`,
-  },
-};
+import { useLanguage } from "@/components/language-provider";
 
 export default function PrivacyPolicyPage() {
+  const { translations } = useLanguage();
+  const { footer, home } = translations;
+
   return (
     <main className="pb-24">
       <section className="site-shell pt-10 md:pt-16">
         <div className="max-w-3xl">
-          <h1 className="display-title hero-headline">Privacy Policy</h1>
+          <h1 className="display-title hero-headline">{footer.privacy}</h1>
           <p className="hero-copy mt-4 text-[var(--muted-ink)]">
             Last updated: April 2026
           </p>
@@ -69,7 +65,7 @@ export default function PrivacyPolicyPage() {
             privacy practices of these external sites.
           </p>
 
-          <h2>8. Children's Privacy</h2>
+          <h2>8. Childrens Privacy</h2>
           <p>
             Our services are not intended for users under 16 years of age. We do not knowingly 
             collect information from children.

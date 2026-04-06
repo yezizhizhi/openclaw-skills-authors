@@ -130,6 +130,10 @@ export type TranslationSet = {
       answer: string;
     }>;
   };
+  footer: {
+    privacy: string;
+    terms: string;
+  };
   categories: Record<HomeCategoryKey, HomeCategoryContent>;
   categoryChips: Record<HomeCategoryKey, string>;
   // Global workflow stages
@@ -236,6 +240,10 @@ const translations: Record<LanguageCode, TranslationSet> = {
           answer: "可以。登录后即可提交 Skill 链接、Skill 包地址和推荐理由。",
         },
       ],
+    },
+    footer: {
+      privacy: "隐私政策",
+      terms: "服务条款",
     },
     categories: {
       books: {
@@ -805,6 +813,10 @@ const translations: Record<LanguageCode, TranslationSet> = {
         },
       ],
     },
+    footer: {
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+    },
     categories: {
       books: {
         title: "OpenClaw Skills for Book Writing",
@@ -1314,6 +1326,10 @@ const translations: Record<LanguageCode, TranslationSet> = {
         { question: "Можно предложить новый skill?", answer: "Да. После входа можно отправить ссылку, пакет и причину рекомендации." },
       ],
     },
+    footer: {
+      privacy: "Политика конфиденциальности",
+      terms: "Условия использования",
+    },
     categories: {
       books: {
         title: "OpenClaw Skills for Book Writing",
@@ -1646,6 +1662,10 @@ const translations: Record<LanguageCode, TranslationSet> = {
         { question: "リンク切れの Skill はどうなりますか？", answer: "リンク切れは順次差し替え、より安定した代替条目に更新します。" },
         { question: "新しい Skill を推薦できますか？", answer: "できます。ログイン後にリンク、パッケージ、推薦理由を送信できます。" },
       ],
+    },
+    footer: {
+      privacy: "プライバシーポリシー",
+      terms: "利用規約",
     },
     categories: {
       books: {
@@ -1980,7 +2000,11 @@ const translations: Record<LanguageCode, TranslationSet> = {
         { question: "Puis-je recommander un nouveau Skill ?", answer: "Oui. Une fois connecté, vous pouvez envoyer un lien, un package et une raison." },
       ],
     },
-categories: {
+    footer: {
+      privacy: "Politique de confidentialité",
+      terms: "Conditions d'utilisation",
+    },
+    categories: {
       books: {
         title: "OpenClaw Skills for Book Writing",
         subtitle: "Fiction, Non-fiction, Mémoires, Développement personnel, Business, Adaptation de cours en livre",
@@ -2312,6 +2336,10 @@ categories: {
         { question: "어떤 Skill이 더 이상 작동하지 않으면 어떻게 하나요?", answer: "깨진 링크는 계속 교체하고 더 안정적인 대체 항목으로 갱신합니다." },
         { question: "새로운 Skill을 추천할 수 있나요?", answer: "네. 로그인 후 링크, 패키지, 추천 이유를 제출할 수 있습니다." },
       ],
+    },
+    footer: {
+      privacy: "개인정보 처리방침",
+      terms: "서비스약관",
     },
     categories: {
       books: {
@@ -2646,6 +2674,10 @@ categories: {
         { question: "Kann ich einen neuen Skill empfehlen?", answer: "Ja. Nach dem Login kannst du Link, Paket und Begründung einreichen." },
       ],
     },
+    footer: {
+      privacy: "Datenschutzrichtlinie",
+      terms: "Nutzungsbedingungen",
+    },
     categories: {
       books: {
         title: "OpenClaw Skills for Book Writing",
@@ -2978,6 +3010,10 @@ categories: {
         { question: "¿Qué pasa si un skill deja de funcionar?", answer: "Los enlaces rotos se reemplazan gradualmente por alternativas más estables." },
         { question: "¿Puedo recomendar un nuevo skill?", answer: "Sí. Después de iniciar sesión puedes enviar el enlace, el paquete y una razón." },
       ],
+    },
+    footer: {
+      privacy: "Política de privacidad",
+      terms: "Términos de servicio",
     },
     categories: {
       books: {
