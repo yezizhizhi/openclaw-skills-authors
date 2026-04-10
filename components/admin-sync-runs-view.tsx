@@ -6,33 +6,39 @@ import { AuthDialogTrigger } from "@/components/auth-dialog-trigger";
 import { useLanguage } from "@/components/language-provider";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
 
-type SkillSubmission = {
+type SyncRun = {
   id: number;
-  skill_link: string | null;
-  skill_package: string | null;
-  recommendation_reason: string;
-  submitter_email: string | null;
-  submitter_user_id: string;
-  created_at: string;
+  source_type: string;
+  status: string;
+  started_at: string;
+  finished_at: string | null;
+  fetched_count: number;
+  normalized_count: number;
+  published_count: number;
+  review_count: number;
+  error_summary: string | null;
 };
 
-function formatTimestamp(value: string, locale: string) {
-  const date = new Date(value);
+function formatTimestamp(value: string | null, locale: string) {
+  if (!value) {
+    return "-";
+  }
+
   return new Intl.DateTimeFormat(locale, {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
-  }).format(date);
+  }).format(new Date(value));
 }
 
-export function AdminSubmissionsView() {
+export function AdminSyncRunsView() {
   const { language } = useLanguage();
   const isZh = language === "zh";
   const supabase = useMemo(() => getSupabaseBrowserClient(), []);
   const [session, setSession] = useState<Session | null>(null);
-  const [items, setItems] = useState<SkillSubmission[]>([]);
+  const [items, setItems] = useState<SyncRun[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -64,19 +70,19 @@ export function AdminSubmissionsView() {
   }, [supabase]);
 
   useEffect(() => {
-    if (!supabase || !session?.access_token) {
+    const accessToken = session?.access_token;
+    if (!supabase || !accessToken) {
       return;
     }
 
     let active = true;
-    const accessToken = session.access_token;
 
-    async function loadSubmissions() {
+    async function loadItems() {
       setLoading(true);
       setError("");
 
       try {
-        const response = await fetch("/api/admin/skill-submissions", {
+        const response = await fetch("/api/admin/sync-runs", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -84,24 +90,26 @@ export function AdminSubmissionsView() {
         });
         const payload = (await response.json()) as {
           error?: string;
-          submissions?: SkillSubmission[];
+          runs?: SyncRun[];
         };
 
         if (!response.ok) {
-          throw new Error(payload.error || (isZh ? "读取后台提交列表失败。" : "Failed to load submissions."));
+          throw new Error(payload.error || (isZh ? "读取同步记录失败。" : "Failed to load sync runs."));
         }
 
-        if (!active) return;
-        setItems(payload.submissions ?? []);
+        if (active) {
+          setItems(payload.runs ?? []);
+        }
       } catch (fetchError) {
-        if (!active) return;
-        setError(
-          fetchError instanceof Error
-            ? fetchError.message
-            : isZh
-              ? "读取后台提交列表失败。"
-              : "Failed to load submissions.",
-        );
+        if (active) {
+          setError(
+            fetchError instanceof Error
+              ? fetchError.message
+              : isZh
+                ? "读取同步记录失败。"
+                : "Failed to load sync runs.",
+          );
+        }
       } finally {
         if (active) {
           setLoading(false);
@@ -109,26 +117,24 @@ export function AdminSubmissionsView() {
       }
     }
 
-    void loadSubmissions();
+    void loadItems();
 
     return () => {
       active = false;
     };
-  }, [isZh, session, supabase]);
+  }, [isZh, session?.access_token, supabase]);
 
   if (!session) {
     return (
       <section className="admin-shell">
         <div className="admin-empty">
-          <h2 className="admin-empty-title">{isZh ? "请先登录后台账号" : "Sign In to Access the Admin Panel"}</h2>
+          <h2 className="admin-empty-title">{isZh ? "请先登录后台账号" : "Sign In to Access Sync Runs"}</h2>
           <p className="admin-empty-copy">
-            {isZh
-              ? "只有管理员账号可以查看所有用户提交的 Skills 推荐记录。"
-              : "Only admin accounts can view all submitted skill recommendations."}
+            {isZh ? "只有管理员账号可以查看自动同步执行记录。" : "Only admin accounts can view sync execution history."}
           </p>
           <div className="mx-auto w-full max-w-sm">
             <AuthDialogTrigger
-              label={isZh ? "登录后查看后台" : "Sign In to View Admin"}
+              label={isZh ? "登录后查看同步记录" : "Sign In to View Sync Runs"}
               className="primary-button w-full"
             />
           </div>
@@ -141,11 +147,9 @@ export function AdminSubmissionsView() {
     return (
       <section className="admin-shell">
         <div className="admin-empty">
-          <h2 className="admin-empty-title">{isZh ? "正在载入提交记录" : "Loading submissions"}</h2>
+          <h2 className="admin-empty-title">{isZh ? "正在载入同步记录" : "Loading sync runs"}</h2>
           <p className="admin-empty-copy">
-            {isZh
-              ? "请稍等，我们正在从数据库读取最新的推荐内容。"
-              : "Please wait while we load the latest submissions from the database."}
+            {isZh ? "请稍等，我们正在读取最近的自动化执行结果。" : "Please wait while we load the latest automation runs."}
           </p>
         </div>
       </section>
@@ -156,7 +160,7 @@ export function AdminSubmissionsView() {
     return (
       <section className="admin-shell">
         <div className="admin-empty">
-          <h2 className="admin-empty-title">{isZh ? "暂时无法查看后台" : "Admin view is currently unavailable"}</h2>
+          <h2 className="admin-empty-title">{isZh ? "暂时无法查看同步记录" : "Sync history unavailable"}</h2>
           <p className="admin-empty-copy">{error}</p>
         </div>
       </section>
@@ -171,7 +175,7 @@ export function AdminSubmissionsView() {
           <p className="admin-summary-value">{session.user.email || (isZh ? "已登录账号" : "Signed-in account")}</p>
         </div>
         <div>
-          <p className="admin-summary-label">{isZh ? "提交总数" : "Total Submissions"}</p>
+          <p className="admin-summary-label">{isZh ? "最近执行数" : "Recent Runs"}</p>
           <p className="admin-summary-value">{items.length}</p>
         </div>
       </div>
@@ -181,35 +185,35 @@ export function AdminSubmissionsView() {
           <article key={item.id} className="admin-card">
             <div className="admin-card-meta">
               <span>#{item.id}</span>
-              <span>{formatTimestamp(item.created_at, isZh ? "zh-CN" : "en-US")}</span>
+              <span>{item.source_type}</span>
             </div>
 
-            <h3 className="admin-card-title">{item.submitter_email || item.submitter_user_id}</h3>
+            <h3 className="admin-card-title">{item.status}</h3>
 
             <div className="admin-card-block">
-              <p className="admin-card-label">{isZh ? "Skills 链接" : "Skill Link"}</p>
-              {item.skill_link ? (
-                <a href={item.skill_link} target="_blank" rel="noreferrer" className="admin-card-link">
-                  {item.skill_link}
-                </a>
-              ) : (
-                <p className="admin-card-value muted">{isZh ? "未填写" : "Not provided"}</p>
-              )}
+              <p className="admin-card-label">{isZh ? "开始 / 结束" : "Start / End"}</p>
+              <p className="admin-card-value">{formatTimestamp(item.started_at, isZh ? "zh-CN" : "en-US")}</p>
+              <p className="admin-card-value">{formatTimestamp(item.finished_at, isZh ? "zh-CN" : "en-US")}</p>
             </div>
 
             <div className="admin-card-block">
-              <p className="admin-card-label">{isZh ? "Skills 包地址" : "Skill Package Address"}</p>
-              {item.skill_package ? (
-                <p className="admin-card-value">{item.skill_package}</p>
-              ) : (
-                <p className="admin-card-value muted">{isZh ? "未填写" : "Not provided"}</p>
-              )}
+              <p className="admin-card-label">{isZh ? "抓取 / 标准化 / 发布" : "Fetched / Normalized / Published"}</p>
+              <p className="admin-card-value">
+                {item.fetched_count} / {item.normalized_count} / {item.published_count}
+              </p>
             </div>
 
             <div className="admin-card-block">
-              <p className="admin-card-label">{isZh ? "推荐理由" : "Reason"}</p>
-              <p className="admin-card-value">{item.recommendation_reason}</p>
+              <p className="admin-card-label">{isZh ? "待审核数" : "Review Count"}</p>
+              <p className="admin-card-value">{item.review_count}</p>
             </div>
+
+            {item.error_summary ? (
+              <div className="admin-card-block">
+                <p className="admin-card-label">{isZh ? "错误摘要" : "Error Summary"}</p>
+                <p className="admin-card-value">{item.error_summary}</p>
+              </div>
+            ) : null}
           </article>
         ))}
       </div>
