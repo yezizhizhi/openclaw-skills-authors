@@ -85,7 +85,7 @@ export function CategoryPageClient({
         <div className="section-heading centered category-search-heading">
           <h2 className="section-title">路径 B：直接下载整套 Workflow Pack</h2>
           <p className="section-copy">
-            如果你不是只缺一个 skill，而是想从这个分类下直接拿走整套流程，可以直接下载已经编排好的 workflow 包。
+            如果你不是只缺一个 skill，而是想从这个分类下拿走整套流程，可以先看 workflow 包说明，再决定是否下载。
           </p>
         </div>
 
@@ -106,12 +106,27 @@ export function CategoryPageClient({
 
                 <p className="category-skill-copy">{item.description}</p>
 
+                <div className="mt-4 grid gap-3 md:grid-cols-3">
+                  <div className="rounded-[16px] border border-[var(--line)] bg-[rgba(255,255,255,0.02)] p-3">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">适合谁</p>
+                    <p className="mt-2 text-sm leading-6 text-[var(--soft-ink)]">{item.audience}</p>
+                  </div>
+                  <div className="rounded-[16px] border border-[var(--line)] bg-[rgba(255,255,255,0.02)] p-3">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">真实来源</p>
+                    <p className="mt-2 text-xl font-extrabold tracking-[-0.04em] text-[var(--ink)]">
+                      {item.steps.filter((step) => Boolean(step.selectedSkill.sourceUrl)).length}
+                    </p>
+                    <p className="text-sm text-[var(--muted-ink)]">个 skills</p>
+                  </div>
+                  <div className="rounded-[16px] border border-[var(--line)] bg-[rgba(255,255,255,0.02)] p-3">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">从哪步开始</p>
+                    <p className="mt-2 text-sm leading-6 text-[var(--soft-ink)]">{item.steps[0]?.stepName || "查看详情"}</p>
+                  </div>
+                </div>
+
                 <div className="mt-4 flex gap-3">
-                  <Link href={`/workflow-packages/${item.slug}`} className="secondary-button category-skill-button">
-                    查看 Package
-                  </Link>
-                  <Link href={`/api/workflow-packages/${item.slug}/download`} className="primary-button category-skill-button">
-                    下载整套 Workflow
+                  <Link href={`/workflow-packages/${item.slug}`} className="primary-button category-skill-button">
+                    查看说明与内容
                   </Link>
                 </div>
               </article>
