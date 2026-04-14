@@ -27,6 +27,7 @@ export function CategorySkillExplorer({
 }: CategorySkillExplorerProps) {
   const { translations } = useLanguage();
   const { home, skillWorkflows, skillDescriptions } = translations;
+  const displayWorkflowTags = workflowTags.map((tag) => skillWorkflows[tag] || tag);
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
   const normalizedQuery = deferredQuery.trim();
@@ -46,19 +47,19 @@ export function CategorySkillExplorer({
           type="text"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder={`${home.categoriesTitle} ${workflowTags.slice(0, 3).join(", ")}`}
+          placeholder={`${home.categoriesTitle} ${displayWorkflowTags.slice(0, 3).join(", ")}`}
         />
       </div>
 
       <div className="explorer-chip-row">
-        {workflowTags.map((tag) => (
+        {workflowTags.map((tag, index) => (
           <button
-            key={tag}
+            key={`${tag}-${index}`}
             type="button"
             className="explorer-chip"
             onClick={() => setQuery(tag)}
           >
-            {tag}
+            {displayWorkflowTags[index]}
           </button>
         ))}
       </div>
@@ -110,7 +111,7 @@ export function CategorySkillExplorer({
         <div className="explorer-empty">
           <p className="explorer-empty-title">{home.spotlightTitle}</p>
           <p className="explorer-empty-copy">
-            {workflowTags[0]} / {workflowTags[1]}
+            {displayWorkflowTags[0]} / {displayWorkflowTags[1]}
           </p>
         </div>
       ) : null}
@@ -119,7 +120,7 @@ export function CategorySkillExplorer({
         <div className="explorer-empty">
           <p className="explorer-empty-title">{home.categoriesTitle}</p>
           <p className="explorer-empty-copy">
-            {workflowTags[2]} / {workflowTags[3]}
+            {displayWorkflowTags[2]} / {displayWorkflowTags[3]}
           </p>
         </div>
       ) : null}

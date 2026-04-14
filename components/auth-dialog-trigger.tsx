@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { GoogleLoginButton } from "@/components/google-login-button";
+import { useLanguage } from "@/components/language-provider";
 import { getSupabaseBrowserClient, hasSupabaseBrowserEnv } from "@/lib/supabase/browser";
 
 type AuthDialogTriggerProps = {
@@ -11,9 +12,12 @@ type AuthDialogTriggerProps = {
 };
 
 export function AuthDialogTrigger({
-  label = "登录",
+  label,
   className = "header-nav-link",
 }: AuthDialogTriggerProps) {
+  const { translations } = useLanguage();
+  const authTranslations = translations.auth;
+  const headerTranslations = translations.header;
   const pathname = usePathname() || "/";
   const supabase = useMemo(() => getSupabaseBrowserClient(), []);
   const [open, setOpen] = useState(false);
@@ -62,66 +66,68 @@ export function AuthDialogTrigger({
   return (
     <>
       <button type="button" className={className} onClick={() => setOpen(true)}>
-        {label}
+        {label || headerTranslations.login}
       </button>
 
       {open ? (
-        <div className="auth-modal-backdrop" role="dialog" aria-modal="true" aria-label="登录">
+        <div className="auth-modal-backdrop" role="dialog" aria-modal="true" aria-label={authTranslations.dialogAria}>
           <div className="auth-modal-shell" onClick={(event) => event.stopPropagation()}>
             <button
               type="button"
               className="auth-modal-close"
-              aria-label="关闭登录框"
+              aria-label={authTranslations.close}
               onClick={() => setOpen(false)}
             >
               ×
             </button>
 
-            <p className="auth-modal-kicker">登录</p>
-            <h2 className="auth-modal-title">登录账号</h2>
-            <p className="auth-modal-copy">
-              你可以直接用邮箱和密码登录，也可以继续使用 Google。Google 登录会跳转到 Google 官方授权页完成验证。
-            </p>
+            <p className="auth-modal-kicker">{authTranslations.kicker}</p>
+            <h2 className="auth-modal-title">{authTranslations.title}</h2>
+            <p className="auth-modal-copy">{authTranslations.copy}</p>
 
             <form className="mt-8 grid gap-4" onSubmit={handleEmailLogin}>
               <label className="grid gap-3 text-left">
-                <span className="text-sm font-semibold tracking-[0.08em] text-[var(--accent-soft)]">邮箱账号</span>
+                <span className="text-sm font-semibold tracking-[0.08em] text-[var(--accent-soft)]">
+                  {translations.auth.emailLabel}
+                </span>
                 <input
                   type="email"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   className="submission-input"
-                  placeholder="请输入邮箱账号"
+                  placeholder={translations.auth.emailPlaceholder}
                   autoComplete="email"
                   required
                 />
               </label>
 
               <label className="grid gap-3 text-left">
-                <span className="text-sm font-semibold tracking-[0.08em] text-[var(--accent-soft)]">密码</span>
+                <span className="text-sm font-semibold tracking-[0.08em] text-[var(--accent-soft)]">
+                  {translations.auth.passwordLabel}
+                </span>
                 <input
                   type="password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   className="submission-input"
-                  placeholder="请输入密码"
+                  placeholder={translations.auth.passwordPlaceholder}
                   autoComplete="current-password"
                   required
                 />
               </label>
 
               <button type="submit" className="secondary-button w-full" disabled={busy || !hasSupabaseBrowserEnv()}>
-                {busy ? "登录中..." : "邮箱密码登录"}
+                {busy ? authTranslations.loggingIn : authTranslations.emailLogin}
               </button>
             </form>
 
             <div className="auth-modal-divider">
-              <span>或</span>
+              <span>{authTranslations.divider}</span>
             </div>
 
             <div>
               <GoogleLoginButton
-                label="使用 Google 登录"
+                label={authTranslations.googleLogin}
                 nextPath={pathname}
                 className="primary-button w-full"
               />
@@ -132,7 +138,7 @@ export function AuthDialogTrigger({
           <button
             type="button"
             className="auth-modal-dismiss"
-            aria-label="关闭遮罩"
+            aria-label={authTranslations.close}
             onClick={() => setOpen(false)}
           />
         </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { CopyConfigButton } from "@/components/copy-config-button";
+import { TrackedLink } from "@/components/tracked-link";
 import { useLanguage } from "@/components/language-provider";
 import type { SkillDetail } from "@/lib/skills-repository";
 
@@ -18,6 +19,25 @@ export function SkillDetailClient({
 }: SkillDetailClientProps) {
   const { translations } = useLanguage();
   const { home } = translations;
+  const categorySlug = skill.categorySlug as keyof typeof translations.categoryChips;
+  const localizedCategoryLabel =
+    translations.categoryChips[categorySlug] || skill.categoryLabel;
+  const localizeWorkflow = (value: string) => translations.skillWorkflows[value] || value;
+  const localizedDescription =
+    translations.skillDescriptions[skill.name] || skill.description;
+  const localizedScenarioNames = skill.scenarioNames.map(localizeWorkflow);
+  const localizedWorkflowTags = skill.workflowTags.map(localizeWorkflow);
+  const localizedTags = skill.tags.map((tag) => {
+    const normalizedTag = tag.toLowerCase();
+    if (
+      normalizedTag === skill.categorySlug ||
+      normalizedTag === skill.categoryLabel.toLowerCase()
+    ) {
+      return localizedCategoryLabel;
+    }
+
+    return localizeWorkflow(tag);
+  });
 
   return (
     <main className="pb-24">
@@ -26,46 +46,61 @@ export function SkillDetailClient({
           <div className="breadcrumb-row skill-detail-breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
-            <Link href={`/categories/${skill.categorySlug}`}>{skill.categoryLabel}</Link>
+            <Link href={`/categories/${skill.categorySlug}`}>{localizedCategoryLabel}</Link>
             <span>/</span>
             <span>{skill.name}</span>
           </div>
 
           <h1 className="display-title skill-detail-title">{skill.name}</h1>
           <h2 className="skill-detail-subtitle">
-            {skill.categoryLabel} / {skill.workflow}
+            {localizedCategoryLabel} / {localizeWorkflow(skill.workflow)}
           </h2>
-          <p className="hero-copy hero-copy-lg skill-detail-copy">{skill.description}</p>
+          <p className="hero-copy hero-copy-lg skill-detail-copy">{localizedDescription}</p>
 
           <div className="hero-actions">
             <CopyConfigButton
               configSnippet={openClawPrompt}
               idleLabel={home.spotlightCta}
               successLabel={home.spotlightCta}
+              trackingPayload={{
+                skillId: skill.id,
+                sourceType: skill.sourceUrl?.includes("clawhub.ai") ? "clawhub" : "manual",
+                sourceKey: skill.id,
+              }}
             />
             <Link href="/install-guide" className="secondary-button skill-detail-button">
               {home.installGuide}
             </Link>
             {stableSourceLink ? (
-              <a
+              <TrackedLink
                 href={stableSourceLink}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="secondary-button skill-detail-button"
+                trackingPath="/api/track/skill"
+                trackingPayload={{
+                  skillId: skill.id,
+                  sourceType: skill.sourceUrl?.includes("clawhub.ai") ? "clawhub" : "manual",
+                  sourceKey: skill.id,
+                  eventType: "source_click",
+                  metadata: {
+                    sourceUrl: stableSourceLink,
+                  },
+                }}
               >
                 {home.spotlightCta}
-              </a>
+              </TrackedLink>
             ) : null}
           </div>
 
           <div className="hero-chip-row skill-detail-chip-row">
-            {skill.scenarioNames.length
-              ? skill.scenarioNames.map((scenario) => (
+            {localizedScenarioNames.length
+              ? localizedScenarioNames.map((scenario) => (
                   <span key={scenario} className="chip-link">
                     {scenario}
                   </span>
                 ))
-              : skill.workflowTags.map((tag) => (
+              : localizedWorkflowTags.map((tag) => (
                   <span key={tag} className="chip-link">
                     {tag}
                   </span>
@@ -80,11 +115,13 @@ export function SkillDetailClient({
             <p className="skill-detail-label">{home.spotlightScene}</p>
             <h2 className="skill-detail-card-title">{home.spotlightTitle}</h2>
             <p className="skill-detail-card-copy">
-              {skill.categoryLabel}
-              {skill.scenarioNames.length ? ` ${skill.scenarioNames.join(", ")} ` : ` ${skill.workflow} `}
+              {localizedCategoryLabel}
+              {localizedScenarioNames.length
+                ? ` ${localizedScenarioNames.join(", ")} `
+                : ` ${localizeWorkflow(skill.workflow)} `}
             </p>
             <div className="skill-detail-tag-row">
-              {skill.tags.map((tag) => (
+              {localizedTags.map((tag) => (
                 <span key={tag} className="spotlight-tag">
                   {tag}
                 </span>
@@ -112,6 +149,27 @@ export function SkillDetailClient({
               <code>{openClawPrompt}</code>
             </pre>
           </article>
+        </div>
+      </section>
+
+      <section className="site-shell section-gap skill-detail-section">
+        <div className="rounded-[28px] border border-[var(--line)] bg-[var(--panel)] p-8">
+          <div className="section-heading">
+            <span className="eyebrow">Workflow Option</span>
+            <h2 className="section-title">不只找单个 Skill，也可以直接拿整套 Workflow</h2>
+            <p className="section-copy">
+              如果你不是只需要这一个 skill，而是想把这个分类下的完整工作流一起拿走，可以直接去看已经编排好的 workflow packages。
+            </p>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link href={`/categories/${skill.categorySlug}#workflow-packs`} className="primary-button">
+              查看这个分类下的 Workflow Packs
+            </Link>
+            <Link href="/workflow-packages" className="secondary-button">
+              浏览全部 Workflow Packs
+            </Link>
+          </div>
         </div>
       </section>
 

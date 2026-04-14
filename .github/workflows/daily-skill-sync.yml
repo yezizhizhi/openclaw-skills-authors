@@ -1,0 +1,34 @@
+name: Daily Skill Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * *"
+
+jobs:
+  sync-skills:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run skill sync
+        run: npm run sync:skills
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SKILL_SYNC_SOURCES: ${{ secrets.SKILL_SYNC_SOURCES }}
+          CLAWHUB_SEED_URLS: ${{ secrets.CLAWHUB_SEED_URLS }}
+          GITHUB_SKILL_REPOS: ${{ secrets.GITHUB_SKILL_REPOS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

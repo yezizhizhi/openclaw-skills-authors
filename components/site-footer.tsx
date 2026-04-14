@@ -27,6 +27,12 @@ export function SiteFooter() {
             <Link href="/#categories" className="transition hover:text-[var(--accent)]">
               {home.categoriesTitle}
             </Link>
+            <Link href="/workflow-packages" className="transition hover:text-[var(--accent)]">
+              Workflow Packages
+            </Link>
+            <Link href="/admin/digest-runs" className="transition hover:text-[var(--accent)]">
+              Weekly Digest
+            </Link>
             <Link href="/categories/books" className="transition hover:text-[var(--accent)]">
               {home.spotlightTitle}
             </Link>

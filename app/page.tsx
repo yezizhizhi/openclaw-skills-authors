@@ -8,7 +8,13 @@ import type { HomeCategoryKey } from "@/lib/i18n";
 
 export default function HomePage() {
   const { translations } = useLanguage();
-  const { home, categoryChips, categories: transCategories } = translations;
+  const {
+    home,
+    categoryChips,
+    categories: transCategories,
+    skillWorkflows,
+    skillDescriptions,
+  } = translations;
 
   const featuredCategory = categories[0];
   const sideCategories = categories.slice(1);
@@ -17,8 +23,12 @@ export default function HomePage() {
     .slice(0, 3)
     .map((skill) => ({
       name: skill.name,
-      scene: skill.description,
-      tags: [skill.badge ?? (categoryChips[featuredCategory.slug as keyof typeof categoryChips] || "精选" as const), skill.workflow, "可直达 ClawHub"],
+      scene: skillDescriptions[skill.name] || skill.description,
+      tags: [
+        skill.badge ?? (categoryChips[featuredCategory.slug as keyof typeof categoryChips] || "Featured"),
+        skillWorkflows[skill.workflow] || skill.workflow,
+        home.spotlightCta.replace(" ↗", ""),
+      ],
       href: skill.sourceUrl as string,
     }));
 
@@ -35,11 +45,11 @@ export default function HomePage() {
           <h3 className="hero-copy hero-copy-lg">{home.heroCopy}</h3>
 
           <div className="hero-actions">
-            <Link href="/#categories" className="primary-button">
-              {home.browseAll}
+            <Link href="/search-skills" className="primary-button">
+              找单个 Skill
             </Link>
-            <Link href="/install-guide" className="secondary-button">
-              {home.installGuide}
+            <Link href="/workflow-packages" className="secondary-button">
+              下载 Workflow Pack
             </Link>
           </div>
 
@@ -52,6 +62,53 @@ export default function HomePage() {
           </div>
         </div>
 
+      </section>
+
+      <section className="site-shell section-gap">
+        <SectionHeading
+          eyebrow="Two Paths"
+          title="两种使用方式，同时保留"
+          description="已经知道自己缺什么，就找单个 skill。想直接拿走完整流程，就下 workflow pack。"
+          centered
+        />
+
+        <div className="mt-8 grid gap-5 lg:grid-cols-2">
+          <article className="rounded-[28px] border border-[var(--line)] bg-[var(--panel)] p-7 shadow-[var(--shadow)]">
+            <span className="eyebrow">Path A</span>
+            <h2 className="mt-5 text-3xl font-extrabold tracking-[-0.05em] text-[var(--ink)]">按需求找单个 Skill</h2>
+            <p className="mt-4 text-base leading-8 text-[var(--soft-ink)]">
+              适合已经知道自己卡在“热点调研、文献收集、提纲结构、正文扩写、终稿润色”等某个具体环节的人。
+            </p>
+            <ul className="mt-5 space-y-2 text-sm leading-7 text-[var(--muted-ink)]">
+              <li>直接输入当前需求</li>
+              <li>返回最相关的单个 skills</li>
+              <li>继续跳转 ClawHub 或来源页使用</li>
+            </ul>
+            <div className="mt-6">
+              <Link href="/search-skills" className="primary-button">
+                进入 Skill 搜索
+              </Link>
+            </div>
+          </article>
+
+          <article className="rounded-[28px] border border-[var(--line)] bg-[linear-gradient(180deg,rgba(255,98,76,0.12),rgba(255,255,255,0.03))] p-7 shadow-[var(--shadow)]">
+            <span className="eyebrow">Path B</span>
+            <h2 className="mt-5 text-3xl font-extrabold tracking-[-0.05em] text-[var(--ink)]">直接下载整套 Workflow Pack</h2>
+            <p className="mt-4 text-base leading-8 text-[var(--soft-ink)]">
+              适合不想自己拼技能、而是希望从“选题到成稿”“调研到汇报”“开题到综述”直接拿走一整套流程的人。
+            </p>
+            <ul className="mt-5 space-y-2 text-sm leading-7 text-[var(--muted-ink)]">
+              <li>按真实场景打包</li>
+              <li>每一步都带选中的 skill</li>
+              <li>支持整套 zip 下载</li>
+            </ul>
+            <div className="mt-6">
+              <Link href="/workflow-packages" className="primary-button">
+                浏览 Workflow Packs
+              </Link>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section className="site-shell section-gap" id="categories">

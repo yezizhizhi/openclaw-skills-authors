@@ -17,44 +17,6 @@ const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
 });
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://www.clawauthor.com/#organization",
-      name: "OpenClaw",
-      url: "https://www.clawauthor.com",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://www.clawauthor.com/opengraph-image.png",
-      },
-      sameAs: [
-        "https://twitter.com/openclaw",
-        "https://github.com/openclaw",
-      ],
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://www.clawauthor.com/#website",
-      url: "https://www.clawauthor.com",
-      name: "OpenClaw Skills for Authors",
-      description:
-        "A curated library of OpenClaw Skills designed for authors, writers, researchers, and course creators.",
-      publisher: { "@id": "https://www.clawauthor.com/#organization" },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate:
-            "https://www.clawauthor.com/?q={search_term_string}",
-        },
-        "query-input": "required name=search_term_string",
-      },
-    },
-  ],
-};
-
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
@@ -106,6 +68,44 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteUrl = getSiteUrl();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}/#organization`,
+        name: "OpenClaw",
+        url: siteUrl,
+        logo: {
+          "@type": "ImageObject",
+          url: `${siteUrl}/opengraph-image.png`,
+        },
+        sameAs: [
+          "https://twitter.com/openclaw",
+          "https://github.com/openclaw",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: siteUrl,
+        name: "OpenClaw Skills for Authors",
+        description:
+          "A curated library of OpenClaw Skills designed for authors, writers, researchers, and course creators.",
+        publisher: { "@id": `${siteUrl}/#organization` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${siteUrl}/?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ],
+  };
+
   return (
     <html
       lang="zh-CN"

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { categories, getCategoryBySlug } from "@/lib/site-data";
 import { getCategoryExplorerData } from "@/lib/skills-repository";
 import { getSiteUrl } from "@/lib/site-url";
+import { getWorkflowPackagesByCategory } from "@/lib/workflow-packages";
 import { CategoryPageClient } from "./category-page-client";
 
 type CategoryPageProps = {
@@ -61,6 +62,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     explorerData?.workflowTags.length ? explorerData.workflowTags : category.workflowTags;
   const explorerScenarios = explorerData?.scenarios ?? [];
   const explorerSkills = explorerData?.skills ?? [];
+  const workflowPackages = await getWorkflowPackagesByCategory(category.slug);
 
   return (
     <CategoryPageClient
@@ -68,6 +70,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       workflowTags={workflowTags}
       explorerScenarios={explorerScenarios}
       explorerSkills={explorerSkills}
+      workflowPackages={workflowPackages}
     />
   );
 }

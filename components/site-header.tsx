@@ -11,6 +11,7 @@ export function SiteHeader() {
 
   const navItems = [
     { href: "/#categories", label: header.quickSearch },
+    { href: "/workflow-packages", label: "Workflow Packs" },
     { href: "/submit-skills", label: header.submit },
     { href: "/#faq", label: header.faq },
   ];

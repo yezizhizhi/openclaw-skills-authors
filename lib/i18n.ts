@@ -16,7 +16,7 @@ export const languageOptions: LanguageOption[] = [
   { code: "es", label: "Español" },
 ];
 
-export const defaultLanguage: LanguageCode = "zh";
+export const defaultLanguage: LanguageCode = "en";
 export const languageStorageKey = "openclaw-language";
 
 export const htmlLangByLanguage: Record<LanguageCode, string> = {

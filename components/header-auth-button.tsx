@@ -4,15 +4,18 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { AuthDialogTrigger } from "@/components/auth-dialog-trigger";
+import { useLanguage } from "@/components/language-provider";
 import { getSupabaseBrowserClient, hasSupabaseBrowserEnv } from "@/lib/supabase/browser";
 
 function formatIdentity(session: Session | null) {
   const user = session?.user;
   if (!user) return "";
-  return user.email || user.phone || "已登录";
+  return user.email || user.phone || "";
 }
 
 export function HeaderAuthButton() {
+  const { translations } = useLanguage();
+  const headerTranslations = translations.header;
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -88,21 +91,21 @@ export function HeaderAuthButton() {
   }
 
   if (!session) {
-    return <AuthDialogTrigger label="登录" className="header-nav-link" />;
+    return <AuthDialogTrigger label={headerTranslations.login} className="header-nav-link" />;
   }
 
   return (
     <div className="header-user-shell">
       {isAdmin ? (
         <Link href="/admin/skill-submissions" className="header-nav-link">
-          后台
+          {headerTranslations.admin}
         </Link>
       ) : null}
       <span className="header-user-badge" title={formatIdentity(session)}>
-        {formatIdentity(session)}
+        {formatIdentity(session) || headerTranslations.signedIn}
       </span>
       <button type="button" onClick={handleSignOut} className="header-nav-link" disabled={busy}>
-        {busy ? "退出中..." : "退出"}
+        {busy ? headerTranslations.loggingOut : headerTranslations.logout}
       </button>
     </div>
   );

@@ -2,13 +2,22 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/language-provider";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 export default function AuthCallbackPage() {
+  const { language } = useLanguage();
+  const isZh = language === "zh";
   const router = useRouter();
   const supabase = useMemo(() => getSupabaseBrowserClient(), []);
   const [message, setMessage] = useState(
-    supabase ? "正在完成登录..." : "当前环境缺少登录配置。",
+    supabase
+      ? isZh
+        ? "正在完成登录..."
+        : "Completing sign-in..."
+      : isZh
+        ? "当前环境缺少登录配置。"
+        : "Missing authentication configuration in this environment.",
   );
 
   useEffect(() => {
@@ -43,7 +52,7 @@ export default function AuthCallbackPage() {
 
     const fallbackTimer = window.setTimeout(() => {
       if (!redirected) {
-        setMessage("登录状态已返回，请稍候...");
+        setMessage(isZh ? "登录状态已返回，请稍候..." : "The sign-in state has returned. Please wait...");
         void tryRedirect();
       }
     }, 1200);
@@ -52,12 +61,12 @@ export default function AuthCallbackPage() {
       subscription.unsubscribe();
       window.clearTimeout(fallbackTimer);
     };
-  }, [router, supabase]);
+  }, [isZh, router, supabase]);
 
   return (
     <main className="site-shell section-gap pb-24">
       <section className="hero-center pt-10">
-        <h1 className="display-title hero-headline">正在登录</h1>
+        <h1 className="display-title hero-headline">{isZh ? "正在登录" : "Signing In"}</h1>
         <p className="hero-copy hero-copy-lg">{message}</p>
       </section>
     </main>
