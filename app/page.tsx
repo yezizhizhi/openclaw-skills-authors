@@ -4,10 +4,11 @@ import Link from "next/link";
 import { SectionHeading } from "@/components/section-heading";
 import { categories, editorChoices } from "@/lib/site-data";
 import { useLanguage } from "@/components/language-provider";
+import { getHomeActionLabels } from "@/lib/i18n";
 import type { HomeCategoryKey } from "@/lib/i18n";
 
 export default function HomePage() {
-  const { translations } = useLanguage();
+  const { language, translations } = useLanguage();
   const {
     home,
     categoryChips,
@@ -15,9 +16,11 @@ export default function HomePage() {
     skillWorkflows,
     skillDescriptions,
   } = translations;
+  const homeLabels = getHomeActionLabels(language);
 
   const featuredCategory = categories[0];
   const sideCategories = categories.slice(1);
+  const categoryCards = [featuredCategory, ...sideCategories];
   const spotlightSkills = editorChoices
     .filter((skill) => skill.sourceUrl)
     .slice(0, 3)
@@ -34,22 +37,26 @@ export default function HomePage() {
 
   return (
     <main className="pb-24">
-      <section className="site-shell pt-10 md:pt-16">
+      <section className="site-shell pt-8 md:pt-12">
         <div className="hero-center">
           <h1 className="display-title hero-headline">{home.heroTitle}</h1>
           <h2 className="hero-subheadline">
             {home.heroSubheadlineLine1}
-            <br />
-            {home.heroSubheadlineLine2}
+            {home.heroSubheadlineLine2 ? (
+              <>
+                <br />
+                {home.heroSubheadlineLine2}
+              </>
+            ) : null}
           </h2>
           <h3 className="hero-copy hero-copy-lg">{home.heroCopy}</h3>
 
           <div className="hero-actions">
             <Link href="/search-skills" className="primary-button">
-              找单个 Skill
+              {homeLabels.findSingle}
             </Link>
             <Link href="/workflow-packages" className="secondary-button">
-              下载 Workflow Pack
+              {homeLabels.downloadPack}
             </Link>
           </div>
 
@@ -61,54 +68,6 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-
-      </section>
-
-      <section className="site-shell section-gap">
-        <SectionHeading
-          eyebrow="Two Paths"
-          title="两种使用方式，同时保留"
-          description="已经知道自己缺什么，就找单个 skill。想直接拿走完整流程，就下 workflow pack。"
-          centered
-        />
-
-        <div className="mt-8 grid gap-5 lg:grid-cols-2">
-          <article className="rounded-[28px] border border-[var(--line)] bg-[var(--panel)] p-7 shadow-[var(--shadow)]">
-            <span className="eyebrow">Path A</span>
-            <h2 className="mt-5 text-3xl font-extrabold tracking-[-0.05em] text-[var(--ink)]">按需求找单个 Skill</h2>
-            <p className="mt-4 text-base leading-8 text-[var(--soft-ink)]">
-              适合已经知道自己卡在“热点调研、文献收集、提纲结构、正文扩写、终稿润色”等某个具体环节的人。
-            </p>
-            <ul className="mt-5 space-y-2 text-sm leading-7 text-[var(--muted-ink)]">
-              <li>直接输入当前需求</li>
-              <li>返回最相关的单个 skills</li>
-              <li>继续跳转 ClawHub 或来源页使用</li>
-            </ul>
-            <div className="mt-6">
-              <Link href="/search-skills" className="primary-button">
-                进入 Skill 搜索
-              </Link>
-            </div>
-          </article>
-
-          <article className="rounded-[28px] border border-[var(--line)] bg-[linear-gradient(180deg,rgba(255,98,76,0.12),rgba(255,255,255,0.03))] p-7 shadow-[var(--shadow)]">
-            <span className="eyebrow">Path B</span>
-            <h2 className="mt-5 text-3xl font-extrabold tracking-[-0.05em] text-[var(--ink)]">直接下载整套 Workflow Pack</h2>
-            <p className="mt-4 text-base leading-8 text-[var(--soft-ink)]">
-              适合不想自己拼技能、而是希望从“选题到成稿”“调研到汇报”“开题到综述”直接拿走一整套流程的人。
-            </p>
-            <ul className="mt-5 space-y-2 text-sm leading-7 text-[var(--muted-ink)]">
-              <li>按真实场景打包</li>
-              <li>每一步都带选中的 skill</li>
-              <li>支持整套 zip 下载</li>
-            </ul>
-            <div className="mt-6">
-              <Link href="/workflow-packages" className="primary-button">
-                浏览 Workflow Packs
-              </Link>
-            </div>
-          </article>
-        </div>
       </section>
 
       <section className="site-shell section-gap" id="categories">
@@ -119,41 +78,30 @@ export default function HomePage() {
         />
 
         <div className="category-grid mt-8">
-          <article className="category-hero-card">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <h2 className="preview-title">{transCategories[featuredCategory.slug as HomeCategoryKey].title}</h2>
-              </div>
-            </div>
-            <p className="mt-4 text-[15px] leading-8 text-[var(--muted-ink)]">
-              {transCategories[featuredCategory.slug as HomeCategoryKey].subtitle}
-            </p>
-            <p className="mt-4 text-[15px] leading-8 text-[var(--muted-ink)]">
-              {transCategories[featuredCategory.slug as HomeCategoryKey].copy}
-            </p>
-            <div className="mt-6">
-              <Link
-                href={`/categories/${featuredCategory.slug}`}
-                className="primary-button category-card-button"
-              >
-                {home.categoryButton}
-              </Link>
-            </div>
-          </article>
-
-          {sideCategories.map((category) => (
-            <article key={category.slug} className="compact-category-card">
+          {categoryCards.map((category, index) => (
+            <article
+              key={category.slug}
+              className={index === 0 ? "category-hero-card" : "compact-category-card"}
+            >
               <div>
                 <h3 className="compact-category-title">{transCategories[category.slug as HomeCategoryKey].title}</h3>
                 <p className="compact-category-subtitle">{transCategories[category.slug as HomeCategoryKey].subtitle}</p>
               </div>
               <p className="compact-category-copy">{transCategories[category.slug as HomeCategoryKey].copy}</p>
-              <Link
-                href={`/categories/${category.slug}`}
-                className="primary-button category-card-button"
-              >
-                {home.categoryButton}
-              </Link>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href={`/categories/${category.slug}/packages`}
+                  className="primary-button category-card-button"
+                >
+                  {homeLabels.browsePackages}
+                </Link>
+                <Link
+                  href={`/categories/${category.slug}#search-skills`}
+                  className="secondary-button category-card-button"
+                >
+                  {homeLabels.searchSingle}
+                </Link>
+              </div>
             </article>
           ))}
         </div>
@@ -176,7 +124,7 @@ export default function HomePage() {
 
               <div className="spotlight-block">
                 <p className="spotlight-label">{home.spotlightScene}</p>
-                <p className="spotlight-scene">{skill.scene.replace("适用场景：", "").trim()}</p>
+                <p className="spotlight-scene">{skill.scene.replace(/^适用场景：\s*/, "").replace(/^Ideal for:?\s*/i, "").trim()}</p>
               </div>
 
               <div className="spotlight-block">

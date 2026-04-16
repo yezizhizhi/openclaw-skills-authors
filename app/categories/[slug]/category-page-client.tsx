@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { CategorySkillExplorer } from "@/components/category-skill-explorer";
 import { useLanguage } from "@/components/language-provider";
+import { getCategoryPageLabels } from "@/lib/i18n";
 import type { Category } from "@/lib/site-data";
 import type { CategoryExplorerData } from "@/lib/skill-search";
 import type { WorkflowPackageDetail } from "@/lib/workflow-packages";
@@ -22,9 +23,10 @@ export function CategoryPageClient({
   explorerSkills,
   workflowPackages,
 }: CategoryPageClientProps) {
-  const { translations } = useLanguage();
+  const { language, translations } = useLanguage();
   const { home, categories, categoryData, skillWorkflows, skillDescriptions } = translations;
   const slug = category.slug as keyof typeof categories;
+  const labels = getCategoryPageLabels(language);
 
   // Get translated workflow tags, fallback to original if not available
   const translatedWorkflowTags = categoryData[slug]?.workflowTags?.length
@@ -33,7 +35,7 @@ export function CategoryPageClient({
 
   return (
     <main className="pb-24">
-      <section className="site-shell category-page-shell pt-10 md:pt-16">
+      <section className="site-shell category-page-shell pt-8 md:pt-12">
         <div className="hero-center category-page-hero">
           <h1 className="display-title hero-headline category-page-title">
             {categories[slug].title}
@@ -46,11 +48,11 @@ export function CategoryPageClient({
           </h3>
 
           <div className="hero-actions">
-            <Link href="#search-skills" className="primary-button">
-              按需求搜索 Skills
+            <Link href={`/categories/${category.slug}/packages`} className="primary-button">
+              {labels.browsePackages}
             </Link>
-            <Link href="#workflow-packs" className="secondary-button">
-              下载整套 Workflow
+            <Link href="#search-skills" className="secondary-button">
+              {labels.searchSingle}
             </Link>
           </div>
 
@@ -66,8 +68,8 @@ export function CategoryPageClient({
 
       <section className="site-shell category-search-section section-gap" id="search-skills">
         <div className="section-heading centered category-search-heading">
-          <h2 className="section-title">路径 A：按需求搜索单个 Skill</h2>
-          <p className="section-copy">适合已经知道自己卡在哪一步的人。输入你的任务环节，直接找到对应 skill，然后跳去 ClawHub 或来源页单独使用。</p>
+          <h2 className="section-title">{labels.pathA}</h2>
+          <p className="section-copy">{labels.pathACopy}</p>
         </div>
 
         <div className="mt-8">
@@ -83,10 +85,8 @@ export function CategoryPageClient({
 
       <section className="site-shell section-gap" id="workflow-packs">
         <div className="section-heading centered category-search-heading">
-          <h2 className="section-title">路径 B：直接下载整套 Workflow Pack</h2>
-          <p className="section-copy">
-            如果你不是只缺一个 skill，而是想从这个分类下拿走整套流程，可以先看 workflow 包说明，再决定是否下载。
-          </p>
+          <h2 className="section-title">{labels.pathB}</h2>
+          <p className="section-copy">{labels.pathBCopy}</p>
         </div>
 
         {workflowPackages.length ? (
@@ -94,7 +94,7 @@ export function CategoryPageClient({
             {workflowPackages.map((item) => (
               <article key={item.id} className="category-skill-card">
                 <div>
-                  <p className="category-card-label">Workflow Pack</p>
+                  <p className="category-card-label">{labels.workflowPack}</p>
                   <h3 className="category-skill-title">{item.name}</h3>
                 </div>
 
@@ -108,25 +108,25 @@ export function CategoryPageClient({
 
                 <div className="mt-4 grid gap-3 md:grid-cols-3">
                   <div className="rounded-[16px] border border-[var(--line)] bg-[rgba(255,255,255,0.02)] p-3">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">适合谁</p>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">{labels.forWho}</p>
                     <p className="mt-2 text-sm leading-6 text-[var(--soft-ink)]">{item.audience}</p>
                   </div>
                   <div className="rounded-[16px] border border-[var(--line)] bg-[rgba(255,255,255,0.02)] p-3">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">真实来源</p>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">{labels.liveSources}</p>
                     <p className="mt-2 text-xl font-extrabold tracking-[-0.04em] text-[var(--ink)]">
                       {item.steps.filter((step) => Boolean(step.selectedSkill.sourceUrl)).length}
                     </p>
-                    <p className="text-sm text-[var(--muted-ink)]">个 skills</p>
+                    <p className="text-sm text-[var(--muted-ink)]">{labels.stepUnit}</p>
                   </div>
                   <div className="rounded-[16px] border border-[var(--line)] bg-[rgba(255,255,255,0.02)] p-3">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">从哪步开始</p>
-                    <p className="mt-2 text-sm leading-6 text-[var(--soft-ink)]">{item.steps[0]?.stepName || "查看详情"}</p>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-soft)]">{labels.startStep}</p>
+                    <p className="mt-2 text-sm leading-6 text-[var(--soft-ink)]">{item.steps[0]?.stepName || labels.viewDetail}</p>
                   </div>
                 </div>
 
                 <div className="mt-4 flex gap-3">
                   <Link href={`/workflow-packages/${item.slug}`} className="primary-button category-skill-button">
-                    查看说明与内容
+                    {labels.viewPack}
                   </Link>
                 </div>
               </article>
@@ -134,9 +134,7 @@ export function CategoryPageClient({
           </div>
         ) : (
           <div className="category-skill-card mt-8">
-            <p className="category-skill-copy">
-              这一类的 workflow 包还在编排中。当前你仍然可以先通过上面的搜索区找到单个 skills。
-            </p>
+            <p className="category-skill-copy">{labels.fallback}</p>
           </div>
         )}
       </section>
@@ -144,7 +142,7 @@ export function CategoryPageClient({
       <section className="site-shell section-gap" id="featured-skills">
         <div className="section-heading centered category-search-heading">
           <h2 className="section-title">{home.spotlightTitle}</h2>
-          <p className="section-copy">如果你更想自己挑单个 skill，而不是直接拿整套 workflow，可以从这里继续选。</p>
+          <p className="section-copy">{labels.moreSingles}</p>
         </div>
 
         <div className="grid gap-4 mt-8 md:grid-cols-3">

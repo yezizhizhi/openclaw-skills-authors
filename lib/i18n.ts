@@ -5,6 +5,413 @@ export type LanguageOption = {
   label: string;
 };
 
+const homeActionLabelsByLanguage: Record<LanguageCode, HomeActionLabels> = {
+  zh: {
+    findSingle: "找单个 Skill",
+    downloadPack: "下载 Workflow Pack",
+    browsePackages: "浏览技能包",
+    searchSingle: "搜索单个 Skill",
+  },
+  en: {
+    findSingle: "Find Single Skill",
+    downloadPack: "Download Workflow Pack",
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+  },
+  ru: {
+    findSingle: "Find Single Skill",
+    downloadPack: "Download Workflow Pack",
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+  },
+  ja: {
+    findSingle: "Find Single Skill",
+    downloadPack: "Download Workflow Pack",
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+  },
+  fr: {
+    findSingle: "Find Single Skill",
+    downloadPack: "Download Workflow Pack",
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+  },
+  ko: {
+    findSingle: "Find Single Skill",
+    downloadPack: "Download Workflow Pack",
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+  },
+  de: {
+    findSingle: "Find Single Skill",
+    downloadPack: "Download Workflow Pack",
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+  },
+  es: {
+    findSingle: "Find Single Skill",
+    downloadPack: "Download Workflow Pack",
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+  },
+};
+
+const categoryPageLabelsByLanguage: Record<LanguageCode, CategoryPageLabels> = {
+  zh: {
+    browsePackages: "浏览技能包",
+    searchSingle: "搜索单个 Skill",
+    pathA: "路径 A：按需求搜索单个 Skill",
+    pathACopy: "适合已经知道自己卡在哪一步的人。输入你的任务环节，直接找到对应 skill，然后跳去 ClawHub 或来源页单独使用。",
+    pathB: "路径 B：直接下载整套 Workflow Pack",
+    pathBCopy: "如果你不是只缺一个 skill，而是想从这个分类下拿走整套流程，可以先看 workflow 包说明，再决定是否下载。",
+    workflowPack: "Workflow Pack",
+    forWho: "适合谁",
+    liveSources: "真实来源",
+    startStep: "从哪步开始",
+    stepUnit: "个 skills",
+    viewPack: "查看包详情",
+    viewDetail: "查看详情",
+    fallback: "这一类的 workflow 包还在编排中。当前你仍然可以先通过上面的搜索区找到单个 skills。",
+    moreSingles: "如果你更想自己挑单个 skill，而不是直接拿整套 workflow，可以从这里继续选。",
+  },
+  en: {
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+    pathA: "Path A: Search Single Skills",
+    pathACopy: "Best when you already know which stage is blocked. Enter the task, find the closest matching skill, and jump straight to the live source page.",
+    pathB: "Path B: Download a Full Workflow Pack",
+    pathBCopy: "If you need a complete lane rather than one isolated skill, review the package first and then decide whether to download it.",
+    workflowPack: "Workflow Pack",
+    forWho: "Best for",
+    liveSources: "Live sources",
+    startStep: "Start from",
+    stepUnit: "linked skills",
+    viewPack: "View Package",
+    viewDetail: "View details",
+    fallback: "Packages for this category are still being assembled. For now, you can keep using the single-skill search above.",
+    moreSingles: "If you prefer selecting one skill at a time instead of taking the full workflow, continue with the featured skills below.",
+  },
+  ru: {
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+    pathA: "Path A: Search Single Skills",
+    pathACopy: "Best when you already know which stage is blocked. Enter the task, find the closest matching skill, and jump straight to the live source page.",
+    pathB: "Path B: Download a Full Workflow Pack",
+    pathBCopy: "If you need a complete lane rather than one isolated skill, review the package first and then decide whether to download it.",
+    workflowPack: "Workflow Pack",
+    forWho: "Best for",
+    liveSources: "Live sources",
+    startStep: "Start from",
+    stepUnit: "linked skills",
+    viewPack: "View Package",
+    viewDetail: "View details",
+    fallback: "Packages for this category are still being assembled. For now, you can keep using the single-skill search above.",
+    moreSingles: "If you prefer selecting one skill at a time instead of taking the full workflow, continue with the featured skills below.",
+  },
+  ja: {
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+    pathA: "Path A: Search Single Skills",
+    pathACopy: "Best when you already know which stage is blocked. Enter the task, find the closest matching skill, and jump straight to the live source page.",
+    pathB: "Path B: Download a Full Workflow Pack",
+    pathBCopy: "If you need a complete lane rather than one isolated skill, review the package first and then decide whether to download it.",
+    workflowPack: "Workflow Pack",
+    forWho: "Best for",
+    liveSources: "Live sources",
+    startStep: "Start from",
+    stepUnit: "linked skills",
+    viewPack: "View Package",
+    viewDetail: "View details",
+    fallback: "Packages for this category are still being assembled. For now, you can keep using the single-skill search above.",
+    moreSingles: "If you prefer selecting one skill at a time instead of taking the full workflow, continue with the featured skills below.",
+  },
+  fr: {
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+    pathA: "Path A: Search Single Skills",
+    pathACopy: "Best when you already know which stage is blocked. Enter the task, find the closest matching skill, and jump straight to the live source page.",
+    pathB: "Path B: Download a Full Workflow Pack",
+    pathBCopy: "If you need a complete lane rather than one isolated skill, review the package first and then decide whether to download it.",
+    workflowPack: "Workflow Pack",
+    forWho: "Best for",
+    liveSources: "Live sources",
+    startStep: "Start from",
+    stepUnit: "linked skills",
+    viewPack: "View Package",
+    viewDetail: "View details",
+    fallback: "Packages for this category are still being assembled. For now, you can keep using the single-skill search above.",
+    moreSingles: "If you prefer selecting one skill at a time instead of taking the full workflow, continue with the featured skills below.",
+  },
+  ko: {
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+    pathA: "Path A: Search Single Skills",
+    pathACopy: "Best when you already know which stage is blocked. Enter the task, find the closest matching skill, and jump straight to the live source page.",
+    pathB: "Path B: Download a Full Workflow Pack",
+    pathBCopy: "If you need a complete lane rather than one isolated skill, review the package first and then decide whether to download it.",
+    workflowPack: "Workflow Pack",
+    forWho: "Best for",
+    liveSources: "Live sources",
+    startStep: "Start from",
+    stepUnit: "linked skills",
+    viewPack: "View Package",
+    viewDetail: "View details",
+    fallback: "Packages for this category are still being assembled. For now, you can keep using the single-skill search above.",
+    moreSingles: "If you prefer selecting one skill at a time instead of taking the full workflow, continue with the featured skills below.",
+  },
+  de: {
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+    pathA: "Path A: Search Single Skills",
+    pathACopy: "Best when you already know which stage is blocked. Enter the task, find the closest matching skill, and jump straight to the live source page.",
+    pathB: "Path B: Download a Full Workflow Pack",
+    pathBCopy: "If you need a complete lane rather than one isolated skill, review the package first and then decide whether to download it.",
+    workflowPack: "Workflow Pack",
+    forWho: "Best for",
+    liveSources: "Live sources",
+    startStep: "Start from",
+    stepUnit: "linked skills",
+    viewPack: "View Package",
+    viewDetail: "View details",
+    fallback: "Packages for this category are still being assembled. For now, you can keep using the single-skill search above.",
+    moreSingles: "If you prefer selecting one skill at a time instead of taking the full workflow, continue with the featured skills below.",
+  },
+  es: {
+    browsePackages: "Browse Packages",
+    searchSingle: "Search Single Skills",
+    pathA: "Path A: Search Single Skills",
+    pathACopy: "Best when you already know which stage is blocked. Enter the task, find the closest matching skill, and jump straight to the live source page.",
+    pathB: "Path B: Download a Full Workflow Pack",
+    pathBCopy: "If you need a complete lane rather than one isolated skill, review the package first and then decide whether to download it.",
+    workflowPack: "Workflow Pack",
+    forWho: "Best for",
+    liveSources: "Live sources",
+    startStep: "Start from",
+    stepUnit: "linked skills",
+    viewPack: "View Package",
+    viewDetail: "View details",
+    fallback: "Packages for this category are still being assembled. For now, you can keep using the single-skill search above.",
+    moreSingles: "If you prefer selecting one skill at a time instead of taking the full workflow, continue with the featured skills below.",
+  },
+};
+
+const skillWorkflowLabelsByLanguage: Record<LanguageCode, SkillWorkflowLabels> = {
+  zh: {
+    title: "不只找单个 Skill，也可以直接拿整套 Workflow",
+    copy: "如果你不只是需要这一个 skill，而是想把这个分类下的完整工作流一起拿走，可以直接去看已经编排好的 workflow packages。",
+    categoryPacks: "查看这个分类下的 Workflow Packs",
+    allPacks: "浏览全部 Workflow Packs",
+  },
+  en: {
+    title: "Need more than one skill? Open the full workflow pack",
+    copy: "If this skill is only one part of the job, you can jump into the package view and take the pre-arranged workflow for this category.",
+    categoryPacks: "Open workflow packs for this category",
+    allPacks: "Browse all workflow packs",
+  },
+  ru: {
+    title: "Need more than one skill? Open the full workflow pack",
+    copy: "If this skill is only one part of the job, you can jump into the package view and take the pre-arranged workflow for this category.",
+    categoryPacks: "Open workflow packs for this category",
+    allPacks: "Browse all workflow packs",
+  },
+  ja: {
+    title: "Need more than one skill? Open the full workflow pack",
+    copy: "If this skill is only one part of the job, you can jump into the package view and take the pre-arranged workflow for this category.",
+    categoryPacks: "Open workflow packs for this category",
+    allPacks: "Browse all workflow packs",
+  },
+  fr: {
+    title: "Need more than one skill? Open the full workflow pack",
+    copy: "If this skill is only one part of the job, you can jump into the package view and take the pre-arranged workflow for this category.",
+    categoryPacks: "Open workflow packs for this category",
+    allPacks: "Browse all workflow packs",
+  },
+  ko: {
+    title: "Need more than one skill? Open the full workflow pack",
+    copy: "If this skill is only one part of the job, you can jump into the package view and take the pre-arranged workflow for this category.",
+    categoryPacks: "Open workflow packs for this category",
+    allPacks: "Browse all workflow packs",
+  },
+  de: {
+    title: "Need more than one skill? Open the full workflow pack",
+    copy: "If this skill is only one part of the job, you can jump into the package view and take the pre-arranged workflow for this category.",
+    categoryPacks: "Open workflow packs for this category",
+    allPacks: "Browse all workflow packs",
+  },
+  es: {
+    title: "Need more than one skill? Open the full workflow pack",
+    copy: "If this skill is only one part of the job, you can jump into the package view and take the pre-arranged workflow for this category.",
+    categoryPacks: "Open workflow packs for this category",
+    allPacks: "Browse all workflow packs",
+  },
+};
+
+const packageLabelsEn: PackageLabels = {
+  nav: "Workflow Packs",
+  listTitle: "Published Packages",
+  listDescription: "Open a package detail page first. It shows what problem the bundle solves, why the step order exists, and which live source skills are included.",
+  listSearchFirst: "Search Single Skills First",
+  listRecommendedFit: "Recommended fit",
+  listBestFor: "Best for",
+  listSteps: "Steps",
+  listWorkflowStages: "workflow stages",
+  listLiveSourceSkills: "Live source skills",
+  listLinkedSources: "linked sources",
+  listTemplate: "Template",
+  listStartFrom: "Start from",
+  listViewPackage: "View Package",
+  listDownload: "Download",
+  categoryBreadcrumb: "Packages",
+  categoryHeroTitleSuffix: "Packages",
+  categoryHeroSubtitle: "Start with a ready-made workflow package, not a pile of disconnected skills",
+  categoryHeroCopy: "Each package groups together a small set of source-backed skills for one clear writing outcome. Download the package if you want a pre-arranged path, or go back to single-skill search if you prefer to build your own stack.",
+  categorySearchSkills: "Search Single Skills",
+  categoryBackTo: "Back to",
+  categoryStartHere: "Start Here",
+  categoryFeaturedTitle: "Featured package",
+  categoryFeaturedDescription: "If you want one ready-made entry point instead of comparing every bundle first, start here. This package is designed to feel like a first usable path, not a giant package wall.",
+  categoryRecommendedFirst: "Recommended first package",
+  categoryPurpose: "What this package is for",
+  categoryOpenPackage: "Open Package",
+  categoryDownloadPackage: "Download Package",
+  categoryInsideBundle: "Inside the bundle",
+  categoryOrderedSteps: "ordered workflow steps",
+  categoryDirectSources: "direct-to-source skills",
+  categoryGuideAndManifest: "Prompt files and package manifest",
+  categorySuggestedOrder: "Clear suggested order before drafting",
+  categoryBrowse: "Browse",
+  categoryAvailableTitle: "Available packages",
+  categoryAvailableDescription: "Each package is a different working style for the same writing track. Pick the one that matches how you want to begin, then go deeper on its details page.",
+  categoryGoal: "Goal",
+  categoryWhatYouGet: "What you get",
+  categoryWhatYouGetCopy: "A small curated bundle with source-linked skills, ordered prompts, and a package guide you can inspect before using.",
+  categoryEmptyTitle: "Packages for this track are still being arranged",
+  categoryEmptyCopy: "The single-skill search page is already live. You can continue from there while we build the package layer for this category.",
+  detailTitle: "Workflow Package",
+  detailBestFor: "Best for",
+  detailWorkflow: "Workflow",
+  detailIncludes: "Includes",
+  detailDownloadPackage: "Download Package",
+  detailSearchSkills: "Search Single Skills",
+  detailAllPackages: "All Packages",
+  detailVersion: "Version",
+  detailUpdated: "Updated",
+  detailPromptFiles: "Prompt files",
+  detailLinkedSkills: "Linked skills",
+  detailInsidePackage: "Inside the package",
+  detailWhatYouDownload: "What you download",
+  detailCompactBundle: "A compact bundle you can inspect before using.",
+  detailMorePromptFiles: (count) => `Plus ${count} more prompt files inside the zip.`,
+  detailLeadSource: "Lead source",
+  detailSourceSkill: "Source skill",
+  detailInspectSource: "Inspect the first linked source before you decide whether to keep this package as-is.",
+  detailOpenSource: "Open source ↗",
+  detailAfterDownload: "What happens after download",
+  detailHowToUse: "How to use this package",
+  detailHandoff: "A lightweight handoff from package zip to actual execution.",
+  detailStepOne: "1. Open the guide",
+  detailStepOneCopy: "Start with workflow.md to see the intended order and output of each step.",
+  detailStepTwo: "2. Run the prompts",
+  detailStepTwoCopy: "Use the prompt files step by step, or swap only the stages you want to keep custom.",
+  detailStepThree: "3. Inspect the sources",
+  detailStepThreeCopy: "Review the linked source skills when you need to verify why a step was chosen or replace it.",
+  detailWhyPackage: "Why this package",
+  detailWhyOrdered: (count) => `${count} ordered workflow stages instead of an unstructured skill list.`,
+  detailWhyLinked: (count) => `${count} steps already point to live source skills.`,
+  detailWhyTemplate: (name) => `${name} keeps the package tied to one clear writing job.`,
+  detailSteps: "Steps",
+  detailIncludedWorkflow: "Included workflow",
+  detailIncludedWorkflowCopy: "The first stages you will actually run after download.",
+};
+
+const packageLabelsByLanguage: Record<LanguageCode, PackageLabels> = {
+  zh: {
+    ...packageLabelsEn,
+    nav: "技能包",
+    listTitle: "已发布技能包",
+    listDescription: "先打开技能包详情页，查看它解决什么问题、步骤为什么这样排，以及包含哪些真实来源技能。",
+    listSearchFirst: "先搜索单个 Skill",
+    listRecommendedFit: "推荐场景",
+    listBestFor: "适合谁",
+    listSteps: "步骤数",
+    listWorkflowStages: "个流程节点",
+    listLiveSourceSkills: "真实来源技能",
+    listLinkedSources: "个已接来源",
+    listTemplate: "模板",
+    listStartFrom: "从这一步开始",
+    listViewPackage: "查看技能包",
+    listDownload: "下载",
+    categoryBreadcrumb: "技能包",
+    categoryHeroTitleSuffix: "技能包",
+    categoryHeroSubtitle: "先拿现成 workflow，而不是从一堆分散技能里自己拼",
+    categoryHeroCopy: "每个技能包都把少量真实来源技能整理成一个明确结果导向的写作路径。想直接拿现成流程就下载，不然就回到单技能搜索继续选。",
+    categorySearchSkills: "搜索单个 Skill",
+    categoryBackTo: "返回",
+    categoryStartHere: "从这里开始",
+    categoryFeaturedTitle: "推荐技能包",
+    categoryFeaturedDescription: "如果你不想先比完整列表，可以从这里开始。这是一个能直接上手的入口，而不是一面巨大的包墙。",
+    categoryRecommendedFirst: "推荐先看这个包",
+    categoryPurpose: "这个包适合什么任务",
+    categoryOpenPackage: "打开技能包",
+    categoryDownloadPackage: "下载技能包",
+    categoryInsideBundle: "包内内容",
+    categoryOrderedSteps: "个按顺序排列的步骤",
+    categoryDirectSources: "个直连来源技能",
+    categoryGuideAndManifest: "提示词文件与包清单",
+    categorySuggestedOrder: "下载前就能看懂推荐顺序",
+    categoryBrowse: "浏览",
+    categoryAvailableTitle: "可用技能包",
+    categoryAvailableDescription: "同一写作赛道里，不同技能包代表不同工作方式。先挑适合的起步路径，再进入详情页深入查看。",
+    categoryGoal: "目标",
+    categoryWhatYouGet: "你会拿到什么",
+    categoryWhatYouGetCopy: "一个小而完整的结构化技能包，包含真实来源技能、按顺序排列的提示词，以及可先检查的说明文件。",
+    categoryEmptyTitle: "这个分类下的技能包还在整理中",
+    categoryEmptyCopy: "单技能搜索已经可用。我们在补齐这个分类的技能包层时，你可以先从那里继续。",
+    detailTitle: "技能包",
+    detailBestFor: "适合谁",
+    detailWorkflow: "工作流目标",
+    detailIncludes: "包含",
+    detailDownloadPackage: "下载技能包",
+    detailSearchSkills: "搜索单个 Skill",
+    detailAllPackages: "全部技能包",
+    detailVersion: "版本",
+    detailUpdated: "更新时间",
+    detailPromptFiles: "提示词文件",
+    detailLinkedSkills: "已接来源技能",
+    detailInsidePackage: "包内内容",
+    detailWhatYouDownload: "下载后包含什么",
+    detailCompactBundle: "这是一个可以先检查再使用的紧凑型结构化包。",
+    detailMorePromptFiles: (count) => `压缩包内还有 ${count} 个提示词文件。`,
+    detailLeadSource: "主要来源",
+    detailSourceSkill: "来源技能",
+    detailInspectSource: "在决定是否保留这套技能包之前，可以先检查第一个真实来源技能。",
+    detailOpenSource: "打开来源 ↗",
+    detailAfterDownload: "下载之后怎么用",
+    detailHowToUse: "使用方式",
+    detailHandoff: "把 zip 包顺畅接到实际执行流程里。",
+    detailStepOne: "1. 先看说明",
+    detailStepOneCopy: "先打开 workflow.md，看每一步的推荐顺序和输出目标。",
+    detailStepTwo: "2. 再跑提示词",
+    detailStepTwoCopy: "按顺序使用每个提示词文件，或者只替换你想自定义的步骤。",
+    detailStepThree: "3. 检查来源",
+    detailStepThreeCopy: "当你想确认某一步为什么这样选，或打算替换它时，就回看对应来源技能。",
+    detailWhyPackage: "为什么用这套包",
+    detailWhyOrdered: (count) => `不是一串散乱技能，而是 ${count} 个按顺序编排的工作流节点。`,
+    detailWhyLinked: (count) => `其中已有 ${count} 步连接到真实来源技能。`,
+    detailWhyTemplate: (name) => `${name} 让整个技能包始终围绕一个清晰的写作任务展开。`,
+    detailSteps: "步骤",
+    detailIncludedWorkflow: "包含的工作流",
+    detailIncludedWorkflowCopy: "这些是你下载后最先实际执行的几个阶段。",
+  },
+  en: packageLabelsEn,
+  ru: packageLabelsEn,
+  ja: packageLabelsEn,
+  fr: packageLabelsEn,
+  ko: packageLabelsEn,
+  de: packageLabelsEn,
+  es: packageLabelsEn,
+};
+
 export const languageOptions: LanguageOption[] = [
   { code: "zh", label: "中文" },
   { code: "en", label: "English" },
@@ -168,6 +575,116 @@ export type TranslationSet = {
   skillPreviews: Record<string, { inputPreview: string; outputPreview: string }>;
 };
 
+export type HomeActionLabels = {
+  findSingle: string;
+  downloadPack: string;
+  browsePackages: string;
+  searchSingle: string;
+};
+
+export type CategoryPageLabels = {
+  browsePackages: string;
+  searchSingle: string;
+  pathA: string;
+  pathACopy: string;
+  pathB: string;
+  pathBCopy: string;
+  workflowPack: string;
+  forWho: string;
+  liveSources: string;
+  startStep: string;
+  stepUnit: string;
+  viewPack: string;
+  viewDetail: string;
+  fallback: string;
+  moreSingles: string;
+};
+
+export type SkillWorkflowLabels = {
+  title: string;
+  copy: string;
+  categoryPacks: string;
+  allPacks: string;
+};
+
+export type PackageLabels = {
+  nav: string;
+  listTitle: string;
+  listDescription: string;
+  listSearchFirst: string;
+  listRecommendedFit: string;
+  listBestFor: string;
+  listSteps: string;
+  listWorkflowStages: string;
+  listLiveSourceSkills: string;
+  listLinkedSources: string;
+  listTemplate: string;
+  listStartFrom: string;
+  listViewPackage: string;
+  listDownload: string;
+  categoryBreadcrumb: string;
+  categoryHeroTitleSuffix: string;
+  categoryHeroSubtitle: string;
+  categoryHeroCopy: string;
+  categorySearchSkills: string;
+  categoryBackTo: string;
+  categoryStartHere: string;
+  categoryFeaturedTitle: string;
+  categoryFeaturedDescription: string;
+  categoryRecommendedFirst: string;
+  categoryPurpose: string;
+  categoryOpenPackage: string;
+  categoryDownloadPackage: string;
+  categoryInsideBundle: string;
+  categoryOrderedSteps: string;
+  categoryDirectSources: string;
+  categoryGuideAndManifest: string;
+  categorySuggestedOrder: string;
+  categoryBrowse: string;
+  categoryAvailableTitle: string;
+  categoryAvailableDescription: string;
+  categoryGoal: string;
+  categoryWhatYouGet: string;
+  categoryWhatYouGetCopy: string;
+  categoryEmptyTitle: string;
+  categoryEmptyCopy: string;
+  detailTitle: string;
+  detailBestFor: string;
+  detailWorkflow: string;
+  detailIncludes: string;
+  detailDownloadPackage: string;
+  detailSearchSkills: string;
+  detailAllPackages: string;
+  detailVersion: string;
+  detailUpdated: string;
+  detailPromptFiles: string;
+  detailLinkedSkills: string;
+  detailInsidePackage: string;
+  detailWhatYouDownload: string;
+  detailCompactBundle: string;
+  detailMorePromptFiles: (count: number) => string;
+  detailLeadSource: string;
+  detailSourceSkill: string;
+  detailInspectSource: string;
+  detailOpenSource: string;
+  detailAfterDownload: string;
+  detailHowToUse: string;
+  detailHandoff: string;
+  detailStepOne: string;
+  detailStepOneCopy: string;
+  detailStepTwo: string;
+  detailStepTwoCopy: string;
+  detailStepThree: string;
+  detailStepThreeCopy: string;
+  detailWhyPackage: string;
+  detailWhyOrdered: (count: number) => string;
+  detailWhyLinked: (count: number) => string;
+  detailWhyTemplate: (name: string) => string;
+  detailSteps: string;
+  detailIncludedWorkflow: string;
+  detailIncludedWorkflowCopy: string;
+};
+
 const translations: Record<LanguageCode, TranslationSet> = {
   zh: {
     languageLabel: "语言",
@@ -201,8 +718,8 @@ const translations: Record<LanguageCode, TranslationSet> = {
     },
     home: {
       heroTitle: "OpenClaw Skills for Authors",
-      heroSubheadlineLine1: "一站式创作者skills库",
-      heroSubheadlineLine2: "覆盖写书、写文章、写文案、写报告、写论文、写课程",
+      heroSubheadlineLine1: "专为创作者而生，支持单个 Skill 搜索与整套技能包下载",
+      heroSubheadlineLine2: "",
       heroCopy:
         "我们将适合作者与内容创作者使用的 OpenClaw Skills 按题材与创作流程整理成清晰可用的技能库。你可以按写作场景快速找到合适的 Skill，通过复制配置或下载包，更高效地完成构思、写作、整理、润色与修订。",
       browseAll: "浏览全部 OpenClaw Skills",
@@ -3585,5 +4102,22 @@ const translations: Record<LanguageCode, TranslationSet> = {
 };
 
 export function getTranslations(language: LanguageCode): TranslationSet {
-  return translations[language] ?? translations[defaultLanguage];
+  const contentLanguage: LanguageCode = language === "zh" ? "zh" : "en";
+  return translations[contentLanguage] ?? translations[defaultLanguage];
+}
+
+export function getHomeActionLabels(language: LanguageCode): HomeActionLabels {
+  return homeActionLabelsByLanguage[language];
+}
+
+export function getCategoryPageLabels(language: LanguageCode): CategoryPageLabels {
+  return categoryPageLabelsByLanguage[language];
+}
+
+export function getSkillWorkflowLabels(language: LanguageCode): SkillWorkflowLabels {
+  return skillWorkflowLabelsByLanguage[language];
+}
+
+export function getPackageLabels(language: LanguageCode): PackageLabels {
+  return packageLabelsByLanguage[language];
 }

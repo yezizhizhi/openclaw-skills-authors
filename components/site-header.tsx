@@ -4,14 +4,16 @@ import Link from "next/link";
 import { HeaderAuthButton } from "@/components/header-auth-button";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useLanguage } from "@/components/language-provider";
+import { getPackageLabels } from "@/lib/i18n";
 
 export function SiteHeader() {
-  const { translations } = useLanguage();
+  const { language, translations } = useLanguage();
   const { header, brandCopy } = translations;
+  const packageLabels = getPackageLabels(language);
 
   const navItems = [
     { href: "/#categories", label: header.quickSearch },
-    { href: "/workflow-packages", label: "Workflow Packs" },
+    { href: "/workflow-packages", label: packageLabels.nav },
     { href: "/submit-skills", label: header.submit },
     { href: "/#faq", label: header.faq },
   ];

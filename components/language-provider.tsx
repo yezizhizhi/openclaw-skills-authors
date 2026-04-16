@@ -26,24 +26,34 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<LanguageCode>(() => {
+  const [language, setLanguage] = useState<LanguageCode>(defaultLanguage);
+
+  useEffect(() => {
     if (typeof window === "undefined") {
-      return defaultLanguage;
+      return;
     }
 
     const storedLanguage = window.localStorage.getItem(
       languageStorageKey,
     ) as LanguageCode | null;
 
-    return storedLanguage || defaultLanguage;
-  });
+    if (storedLanguage && storedLanguage !== defaultLanguage) {
+      const frame = window.requestAnimationFrame(() => {
+        setLanguage(storedLanguage);
+      });
+
+      return () => window.cancelAnimationFrame(frame);
+    }
+  }, []);
 
   useEffect(() => {
+    const contentLanguage: LanguageCode = language === "zh" ? "zh" : "en";
+
     if (typeof window !== "undefined") {
       window.localStorage.setItem(languageStorageKey, language);
     }
     if (typeof document !== "undefined") {
-      document.documentElement.lang = htmlLangByLanguage[language];
+      document.documentElement.lang = htmlLangByLanguage[contentLanguage];
     }
   }, [language]);
 

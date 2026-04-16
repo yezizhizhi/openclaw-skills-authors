@@ -14,6 +14,22 @@
   --accent-soft: #ff8b6f;
   --shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
   --radius-xl: 26px;
+  --font-sans:
+    Inter,
+    "Helvetica Neue",
+    Arial,
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Noto Sans CJK SC",
+    "Microsoft YaHei",
+    sans-serif;
+  --font-serif:
+    "Iowan Old Style",
+    "Palatino Linotype",
+    "Book Antiqua",
+    Georgia,
+    "Times New Roman",
+    serif;
 }
 
 @theme inline {

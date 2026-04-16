@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CopyConfigButton } from "@/components/copy-config-button";
 import { TrackedLink } from "@/components/tracked-link";
 import { useLanguage } from "@/components/language-provider";
+import { getSkillWorkflowLabels } from "@/lib/i18n";
 import type { SkillDetail } from "@/lib/skills-repository";
 
 type SkillDetailClientProps = {
@@ -17,7 +18,7 @@ export function SkillDetailClient({
   openClawPrompt,
   stableSourceLink,
 }: SkillDetailClientProps) {
-  const { translations } = useLanguage();
+  const { language, translations } = useLanguage();
   const { home } = translations;
   const categorySlug = skill.categorySlug as keyof typeof translations.categoryChips;
   const localizedCategoryLabel =
@@ -38,6 +39,7 @@ export function SkillDetailClient({
 
     return localizeWorkflow(tag);
   });
+  const workflowLabels = getSkillWorkflowLabels(language);
 
   return (
     <main className="pb-24">
@@ -156,18 +158,16 @@ export function SkillDetailClient({
         <div className="rounded-[28px] border border-[var(--line)] bg-[var(--panel)] p-8">
           <div className="section-heading">
             <span className="eyebrow">Workflow Option</span>
-            <h2 className="section-title">不只找单个 Skill，也可以直接拿整套 Workflow</h2>
-            <p className="section-copy">
-              如果你不是只需要这一个 skill，而是想把这个分类下的完整工作流一起拿走，可以直接去看已经编排好的 workflow packages。
-            </p>
+            <h2 className="section-title">{workflowLabels.title}</h2>
+            <p className="section-copy">{workflowLabels.copy}</p>
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href={`/categories/${skill.categorySlug}#workflow-packs`} className="primary-button">
-              查看这个分类下的 Workflow Packs
+              {workflowLabels.categoryPacks}
             </Link>
             <Link href="/workflow-packages" className="secondary-button">
-              浏览全部 Workflow Packs
+              {workflowLabels.allPacks}
             </Link>
           </div>
         </div>

@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Manrope, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguageProvider } from "@/components/language-provider";
 import { getSiteUrl } from "@/lib/site-url";
-
-const manrope = Manrope({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
-
-const sourceSerif = Source_Serif_4({
-  variable: "--font-serif",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -108,8 +97,8 @@ export default function RootLayout({
 
   return (
     <html
-      lang="zh-CN"
-      className={`${manrope.variable} ${sourceSerif.variable} h-full scroll-smooth antialiased`}
+      lang="en"
+      className="h-full scroll-smooth antialiased"
     >
       <body className="site-body min-h-full">
         <script
