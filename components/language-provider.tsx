@@ -47,13 +47,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const contentLanguage: LanguageCode = language === "zh" ? "zh" : "en";
-
     if (typeof window !== "undefined") {
       window.localStorage.setItem(languageStorageKey, language);
     }
     if (typeof document !== "undefined") {
-      document.documentElement.lang = htmlLangByLanguage[contentLanguage];
+      document.documentElement.lang = htmlLangByLanguage[language] ?? htmlLangByLanguage[defaultLanguage];
     }
   }, [language]);
 

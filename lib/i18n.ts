@@ -4102,8 +4102,7 @@ const translations: Record<LanguageCode, TranslationSet> = {
 };
 
 export function getTranslations(language: LanguageCode): TranslationSet {
-  const contentLanguage: LanguageCode = language === "zh" ? "zh" : "en";
-  return translations[contentLanguage] ?? translations[defaultLanguage];
+  return translations[language] ?? translations[defaultLanguage];
 }
 
 export function getHomeActionLabels(language: LanguageCode): HomeActionLabels {
