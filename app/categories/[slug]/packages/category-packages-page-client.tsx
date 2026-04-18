@@ -17,6 +17,7 @@ export function CategoryPackagesPageClient({
 }) {
   const { language, translations } = useLanguage();
   const packageLabels = getPackageLabels(language);
+  const homeLabel = language === "zh" ? "首页" : "Home";
   const slug = category.slug as HomeCategoryKey;
   const categoryTitle = translations.categories[slug]?.title || category.heroTitle;
   const translatedWorkflowTags = translations.categoryData[slug]?.workflowTags?.length
@@ -29,7 +30,7 @@ export function CategoryPackagesPageClient({
       <section className="site-shell pt-10 md:pt-16">
         <div className="hero-center">
           <div className="breadcrumb-row skill-detail-breadcrumb">
-            <Link href="/">Home</Link>
+            <Link href="/">{homeLabel}</Link>
             <span>/</span>
             <Link href={`/categories/${category.slug}`}>{categoryTitle}</Link>
             <span>/</span>

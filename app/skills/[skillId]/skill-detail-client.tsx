@@ -20,6 +20,8 @@ export function SkillDetailClient({
 }: SkillDetailClientProps) {
   const { language, translations } = useLanguage();
   const { home } = translations;
+  const homeLabel = language === "zh" ? "首页" : "Home";
+  const workflowOptionLabel = language === "zh" ? "工作流选项" : "Workflow Option";
   const categorySlug = skill.categorySlug as keyof typeof translations.categoryChips;
   const localizedCategoryLabel =
     translations.categoryChips[categorySlug] || skill.categoryLabel;
@@ -46,7 +48,7 @@ export function SkillDetailClient({
       <section className="site-shell skill-detail-shell pt-10 md:pt-16">
         <div className="hero-center skill-detail-hero">
           <div className="breadcrumb-row skill-detail-breadcrumb">
-            <Link href="/">Home</Link>
+            <Link href="/">{homeLabel}</Link>
             <span>/</span>
             <Link href={`/categories/${skill.categorySlug}`}>{localizedCategoryLabel}</Link>
             <span>/</span>
@@ -157,7 +159,7 @@ export function SkillDetailClient({
       <section className="site-shell section-gap skill-detail-section">
         <div className="rounded-[28px] border border-[var(--line)] bg-[var(--panel)] p-8">
           <div className="section-heading">
-            <span className="eyebrow">Workflow Option</span>
+            <span className="eyebrow">{workflowOptionLabel}</span>
             <h2 className="section-title">{workflowLabels.title}</h2>
             <p className="section-copy">{workflowLabels.copy}</p>
           </div>

@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useLanguage } from "@/components/language-provider";
 
 export function SiteFooter() {
-  const { translations } = useLanguage();
-  const { home } = translations;
+  const { language, translations } = useLanguage();
+  const { home, footer } = translations;
+  const workflowPackagesLabel = language === "zh" ? "Workflow 技能包" : "Workflow Packages";
 
   return (
     <footer className="site-shell pb-8 pt-16">
@@ -28,19 +29,16 @@ export function SiteFooter() {
               {home.categoriesTitle}
             </Link>
             <Link href="/workflow-packages" className="transition hover:text-[var(--accent)]">
-              Workflow Packages
-            </Link>
-            <Link href="/admin/digest-runs" className="transition hover:text-[var(--accent)]">
-              Weekly Digest
+              {workflowPackagesLabel}
             </Link>
             <Link href="/categories/books" className="transition hover:text-[var(--accent)]">
               {home.spotlightTitle}
             </Link>
             <Link href="/privacy-policy" className="transition hover:text-[var(--accent)]">
-              Privacy Policy
+              {footer.privacy}
             </Link>
             <Link href="/terms" className="transition hover:text-[var(--accent)]">
-              Terms of Service
+              {footer.terms}
             </Link>
           </div>
         </div>

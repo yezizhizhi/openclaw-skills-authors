@@ -50,6 +50,7 @@ export function WorkflowPackagesPageClient({ packages }: { packages: WorkflowPac
   const { language } = useLanguage();
   const packageLabels = getPackageLabels(language);
   const languageKey = language === "zh" ? "zh" : "en";
+  const phaseLabel = language === "zh" ? "阶段二" : "Phase 2";
 
   return (
     <main className="site-shell section-gap pb-24">
@@ -66,7 +67,7 @@ export function WorkflowPackagesPageClient({ packages }: { packages: WorkflowPac
 
       <section className="mt-14">
         <SectionHeading
-          eyebrow="Phase 2"
+          eyebrow={phaseLabel}
           title={packageLabels.listTitle}
           description={packageLabels.listDescription}
           centered

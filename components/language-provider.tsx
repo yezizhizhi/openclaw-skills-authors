@@ -13,6 +13,7 @@ import {
   getTranslations,
   htmlLangByLanguage,
   languageStorageKey,
+  normalizeLanguage,
   type LanguageCode,
   type TranslationSet,
 } from "@/lib/i18n";
@@ -33,9 +34,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const storedLanguage = window.localStorage.getItem(
-      languageStorageKey,
-    ) as LanguageCode | null;
+    const storedLanguage = normalizeLanguage(window.localStorage.getItem(languageStorageKey));
 
     if (storedLanguage && storedLanguage !== defaultLanguage) {
       const frame = window.requestAnimationFrame(() => {
@@ -47,18 +46,23 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    const normalizedLanguage = normalizeLanguage(language);
+
     if (typeof window !== "undefined") {
-      window.localStorage.setItem(languageStorageKey, language);
+      window.localStorage.setItem(languageStorageKey, normalizedLanguage);
     }
     if (typeof document !== "undefined") {
-      document.documentElement.lang = htmlLangByLanguage[language] ?? htmlLangByLanguage[defaultLanguage];
+      document.documentElement.lang =
+        htmlLangByLanguage[normalizedLanguage] ?? htmlLangByLanguage[defaultLanguage];
     }
   }, [language]);
 
   const value = useMemo(
     () => ({
-      language,
-      setLanguage,
+      language: normalizeLanguage(language),
+      setLanguage: (nextLanguage: LanguageCode) => {
+        setLanguage(normalizeLanguage(nextLanguage));
+      },
       translations: getTranslations(language),
     }),
     [language],

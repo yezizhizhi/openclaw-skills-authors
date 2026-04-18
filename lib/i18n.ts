@@ -1,4 +1,5 @@
 export type LanguageCode = "zh" | "en" | "ru" | "ja" | "fr" | "ko" | "de" | "es";
+export type DisplayLanguageCode = "zh" | "en";
 
 export type LanguageOption = {
   code: LanguageCode;
@@ -413,14 +414,8 @@ const packageLabelsByLanguage: Record<LanguageCode, PackageLabels> = {
 };
 
 export const languageOptions: LanguageOption[] = [
-  { code: "zh", label: "中文" },
   { code: "en", label: "English" },
-  { code: "ru", label: "Русский" },
-  { code: "ja", label: "日本語" },
-  { code: "fr", label: "Français" },
-  { code: "ko", label: "한국어" },
-  { code: "de", label: "Deutsch" },
-  { code: "es", label: "Español" },
+  { code: "zh", label: "中文" },
 ];
 
 export const defaultLanguage: LanguageCode = "en";
@@ -436,6 +431,10 @@ export const htmlLangByLanguage: Record<LanguageCode, string> = {
   de: "de",
   es: "es",
 };
+
+export function normalizeLanguage(language: string | null | undefined): DisplayLanguageCode {
+  return language === "zh" ? "zh" : "en";
+}
 
 export type HomeCategoryKey =
   | "books"
@@ -4102,21 +4101,22 @@ const translations: Record<LanguageCode, TranslationSet> = {
 };
 
 export function getTranslations(language: LanguageCode): TranslationSet {
-  return translations[language] ?? translations[defaultLanguage];
+  const normalizedLanguage = normalizeLanguage(language);
+  return translations[normalizedLanguage] ?? translations[defaultLanguage];
 }
 
 export function getHomeActionLabels(language: LanguageCode): HomeActionLabels {
-  return homeActionLabelsByLanguage[language];
+  return homeActionLabelsByLanguage[normalizeLanguage(language)];
 }
 
 export function getCategoryPageLabels(language: LanguageCode): CategoryPageLabels {
-  return categoryPageLabelsByLanguage[language];
+  return categoryPageLabelsByLanguage[normalizeLanguage(language)];
 }
 
 export function getSkillWorkflowLabels(language: LanguageCode): SkillWorkflowLabels {
-  return skillWorkflowLabelsByLanguage[language];
+  return skillWorkflowLabelsByLanguage[normalizeLanguage(language)];
 }
 
 export function getPackageLabels(language: LanguageCode): PackageLabels {
-  return packageLabelsByLanguage[language];
+  return packageLabelsByLanguage[normalizeLanguage(language)];
 }
