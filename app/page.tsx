@@ -49,7 +49,7 @@ export default function HomePage() {
               </>
             ) : null}
           </h2>
-          <h3 className="hero-copy hero-copy-lg">{home.heroCopy}</h3>
+          {home.heroCopy ? <h3 className="hero-copy hero-copy-lg hero-copy-subheadline">{home.heroCopy}</h3> : null}
 
           <div className="hero-actions">
             <Link href="/search-skills" className="primary-button">

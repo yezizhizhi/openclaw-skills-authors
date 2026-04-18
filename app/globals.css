@@ -434,6 +434,16 @@ a {
   font-weight: 700;
 }
 
+.hero-copy-subheadline {
+  max-width: 960px;
+  margin-top: 0.75rem;
+  color: var(--soft-ink);
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  line-height: 1.45;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
 .submission-input {
   width: 100%;
   border-radius: 22px;
