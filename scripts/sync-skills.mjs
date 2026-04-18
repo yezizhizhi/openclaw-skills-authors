@@ -3,10 +3,11 @@ import { discoverGitHubSkills } from "./sync-github-skills.mjs";
 import {
   buildRawSkillPayload,
   createSupabaseAdminClient,
-  evaluateSkill,
+  evaluateSkillWithSignals,
   normalizeSkillRecord,
   persistEvaluation,
   publishSkill,
+  refineSkillWithAI,
   upsertLatestSkillVersion,
 } from "./skill-sync-lib.mjs";
 
@@ -102,11 +103,12 @@ async function processSource(supabase, sourceType) {
 
     for (const item of discovered) {
       const rawSkillId = await persistRawSkill(supabase, sourceType, item, syncRunId);
-      const normalized = normalizeSkillRecord(item);
+      const baseNormalized = normalizeSkillRecord(item);
+      const { normalizedRecord: normalized, aiAssessment } = await refineSkillWithAI(item, baseNormalized);
       summary.normalized_count += 1;
 
       const versionId = await upsertLatestSkillVersion(supabase, rawSkillId, normalized);
-      const evaluation = evaluateSkill(normalized);
+      const evaluation = evaluateSkillWithSignals(normalized, aiAssessment);
       await persistEvaluation(supabase, versionId, evaluation, normalized);
 
       if (evaluation.needsReview) {

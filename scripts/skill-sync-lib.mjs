@@ -43,6 +43,294 @@ const WORKFLOW_RULES = [
   { keywords: ["polish", "review", "qa", "quality", "润色", "质检", "审校"], label: "质检修订" },
 ];
 
+const AI_CATEGORY_SLUGS = CATEGORY_RULES.map((rule) => rule.slug);
+
+function getCategoryRule(categorySlug) {
+  return CATEGORY_RULES.find((rule) => rule.slug === categorySlug) ?? CATEGORY_RULES[0];
+}
+
+function toTitleCase(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/(^|\s|[-_/])([a-z])/g, (_match, prefix, char) => `${prefix}${char.toUpperCase()}`);
+}
+
+function normalizeWorkflowLabel(categorySlug, workflow) {
+  const categoryRule = getCategoryRule(categorySlug);
+  const raw = String(workflow || "").trim();
+
+  if (!raw) {
+    return categoryRule.workflows[0] || "选题调研";
+  }
+
+  const exactMatch = categoryRule.workflows.find((item) => item.toLowerCase() === raw.toLowerCase());
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  const normalized = raw.toLowerCase();
+  const partialMatch = categoryRule.workflows.find((item) => {
+    const candidate = item.toLowerCase();
+    return candidate.includes(normalized) || normalized.includes(candidate);
+  });
+
+  if (partialMatch) {
+    return partialMatch;
+  }
+
+  return raw;
+}
+
+function getOpenAIEvalConfig() {
+  const apiKey = process.env.OPENAI_API_KEY?.trim() || "";
+
+  if (!apiKey) {
+    return null;
+  }
+
+  return {
+    apiKey,
+    model: process.env.OPENAI_EVAL_MODEL?.trim() || "gpt-4.1",
+    baseUrl: process.env.OPENAI_BASE_URL?.trim() || "https://api.openai.com/v1",
+  };
+}
+
+function extractResponseText(responseJson) {
+  if (typeof responseJson?.output_text === "string" && responseJson.output_text.trim()) {
+    return responseJson.output_text;
+  }
+
+  for (const item of responseJson?.output ?? []) {
+    for (const content of item?.content ?? []) {
+      if (content?.type === "output_text" && typeof content.text === "string" && content.text.trim()) {
+        return content.text;
+      }
+    }
+  }
+
+  return "";
+}
+
+function computeAiScore(aiAssessment, normalizedRecord) {
+  if (!aiAssessment) {
+    return null;
+  }
+
+  const workflowMatches =
+    normalizeWorkflowLabel(normalizedRecord.categorySlug, aiAssessment.workflow) === normalizedRecord.workflow;
+  const categoryMatches = aiAssessment.category_slug === normalizedRecord.categorySlug;
+  const confidence = Math.max(0, Math.min(1, Number(aiAssessment.confidence ?? 0)));
+  const recommendation = aiAssessment.publish_recommendation || "review";
+  const useCaseCount = Array.isArray(aiAssessment.use_cases) ? aiAssessment.use_cases.length : 0;
+  const tagCount = Array.isArray(aiAssessment.relevant_tags) ? aiAssessment.relevant_tags.length : 0;
+
+  return Math.max(
+    0,
+    Math.min(
+      100,
+      Math.round(
+        confidence * 60 +
+          (categoryMatches ? 12 : 0) +
+          (workflowMatches ? 10 : 0) +
+          (recommendation === "publish" ? 12 : recommendation === "review" ? 4 : -6) +
+          Math.min(8, useCaseCount * 2) +
+          Math.min(8, tagCount * 2),
+      ),
+    ),
+  );
+}
+
+export async function getAiAssessment(record, normalizedRecord) {
+  const config = getOpenAIEvalConfig();
+
+  if (!config) {
+    return null;
+  }
+
+  const categoryRule = getCategoryRule(normalizedRecord.categorySlug);
+  const payload = {
+    source_type: normalizedRecord.sourceType,
+    source_key: normalizedRecord.sourceKey,
+    name: normalizedRecord.name,
+    description: normalizedRecord.description,
+    source_url: normalizedRecord.sourceUrl,
+    repository_url: normalizedRecord.repositoryUrl,
+    install_mode: normalizedRecord.installMode,
+    primary_action: normalizedRecord.primaryAction,
+    models: normalizedRecord.models,
+    tags: normalizedRecord.tags,
+    input_preview: normalizedRecord.inputPreview,
+    output_preview: normalizedRecord.outputPreview,
+    config_snippet: normalizedRecord.configSnippet,
+    rule_inference: {
+      category_slug: normalizedRecord.categorySlug,
+      workflow: normalizedRecord.workflow,
+      category_confidence: normalizedRecord.categoryConfidence,
+      workflow_confidence: normalizedRecord.workflowConfidence,
+    },
+    workflow_options: categoryRule.workflows,
+    raw_payload_excerpt: normalizedRecord.rawPayload,
+  };
+
+  const response = await fetch(`${config.baseUrl}/responses`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${config.apiKey}`,
+    },
+    body: JSON.stringify({
+      model: config.model,
+      input: [
+        {
+          role: "system",
+          content: [
+            {
+              type: "input_text",
+              text:
+                "You evaluate discovered AI skills for a production catalog. Return only structured JSON. Favor precise category/workflow placement, realistic confidence, and conservative publish recommendations.",
+            },
+          ],
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text",
+              text: JSON.stringify(payload),
+            },
+          ],
+        },
+      ],
+      text: {
+        format: {
+          type: "json_schema",
+          name: "skill_catalog_assessment",
+          strict: true,
+          schema: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              category_slug: {
+                type: "string",
+                enum: AI_CATEGORY_SLUGS,
+              },
+              workflow: {
+                type: "string",
+              },
+              confidence: {
+                type: "number",
+              },
+              publish_recommendation: {
+                type: "string",
+                enum: ["publish", "review", "hold"],
+              },
+              quality_summary: {
+                type: "string",
+              },
+              use_cases: {
+                type: "array",
+                items: { type: "string" },
+              },
+              relevant_tags: {
+                type: "array",
+                items: { type: "string" },
+              },
+            },
+            required: [
+              "category_slug",
+              "workflow",
+              "confidence",
+              "publish_recommendation",
+              "quality_summary",
+              "use_cases",
+              "relevant_tags",
+            ],
+          },
+        },
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`OpenAI evaluation failed: ${response.status} ${errorText}`);
+  }
+
+  const responseJson = await response.json();
+  const text = extractResponseText(responseJson);
+
+  if (!text) {
+    throw new Error("OpenAI evaluation returned no structured text.");
+  }
+
+  const parsed = JSON.parse(text);
+  return {
+    category_slug: AI_CATEGORY_SLUGS.includes(parsed.category_slug)
+      ? parsed.category_slug
+      : normalizedRecord.categorySlug,
+    workflow: normalizeWorkflowLabel(parsed.category_slug || normalizedRecord.categorySlug, parsed.workflow),
+    confidence: Math.max(0, Math.min(1, Number(parsed.confidence ?? 0))),
+    publish_recommendation: parsed.publish_recommendation || "review",
+    quality_summary: String(parsed.quality_summary || "").trim(),
+    use_cases: ensureArray(parsed.use_cases).slice(0, 5),
+    relevant_tags: ensureArray(parsed.relevant_tags).slice(0, 8).map(toTitleCase),
+  };
+}
+
+export async function refineSkillWithAI(record, normalizedRecord) {
+  try {
+    const aiAssessment = await getAiAssessment(record, normalizedRecord);
+
+    if (!aiAssessment) {
+      return {
+        normalizedRecord,
+        aiAssessment: null,
+      };
+    }
+
+    const categorySlug =
+      aiAssessment.confidence >= 0.55 ? aiAssessment.category_slug : normalizedRecord.categorySlug;
+    const workflow =
+      aiAssessment.confidence >= 0.45
+        ? normalizeWorkflowLabel(categorySlug, aiAssessment.workflow)
+        : normalizedRecord.workflow;
+
+    return {
+      normalizedRecord: {
+        ...normalizedRecord,
+        categorySlug,
+        workflow,
+        categoryConfidence: Math.max(
+          Number(normalizedRecord.categoryConfidence ?? 0),
+          Math.round(aiAssessment.confidence * 3),
+        ),
+        workflowConfidence: Math.max(
+          Number(normalizedRecord.workflowConfidence ?? 0),
+          Math.round(aiAssessment.confidence * 3),
+        ),
+        tags: Array.from(new Set([...normalizedRecord.tags, ...aiAssessment.relevant_tags])),
+      },
+      aiAssessment: {
+        ...aiAssessment,
+        category_slug: categorySlug,
+        workflow,
+      },
+    };
+  } catch (error) {
+    console.warn(
+      `[skill-sync-lib] OpenAI evaluation skipped for ${normalizedRecord.sourceType}:${normalizedRecord.sourceKey}: ${
+        error instanceof Error ? error.message : "Unknown OpenAI error"
+      }`,
+    );
+
+    return {
+      normalizedRecord,
+      aiAssessment: null,
+    };
+  }
+}
+
 export function slugify(value) {
   return String(value || "")
     .trim()
@@ -265,6 +553,47 @@ export function evaluateSkill(record) {
       { label: "workflow_fit", score: workflowFit },
       { label: "compatibility", score: compatibility },
       { label: "quality", score: quality },
+    ],
+  };
+}
+
+export function evaluateSkillWithSignals(record, aiAssessment = null) {
+  const ruleEvaluation = evaluateSkill(record);
+  const aiScore = computeAiScore(aiAssessment, record);
+
+  if (aiScore == null) {
+    return {
+      ...ruleEvaluation,
+      aiScore: null,
+      aiAssessment: null,
+    };
+  }
+
+  const finalScore = Math.round(ruleEvaluation.finalScore * 0.7 + aiScore * 0.3);
+  const recommendation = aiAssessment?.publish_recommendation || "review";
+  const shouldAutoPublish =
+    finalScore >= 74 &&
+    recommendation === "publish" &&
+    aiAssessment?.confidence >= 0.65 &&
+    /^https?:\/\//.test(record.sourceUrl || "");
+
+  const needsReview = recommendation === "review" || (!shouldAutoPublish && finalScore >= 60);
+  const status = shouldAutoPublish ? "approved" : finalScore < 60 || recommendation === "hold" ? "rejected" : "pending_review";
+  const publishDecision = shouldAutoPublish ? "publish" : recommendation === "hold" || finalScore < 60 ? "hold" : "review";
+  const aiSummary = aiAssessment?.quality_summary ? ` AI: ${aiAssessment.quality_summary}` : "";
+
+  return {
+    ...ruleEvaluation,
+    finalScore,
+    status,
+    publishDecision,
+    needsReview,
+    aiScore,
+    aiAssessment,
+    reason: `${ruleEvaluation.reason}${aiSummary}`.trim(),
+    reasons: [
+      ...ruleEvaluation.reasons,
+      { label: "ai_score", score: aiScore, metadata: aiAssessment },
     ],
   };
 }

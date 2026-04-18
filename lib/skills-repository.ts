@@ -121,17 +121,6 @@ function normalizeSkills(
 export async function getCategoryExplorerData(categorySlug: string): Promise<CategoryExplorerData | null> {
   const fallback = getFallback(categorySlug);
 
-  if (
-    categorySlug === "books" ||
-    categorySlug === "articles" ||
-    categorySlug === "copywriting" ||
-    categorySlug === "reports" ||
-    categorySlug === "academic" ||
-    categorySlug === "courses"
-  ) {
-    return fallback;
-  }
-
   const supabase = getSupabaseServerClient();
 
   if (!supabase) {
@@ -223,17 +212,6 @@ export async function getCategoryExplorerData(categorySlug: string): Promise<Cat
 
 export async function getSkillDetail(skillId: string): Promise<SkillDetail | null> {
   const fallback = getStaticSkillDetail(skillId);
-
-  if (
-    skillId.startsWith("books-") ||
-    skillId.startsWith("articles-") ||
-    skillId.startsWith("copywriting-") ||
-    skillId.startsWith("reports-") ||
-    skillId.startsWith("academic-") ||
-    skillId.startsWith("courses-")
-  ) {
-    return fallback;
-  }
 
   const supabase = getSupabaseServerClient();
 

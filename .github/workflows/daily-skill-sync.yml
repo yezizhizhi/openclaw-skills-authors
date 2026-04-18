@@ -32,3 +32,11 @@ jobs:
           CLAWHUB_SEED_URLS: ${{ secrets.CLAWHUB_SEED_URLS }}
           GITHUB_SKILL_REPOS: ${{ secrets.GITHUB_SKILL_REPOS }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_EVAL_MODEL: ${{ secrets.OPENAI_EVAL_MODEL }}
+
+      - name: Rebuild workflow packages
+        run: npm run build:workflow-packages
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

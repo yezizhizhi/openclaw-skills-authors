@@ -13,7 +13,8 @@
     "sync:clawhub": "node scripts/sync-clawhub.mjs",
     "sync:github": "node scripts/sync-github-skills.mjs",
     "build:workflow-packages": "node scripts/build-workflow-packages.mjs",
-    "build:weekly-digest": "node scripts/build-weekly-digest.mjs"
+    "build:weekly-digest": "node scripts/build-weekly-digest.mjs",
+    "send:weekly-digest-email": "node scripts/send-weekly-digest-email.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
